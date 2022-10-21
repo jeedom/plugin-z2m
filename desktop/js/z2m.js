@@ -30,6 +30,10 @@ $('#bt_showZ2mDevice').off('click').on('click', function () {
   $('#md_modal').dialog({title: "{{Configuration du noeud}}"}).load('index.php?v=d&plugin=z2m&modal=device&id='+$('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
 });
 
+$('#bt_z2mNetwork').off('click').on('click', function () {
+  $('#md_modal').dialog({title: "{{Configuration du réseaux}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
+});
+
 function printEqLogic(_eqLogic) {
   $('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
   return _eqLogic;

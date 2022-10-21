@@ -73,6 +73,9 @@ class z2m extends eqLogic {
   }
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
+    if (isset($_datas['logging']['level']) && $_datas['logging']['level'] == 'error') {
+      log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
+    }
     if (isset($_datas['response']['status']) && $_datas['response']['status'] != 'ok') {
       log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . json_encode($_datas['response']));
     } elseif (isset($_datas['response']['permit_join'])) {
@@ -109,6 +112,8 @@ class z2m extends eqLogic {
           $eqLogic->save();
           $new = true;
         }
+        $eqLogic->setConfiguration('instance', $_instanceNumber);
+        $eqLogic->save();
         foreach ($device['definition']['exposes'] as $expose) {
           if (isset($expose['features'])) {
             foreach ($expose['features'] as $feature) {
@@ -181,8 +186,6 @@ class z2m extends eqLogic {
             }
             continue;
           }
-
-
 
           if (!isset($expose['name'])) {
             continue;

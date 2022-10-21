@@ -23,6 +23,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<br />
 				<span>{{Mode inclusion}}</span>
 			</div>
+			<div class="cursor logoSecondary" id="bt_z2mNetwork">
+				<i class="fas fa-sitemap"></i>
+				<br>
+				<span>{{Réseaux Zigbee}}</span>
+			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i>
 				<br>

@@ -22,6 +22,7 @@ if (!is_object($eqLogic)) {
     throw new \Exception(__('Equipement introuvable : ', __FILE__) . init('id'));
 }
 $infos = z2m::getDeviceInfo($eqLogic->getLogicalId());
+$bridge_info = z2m::getDeviceInfo('bridge' . $eqLogic->getConfiguration('instance', 1));
 sendVarToJS('z2m_id', $eqLogic->getId());
 ?>
 
@@ -132,9 +133,14 @@ sendVarToJS('z2m_id', $eqLogic->getId());
             <fieldset>
                 <br>
                 <?php
+                $current_value = $bridge_info['config']['devices'][z2m::convert_from_addr($eqLogic->getLogicalId())];
                 foreach ($infos['definition']['options'] as $option) {
                     if ($option['access'] == 1) {
                         continue;
+                    }
+                    $default_value = (isset($current_value[$option['name']])) ? $current_value[$option['name']] : '';
+                    if (is_object($default_value) || is_array($default_value)) {
+                        $default_value = json_encode($default_value);
                     }
                     echo '<div class="form-group">';
                     echo '<label class="col-sm-8 control-label">' . $option['description'];
@@ -150,10 +156,10 @@ sendVarToJS('z2m_id', $eqLogic->getId());
                             if (isset($option['value_max'])) {
                                 $max = 'max=' . $option['value_max'];
                             }
-                            echo '<input type="number" data-name="' . $option['name'] . '" class="form-control" ' . $min . ' ' . $max . ' />';
+                            echo '<input type="number" data-name="' . $option['name'] . '" class="form-control" ' . $min . ' ' . $max . ' value="' . $default_value . '" />';
                             break;
                         case 'list':
-                            echo '<input type="text" data-name="' . $option['name'] . '" class="form-control" />';
+                            echo '<input type="text" data-name="' . $option['name'] . '" class="form-control" value="' . $default_value . '" />';
                             break;
                     }
                     echo '</div>';
