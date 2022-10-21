@@ -73,6 +73,7 @@ class z2m extends eqLogic {
   }
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
+    log::add('z2m', 'debug', json_encode($_datas));
     if (isset($_datas['logging']['level']) && $_datas['logging']['level'] == 'error') {
       log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
     }
@@ -92,6 +93,10 @@ class z2m extends eqLogic {
           'page' => 'z2m',
           'message' => __('Mode inclusion inactif', __FILE__),
         ));
+      }
+    } else if (isset($_datas['response']['networkmap']) && $_datas['response']['networkmap']['status'] == 'ok') {
+      if ($_datas['response']['networkmap']['data']['type'] == 'raw') {
+        file_put_contents(__DIR__ . '/../../data/devices/networkMap' . $_instanceNumber . '.json', json_encode($_datas['response']['networkmap']['data']['value']));
       }
     }
     if (isset($_datas['devices'])) {
@@ -228,7 +233,7 @@ class z2m extends eqLogic {
   public static function getDeviceInfo($_device) {
     $file = __DIR__ . '/../../data/devices/' . $_device . '.json';
     if (!file_exists($file)) {
-      throw new Exception(__('Fichier non trouvé : ', __FILE__) . $file);
+      return array();
     }
     return json_decode(file_get_contents($file), true);
   }

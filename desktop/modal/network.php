@@ -19,6 +19,7 @@ if (!isConnect('admin')) {
 }
 $plugin = plugin::byId('z2m');
 $infos = z2m::getDeviceInfo('bridge1');
+$map = z2m::getDeviceInfo('networkMap1');
 ?>
 <select class="pull-right form-control" id="sel_networkZigbeeInstance" style="width:250px;">
     <?php
@@ -33,6 +34,7 @@ $infos = z2m::getDeviceInfo('bridge1');
 <ul id="tabs_network" class="nav nav-tabs" data-tabs="tabs">
     <li class="active"><a href="#application_network" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Application}}</a></li>
     <li><a href="#devices_network" data-toggle="tab"><i class="fab fa-codepen"></i> {{Noeuds}} (<?php echo count($infos['config']['devices']) ?>)</a></li>
+    <li role="presentation"><a href="#networkMap" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Graphique du réseaux}}</a></li>
     <li role="presentation"><a href="#rawBridgeTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
 </ul>
 
@@ -115,19 +117,24 @@ $infos = z2m::getDeviceInfo('bridge1');
                     $eqLogic = eqLogic::byLogicalId(z2m::convert_to_addr($device_id), 'z2m');
                     echo '<tr>';
                     echo '<td>';
+                    if (is_object($eqLogic)) {
+                        $child = ($eqLogic->getConfiguration('ischild', 0) == 1) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_orange fas fa-user" title="Ce device est un enfant"></i>' : '';
+                        $child .= ($eqLogic->getConfiguration('canbesplit', 0) == 1 && $eqLogic->getConfiguration('ischild', 0) == 0) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-random" title="Ce device peut être séparé en enfants"></i>' : '';
 
-                    if ($eqLogic->getConfiguration('device') != "") {
-                        if (z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
-                            echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
-                        } else if ($eqLogic->getConfiguration('ischild', 0) == 1 && file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('visual', 'none'))) {
-                            echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . $eqLogic->getConfiguration('visual') . '" height="40" width="40"/>' . $child;
-                        } else if ($eqLogic->getConfiguration('ischild', 0) == 1 && z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false) {
-                            echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
+
+                        if ($eqLogic->getConfiguration('device') != "") {
+                            if (z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
+                                echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
+                            } else if ($eqLogic->getConfiguration('ischild', 0) == 1 && file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('visual', 'none'))) {
+                                echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . $eqLogic->getConfiguration('visual') . '" height="40" width="40"/>' . $child;
+                            } else if ($eqLogic->getConfiguration('ischild', 0) == 1 && z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false) {
+                                echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
+                            } else {
+                                echo '<img src="' . $plugin->getPathImgIcon() . '" height="40" width="40" />' . $child;
+                            }
                         } else {
-                            echo '<img src="' . $plugin->getPathImgIcon() . '" height="40" width="40"/>' . $child;
+                            echo '<img src="' . $plugin->getPathImgIcon() . '" height="40" width="40" />' . $child;
                         }
-                    } else {
-                        echo '<img src="' . $plugin->getPathImgIcon() . '" height="40" width="40"/>' . $child;
                     }
                     echo '</td>';
                     echo '<td>';
@@ -145,6 +152,9 @@ $infos = z2m::getDeviceInfo('bridge1');
         </table>
     </div>
 
+    <div role="tabpanel" class="tab-pane" id="networkMap">
+        <pre><?php echo json_encode($map, JSON_PRETTY_PRINT); ?></pre>
+    </div>
 
     <div role="tabpanel" class="tab-pane" id="rawBridgeTab">
         <pre><?php echo json_encode($infos, JSON_PRETTY_PRINT); ?></pre>
