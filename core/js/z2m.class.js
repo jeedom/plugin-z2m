@@ -68,6 +68,46 @@ jeedom.z2m.bridge.updateNetworkMap = function(_params){
   $.ajax(paramsAJAX);
 }
 
+jeedom.z2m.bridge.backup = function(_params){
+  var paramsRequired = ['instance'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/backup'
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.bridge.restart = function(_params){
+  var paramsRequired = ['instance'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/restart'
+  };
+  $.ajax(paramsAJAX);
+}
+
 jeedom.z2m.device.setOptions = function(_params){
   var paramsRequired = ['id','options'];
   var paramsSpecifics = {};

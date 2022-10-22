@@ -46,20 +46,16 @@ sendVarToJS('z2m_devices', $devices);
 			</div>
 		</div>
 		<legend><i class="fas fa-table"></i> {{Mes templates}}</legend>
-		<?php
-		if (count($eqLogics) == 0) {
-			echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement Template trouvé, cliquer sur "Ajouter" pour commencer}}</div>';
-		} else {
-			// Champ de recherche
-			echo '<div class="input-group" style="margin:5px;">';
-			echo '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic">';
-			echo '<div class="input-group-btn">';
-			echo '<a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i></a>';
-			echo '<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>';
-			echo '</div>';
-			echo '</div>';
-			// Liste des équipements du plugin
-			echo '<div class="eqLogicThumbnailContainer">';
+		<div class="input-group" style="margin:5px;">
+			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic">
+			<div class="input-group-btn">
+				<a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i></a>
+				<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>
+			</div>
+		</div>
+		// Liste des équipements du plugin
+		<div class="eqLogicThumbnailContainer">
+			<?php
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('isgroup', 0) == 0) {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
@@ -84,9 +80,35 @@ sendVarToJS('z2m_devices', $devices);
 					echo '</div>';
 				}
 			}
-			echo '</div>';
-		}
-		?>
+			?>
+		</div>
+		<legend><i class="fas fa-object-group"></i> {{Mes groupes Zigbee}}</legend>
+		<div class="eqLogicThumbnailContainer">
+			<?php
+			$child = '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-object-group" title="Groupe"></i>';
+			foreach ($eqLogics as $eqLogic) {
+				if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
+					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+					if ($eqLogic->getConfiguration('device') != "") {
+						if (zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
+							echo '<img class="lazy" src="plugins/zigbee/core/config/devices/' . zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '"/>' . $child;
+						} else if ($eqLogic->getConfiguration('ischild', 0) == 1 && file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('visual', 'none'))) {
+							echo '<img class="lazy" src="plugins/zigbee/core/config/devices/' . $eqLogic->getConfiguration('visual') . '"/>' . $child;
+						} else if ($eqLogic->getConfiguration('ischild', 0) == 1 && zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false) {
+							echo '<img class="lazy" src="plugins/zigbee/core/config/devices/' . zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '"/>' . $child;
+						} else {
+							echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
+						}
+					} else {
+						echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
+					}
+					echo "<br/>";
+					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '</div>';
+				}
+			}
+			?>
+		</div>
 	</div> <!-- /.eqLogicThumbnailDisplay -->
 
 	<!-- Page de présentation de l'équipement -->

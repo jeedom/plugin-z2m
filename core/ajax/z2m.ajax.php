@@ -40,7 +40,7 @@ try {
   }
 
   if (init('action') == 'publish') {
-    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . init('topic'), init('message'));
+    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . init('topic'), init('message', ''));
     ajax::success();
   }
 
