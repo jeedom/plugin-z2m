@@ -258,7 +258,7 @@ sendVarToJS('devices_attr', $deviceAttr);
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-								<th style="width: 300px;">{{Nom}}</th>
+								<th style="width: 450px;">{{Nom}}</th>
 								<th style="width: 130px;">{{Type}}</th>
 								<th>{{Logical ID}}</th>
 								<th>{{Paramètres}}</th>

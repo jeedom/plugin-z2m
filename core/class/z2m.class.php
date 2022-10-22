@@ -144,7 +144,7 @@ class z2m extends eqLogic {
         $cmd->setSubType('string');
 
         $cmd->save();
-        foreach ($device['definition']['exposes'] as $expose) {
+        foreach ($device['definition']['exposes'] as &$expose) {
           if (isset($expose['features'])) {
             foreach ($expose['features'] as $feature) {
               $cmd = $eqLogic->getCmd('info', $feature['name']);
@@ -155,7 +155,11 @@ class z2m extends eqLogic {
               }
               $cmd->setEqLogic_id($eqLogic->getId());
               $cmd->setType('info');
-              $cmd->setSubType($feature['type']);
+              if ($feature['type'] == 'enum') {
+                $cmd->setSubType('string');
+              } else {
+                $cmd->setSubType($feature['type']);
+              }
               if ($feature['type'] == 'binary') {
                 $cmd->setConfiguration('repeatEventManagement', 'never');
               } else if ($feature['type'] == 'numeric') {
@@ -279,6 +283,43 @@ class z2m extends eqLogic {
             }
           }
           $cmd->save();
+          $link_cmd_id = $cmd->getId();
+
+          if ($expose['access'] == 7) {
+            if (isset($expose['value_off'])) {
+              if (is_bool($expose['value_off']) && !$expose['value_off']) {
+                $expose['value_off'] = 'false';
+              }
+              $cmd = $eqLogic->getCmd('action', $expose['name'] . '::' . $expose['value_off']);
+              if (!is_object($cmd)) {
+                $cmd = new z2mCmd();
+                $cmd->setLogicalId($expose['name'] . '::' . $expose['value_off']);
+                $cmd->setName(__($expose['name'] . ' Off', __FILE__));
+              }
+              $cmd->setEqLogic_id($eqLogic->getId());
+              $cmd->setType('action');
+              $cmd->setSubType('other');
+              $cmd->setValue($link_cmd_id);
+              $cmd->save();
+            }
+
+            if (isset($expose['value_on'])) {
+              if (is_bool($expose['value_on']) && $expose['value_on']) {
+                $expose['value_on'] = 'true';
+              }
+              $cmd = $eqLogic->getCmd('action', $expose['name'] . '::' . $expose['value_on']);
+              if (!is_object($cmd)) {
+                $cmd = new z2mCmd();
+                $cmd->setLogicalId($expose['name'] . '::' . $expose['value_on']);
+                $cmd->setName(__($expose['name'] . ' On', __FILE__));
+              }
+              $cmd->setEqLogic_id($eqLogic->getId());
+              $cmd->setType('action');
+              $cmd->setSubType('other');
+              $cmd->setValue($link_cmd_id);
+              $cmd->save();
+            }
+          }
         }
         file_put_contents(__DIR__ . '/../../data/devices/' . $addr . '.json', json_encode($device));
         if ($new !== null) {
@@ -489,6 +530,11 @@ class z2mCmd extends cmd {
         break;
     }
     $info = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
+    if ($info[1] == 'true') {
+      $info[1] = true;
+    } else if ($info[1] == 'false') {
+      $info[1] = false;
+    }
     $datas = array($info[0] =>  $info[1]);
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
