@@ -143,6 +143,7 @@ jeedom.z2m.device.ota_check = function(_params){
   var paramsAJAX = jeedom.private.getParamsAJAX(params);
   paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
   paramsAJAX.data = {
+    instance : _params.instance,
     action: 'publish',
     topic : '/bridge/request/device/ota_update/check',
     message : JSON.stringify({id:_params.id}),
@@ -163,6 +164,7 @@ jeedom.z2m.device.ota_update = function(_params){
   var paramsAJAX = jeedom.private.getParamsAJAX(params);
   paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
   paramsAJAX.data = {
+    instance : _params.instance,
     action: 'publish',
     topic : '/bridge/request/device/ota_update/update',
     message : JSON.stringify({id:_params.id}),
@@ -183,6 +185,7 @@ jeedom.z2m.device.setOptions = function(_params){
   var paramsAJAX = jeedom.private.getParamsAJAX(params);
   paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
   paramsAJAX.data = {
+    instance : _params.instance,
     action: 'publish',
     topic : '/bridge/request/device/options',
     options : JSON.stringify(_params.options),
@@ -203,8 +206,51 @@ jeedom.z2m.device.configure_reporting = function(_params){
   var paramsAJAX = jeedom.private.getParamsAJAX(params);
   paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
   paramsAJAX.data = {
+    instance : _params.instance,
     action: 'publish',
     topic : '/bridge/request/device/configure_reporting',
+    message : JSON.stringify(_params.options),
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.device.bind = function(_params){
+  var paramsRequired = ['instance','options'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    instance : _params.instance,
+    action: 'publish',
+    topic : '/bridge/request/device/bind',
+    message : JSON.stringify(_params.options),
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.device.unbind = function(_params){
+  var paramsRequired = ['instance','options'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    instance : _params.instance,
+    action: 'publish',
+    topic : '/bridge/request/device/unbind',
     message : JSON.stringify(_params.options),
   };
   $.ajax(paramsAJAX);

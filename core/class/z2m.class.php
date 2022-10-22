@@ -213,6 +213,42 @@ class z2m extends eqLogic {
                 $cmd->setValue($link_cmd_id);
                 $cmd->save();
               }
+
+              if ($feature['type'] == 'numeric') {
+                $cmd = $eqLogic->getCmd('action', $feature['name'] . '::#slider#');
+                if (!is_object($cmd)) {
+                  $cmd = new z2mCmd();
+                  $cmd->setLogicalId($feature['name']  . '::#slider#');
+                  $cmd->setName(__('Configurer ' . $feature['name'], __FILE__));
+                }
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setType('action');
+                $cmd->setSubType('slider');
+                $cmd->setValue($link_cmd_id);
+                if (isset($expose['value_max'])) {
+                  $cmd->setConfiguration('maxValue', $expose['value_max']);
+                }
+                if (isset($expose['value_min'])) {
+                  $cmd->setConfiguration('minValue', $expose['value_min']);
+                }
+                $cmd->save();
+              }
+
+              if ($feature['type'] == 'enum') {
+                foreach ($feature['values'] as $feature_value) {
+                  $cmd = $eqLogic->getCmd('action', $feature['name'] . '::' . $feature_value);
+                  if (!is_object($cmd)) {
+                    $cmd = new z2mCmd();
+                    $cmd->setLogicalId($feature['name'] . '::' . $feature_value);
+                    $cmd->setName(__($feature_value, __FILE__));
+                  }
+                  $cmd->setEqLogic_id($eqLogic->getId());
+                  $cmd->setType('action');
+                  $cmd->setSubType('other');
+                  $cmd->setValue($link_cmd_id);
+                  $cmd->save();
+                }
+              }
             }
             continue;
           }
