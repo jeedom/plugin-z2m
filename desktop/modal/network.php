@@ -161,11 +161,14 @@ sendVarToJS('z2m_network_map', $map);
         <br />
         <table class="table table-bordered table-condensed">
             <thead>
-                <th>
-                <td>{{ID}}</td>
-                <td>{{Nom}}</td>
-                <td>{{Action}}</td>
-                </th>
+                <tr>
+                    <th>{{Image}}</th>
+                    <th>{{ID}}</th>
+                    <th>{{Nom}}</th>
+                    <th>{{LQI}}</th>
+                    <th>{{Type}}</th>
+                    <th>{{Action}}</th>
+                </tr>
             </thead>
             <tbody>
                 <?php
@@ -174,7 +177,7 @@ sendVarToJS('z2m_network_map', $map);
                         continue;
                     }
                     $eqLogic = eqLogic::byLogicalId(z2m::convert_to_addr($device_info['ieee_address']), 'z2m');
-                    echo '<tr data-ieee="' . $device_id . '">';
+                    echo '<tr data-ieee="' . $device_info['ieee_address'] . '">';
                     echo '<td>';
                     if (is_object($eqLogic)) {
                         $child = ($eqLogic->getConfiguration('ischild', 0) == 1) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_orange fas fa-user" title="Ce device est un enfant"></i>' : '';
@@ -195,12 +198,26 @@ sendVarToJS('z2m_network_map', $map);
                     }
                     echo '</td>';
                     echo '<td>';
-                    echo z2m::convert_to_addr($device_id);
+                    echo z2m::convert_to_addr($device_info['ieee_address']);
                     echo '</td>';
+
                     echo '<td>';
                     if (is_object($eqLogic)) {
                         echo '<a href="index.php?v=d&p=z2m&m=z2m&id=' . $eqLogic->getId() . '" >' . $eqLogic->getHumanName() . '</a>';
                     }
+                    echo '</td>';
+                    echo '<td>';
+                    foreach ($map['links'] as $link) {
+                        if ($link['target']['networkAddress'] == 0 && $link['sourceIeeeAddr'] == $device_info['ieee_address']) {
+                            echo '<i class="far fa-arrow-alt-circle-left"></i> ' . $link['lqi'];
+                        }
+                        if ($link['source']['networkAddress'] == 0 && $link['targetIeeeAddr'] == $device_info['ieee_address']) {
+                            echo '<i class="far fa-arrow-alt-circle-right"></i> ' . $link['lqi'];
+                        }
+                    }
+                    echo '</td>';
+                    echo '<td>';
+                    echo $device_info['type'];
                     echo '</td>';
                     echo '<td>';
                     echo '<a class="btn btn-danger bt_z2mRemoveNode"><i class="fas fa-trash-alt"></i></a>';
