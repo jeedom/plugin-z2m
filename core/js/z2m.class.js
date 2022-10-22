@@ -26,7 +26,7 @@ jeedom.z2m.utils.convert_to_addr = function(_addr){
 }
 
 jeedom.z2m.utils.convert_from_addr = function(_addr){
-  return '0x'+_addr.replace(':', '')
+  return '0x'+_addr.replaceAll(':', '')
 }
 
 jeedom.z2m.bridge.include = function(_params){
@@ -130,8 +130,8 @@ jeedom.z2m.bridge.addByCode = function(_params){
   $.ajax(paramsAJAX);
 }
 
-jeedom.z2m.device.setOptions = function(_params){
-  var paramsRequired = ['id','options'];
+jeedom.z2m.device.ota_check = function(_params){
+  var paramsRequired = ['instance','id'];
   var paramsSpecifics = {};
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
@@ -143,9 +143,69 @@ jeedom.z2m.device.setOptions = function(_params){
   var paramsAJAX = jeedom.private.getParamsAJAX(params);
   paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
   paramsAJAX.data = {
-    action: 'setDeviceOptions',
-    id : _params.id,
+    action: 'publish',
+    topic : '/bridge/request/device/ota_update/check',
+    message : JSON.stringify({id:_params.id}),
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.device.ota_update = function(_params){
+  var paramsRequired = ['instance','id'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    topic : '/bridge/request/device/ota_update/update',
+    message : JSON.stringify({id:_params.id}),
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.device.setOptions = function(_params){
+  var paramsRequired = ['instance','id','options'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    topic : '/bridge/request/device/options',
     options : JSON.stringify(_params.options),
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.device.configure_reporting = function(_params){
+  var paramsRequired = ['instance','options'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    topic : '/bridge/request/device/configure_reporting',
+    message : JSON.stringify(_params.options),
   };
   $.ajax(paramsAJAX);
 }

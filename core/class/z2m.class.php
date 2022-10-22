@@ -337,15 +337,6 @@ class z2m extends eqLogic {
 
   /*     * *********************Methode d'instance************************* */
 
-
-  public function setDeviceOptions($_options) {
-    $datas = array(
-      'id' => self::convert_from_addr($this->getLogicalId()),
-      'options' => $_options
-    );
-    mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/device/options', json_encode($datas));
-  }
-
   public function preRemove() {
     if ($this->getConfiguration('isgroup', 0) == 1) {
       $datas = array(

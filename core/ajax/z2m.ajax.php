@@ -30,15 +30,6 @@ try {
     ajax::success();
   }
 
-  if (init('action') == 'setDeviceOptions') {
-    $eqLogic = eqLogic::byId(init('id'));
-    if (!is_object($eqLogic)) {
-      throw new Exception(__('Equipement introuvable : ', __FILE__) . init('id'));
-    }
-    $eqLogic->setDeviceOptions(json_decode(init('options'), true));
-    ajax::success();
-  }
-
   if (init('action') == 'publish') {
     mqtt2::publish(z2m::getInstanceTopic(init('instance')) . init('topic'), init('message', ''));
     ajax::success();
