@@ -19,6 +19,7 @@ jeedom.z2m = function() {};
 jeedom.z2m.bridge = function() {};
 jeedom.z2m.device = function() {};
 jeedom.z2m.utils = function() {};
+jeedom.z2m.group = function() {};
 
 jeedom.z2m.utils.convert_to_addr = function(_addr){
   return _addr.replace('0x', '').match(/.{1,2}/g).join(':')
@@ -146,6 +147,69 @@ jeedom.z2m.device.remove = function(_params){
     instance : _params.instance,
     topic : '/bridge/request/device/remove',
     message : JSON.stringify({"id":_params.id,force:force})
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.group.add = function(_params){
+  var paramsRequired = ['instance','name'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/group/add',
+    message : JSON.stringify({"friendly_name":_params.name})
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.group.removeMember = function(_params){
+  var paramsRequired = ['instance','group','device'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/group/members/remove',
+    message : JSON.stringify({"group":_params.group,"device" : _params.device})
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.group.addMember = function(_params){
+  var paramsRequired = ['instance','group','device'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/group/members/add',
+    message : JSON.stringify({"group":_params.group,"device" : _params.device})
   };
   $.ajax(paramsAJAX);
 }

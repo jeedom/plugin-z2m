@@ -21,6 +21,7 @@ foreach ($eqLogics as $eqLogic) {
 }
 $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
 sendVarToJS('z2m_devices', $devices);
+sendVarToJS('devices_attr', $deviceAttr);
 ?>
 
 <div class="row row-overflow">
@@ -38,6 +39,11 @@ sendVarToJS('z2m_devices', $devices);
 				<i class="fas fa-sitemap"></i>
 				<br>
 				<span>{{Réseaux Zigbee}}</span>
+			</div>
+			<div class="cursor logoSecondary" id="bt_addGroup">
+				<i class="fas fa-object-group"></i>
+				<br>
+				<span>{{Ajouter un groupe}}</span>
 			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i>
@@ -247,12 +253,13 @@ sendVarToJS('z2m_devices', $devices);
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-								<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
-								<th style="min-width:200px;width:350px;">{{Nom}}</th>
-								<th>{{Type}}</th>
-								<th style="min-width:260px;">{{Options}}</th>
+								<th style="width: 300px;">{{Nom}}</th>
+								<th style="width: 130px;">{{Type}}</th>
+								<th>{{Logical ID}}</th>
+								<th>{{Paramètres}}</th>
+								<th style="width:300px;">{{Options}}</th>
 								<th>{{Etat}}</th>
-								<th style="min-width:80px;width:200px;">{{Actions}}</th>
+								<th style="width: 150px;">{{Action}}</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -252,6 +252,7 @@ class z2m extends eqLogic {
           $new = true;
         }
         $eqLogic->setConfiguration('friendly_name', $group['friendly_name']);
+        $eqLogic->setConfiguration('instance', $_instanceNumber);
         $eqLogic->save();
         foreach ($group['scenes'] as $scene) {
           $cmd = $eqLogic->getCmd('action', 'scene_recall::' . $scene['id']);
@@ -334,15 +335,26 @@ class z2m extends eqLogic {
     return false;
   }
 
+  /*     * *********************Methode d'instance************************* */
+
 
   public function setDeviceOptions($_options) {
     $datas = array(
       'id' => self::convert_from_addr($this->getLogicalId()),
       'options' => $_options
     );
-    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/bridge/request/device/options', json_encode($datas));
+    mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/device/options', json_encode($datas));
   }
 
+  public function preRemove() {
+    if ($this->getConfiguration('isgroup', 0) == 1) {
+      $datas = array(
+        'id' => $this->getConfiguration('friendly_name'),
+        'force' => true
+      );
+      mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/group/remove', json_encode($datas));
+    }
+  }
 
   /*     * **********************Getteur Setteur*************************** */
 }

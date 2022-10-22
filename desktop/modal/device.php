@@ -25,8 +25,6 @@ $infos = z2m::getDeviceInfo($eqLogic->getLogicalId());
 $bridge_info = z2m::getDeviceInfo('bridge' . $eqLogic->getConfiguration('instance', 1));
 sendVarToJS('z2m_id', $eqLogic->getId());
 ?>
-
-<div id='div_nodeDeconzAlert' style="display: none;"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#infoNodeTab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-info"></i> {{Information}}</a></li>
     <li role="presentation"><a href="#configuration" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-info"></i> {{Configuration}}</a></li>
