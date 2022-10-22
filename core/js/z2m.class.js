@@ -24,6 +24,10 @@ jeedom.z2m.utils.convert_to_addr = function(_addr){
   return _addr.replace('0x', '').match(/.{1,2}/g).join(':')
 }
 
+jeedom.z2m.utils.convert_from_addr = function(_addr){
+  return '0x'+_addr.replace(':', '')
+}
+
 jeedom.z2m.bridge.include = function(_params){
   var paramsRequired = ['instance'];
   var paramsSpecifics = {};
@@ -42,7 +46,6 @@ jeedom.z2m.bridge.include = function(_params){
   };
   $.ajax(paramsAJAX);
 }
-
 
 jeedom.z2m.bridge.updateNetworkMap = function(_params){
   var paramsRequired = ['instance'];
@@ -81,6 +84,28 @@ jeedom.z2m.device.setOptions = function(_params){
     action: 'setDeviceOptions',
     id : _params.id,
     options : JSON.stringify(_params.options),
+  };
+  $.ajax(paramsAJAX);
+}
+
+jeedom.z2m.device.remove = function(_params){
+  var paramsRequired = ['instance','id'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  let force = (_params.force) ? (_params.force) : false;
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/device/remove',
+    message : JSON.stringify({"id":_params.id,force:force})
   };
   $.ajax(paramsAJAX);
 }

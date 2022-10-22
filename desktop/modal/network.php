@@ -20,6 +20,7 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('z2m');
 $infos = z2m::getDeviceInfo('bridge1');
 $map = z2m::getDeviceInfo('networkMap1');
+$devices = z2m::getDeviceInfo('devices1');
 sendVarToJS('z2m_network_map', $map);
 ?>
 <script type="text/javascript" src="plugins/zigbee/3rdparty/vivagraph/vivagraph.min.js"></script>
@@ -87,7 +88,7 @@ sendVarToJS('z2m_network_map', $map);
 </select>
 <ul id="tabs_network" class="nav nav-tabs" data-tabs="tabs">
     <li class="active"><a href="#application_network" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Application}}</a></li>
-    <li><a href="#devices_network" data-toggle="tab"><i class="fab fa-codepen"></i> {{Noeuds}} (<?php echo count($infos['config']['devices']) ?>)</a></li>
+    <li><a href="#devices_network" data-toggle="tab"><i class="fab fa-codepen"></i> {{Noeuds}} (<?php echo count($devices) - 1 ?>)</a></li>
     <li role="presentation" id="tab_graph"><a href="#graph_network" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Graphique du réseaux}}</a></li>
     <li role="presentation"><a href="#rawBridgeTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
 </ul>
@@ -163,19 +164,21 @@ sendVarToJS('z2m_network_map', $map);
                 <th>
                 <td>{{ID}}</td>
                 <td>{{Nom}}</td>
+                <td>{{Action}}</td>
                 </th>
             </thead>
             <tbody>
                 <?php
-                foreach ($infos['config']['devices'] as $device_id => $device_info) {
-                    $eqLogic = eqLogic::byLogicalId(z2m::convert_to_addr($device_id), 'z2m');
-                    echo '<tr>';
+                foreach ($devices as $device_info) {
+                    if ($device_info['type'] == 'Coordinator') {
+                        continue;
+                    }
+                    $eqLogic = eqLogic::byLogicalId(z2m::convert_to_addr($device_info['ieee_address']), 'z2m');
+                    echo '<tr data-ieee="' . $device_id . '">';
                     echo '<td>';
                     if (is_object($eqLogic)) {
                         $child = ($eqLogic->getConfiguration('ischild', 0) == 1) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_orange fas fa-user" title="Ce device est un enfant"></i>' : '';
                         $child .= ($eqLogic->getConfiguration('canbesplit', 0) == 1 && $eqLogic->getConfiguration('ischild', 0) == 0) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-random" title="Ce device peut être séparé en enfants"></i>' : '';
-
-
                         if ($eqLogic->getConfiguration('device') != "") {
                             if (z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
                                 echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
@@ -199,6 +202,9 @@ sendVarToJS('z2m_network_map', $map);
                         echo '<a href="index.php?v=d&p=z2m&m=z2m&id=' . $eqLogic->getId() . '" >' . $eqLogic->getHumanName() . '</a>';
                     }
                     echo '</td>';
+                    echo '<td>';
+                    echo '<a class="btn btn-danger bt_z2mRemoveNode"><i class="fas fa-trash-alt"></i></a>';
+                    echo '</td>';
                     echo '</tr>';
                 }
                 ?>
@@ -207,8 +213,14 @@ sendVarToJS('z2m_network_map', $map);
     </div>
 
     <div role="tabpanel" class="tab-pane" id="rawBridgeTab">
-        <pre><?php echo json_encode($map, JSON_PRETTY_PRINT); ?></pre>
+        <legend>Zigbee2Mqtt</legend>
         <pre><?php echo json_encode($infos, JSON_PRETTY_PRINT); ?></pre>
+
+        <legend>Device</legend>
+        <pre><?php echo json_encode($devices, JSON_PRETTY_PRINT); ?></pre>
+
+        <legend>NetworkMap</legend>
+        <pre><?php echo json_encode($map, JSON_PRETTY_PRINT); ?></pre>
 
     </div>
 
@@ -274,6 +286,26 @@ sendVarToJS('z2m_network_map', $map);
 
 
 <script>
+    $('.bt_z2mRemoveNode').off('click').on('click', function() {
+        let tr = $(this).closest('tr')
+        jeedom.z2m.device.remove({
+            instance: 1,
+            id: tr.attr('data-ieee'),
+            error: function(error) {
+                $('#div_alert').showAlert({
+                    message: error.message,
+                    level: 'danger'
+                });
+            },
+            success: function() {
+                $('#div_alert').showAlert({
+                    message: '{{Demande de suppression envoyée avec success}}',
+                    level: 'success'
+                });
+            }
+        });
+    })
+
     $('#bt_networkMapUpdate').off('click').on('click', function() {
         jeedom.z2m.bridge.updateNetworkMap({
             instance: 1,

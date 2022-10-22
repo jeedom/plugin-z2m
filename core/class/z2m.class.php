@@ -73,7 +73,6 @@ class z2m extends eqLogic {
   }
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
-    log::add('z2m', 'debug', json_encode($_datas));
     if (isset($_datas['logging']['level']) && $_datas['logging']['level'] == 'error') {
       log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
     }
@@ -226,6 +225,9 @@ class z2m extends eqLogic {
       }
       if (isset($_datas['info'])) {
         file_put_contents(__DIR__ . '/../../data/devices/bridge' . $_instanceNumber . '.json', json_encode($_datas['info']));
+      }
+      if (isset($_datas['devices'])) {
+        file_put_contents(__DIR__ . '/../../data/devices/devices' . $_instanceNumber . '.json', json_encode($_datas['devices']));
       }
     }
   }
