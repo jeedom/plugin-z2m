@@ -67,8 +67,11 @@ class z2m extends eqLogic {
       }
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
-        foreach ($values as $logical_id => $value) {
+        foreach ($values as $logical_id => &$value) {
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . $value);
+          if ($logical_id == 'last_seen') {
+            $value = date('Y-m-d H:i:s', $value / 1000);
+          }
           $eqLogic->checkAndUpdateCmd($logical_id, $value);
         }
         continue;
@@ -130,6 +133,17 @@ class z2m extends eqLogic {
         }
         $eqLogic->setConfiguration('instance', $_instanceNumber);
         $eqLogic->save();
+        $cmd = $eqLogic->getCmd('info', 'last_seen');
+        if (!is_object($cmd)) {
+          $cmd = new z2mCmd();
+          $cmd->setLogicalId('last_seen');
+          $cmd->setName(__('Dernière communication', __FILE__));
+        }
+        $cmd->setEqLogic_id($eqLogic->getId());
+        $cmd->setType('info');
+        $cmd->setSubType('string');
+
+        $cmd->save();
         foreach ($device['definition']['exposes'] as $expose) {
           if (isset($expose['features'])) {
             foreach ($expose['features'] as $feature) {

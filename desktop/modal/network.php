@@ -190,6 +190,7 @@ sendVarToJS('z2m_network_map', $map);
                     <th>{{Nom}}</th>
                     <th>{{LQI}}</th>
                     <th>{{Type}}</th>
+                    <th>{{Derniere communication}}</th>
                     <th>{{Action}}</th>
                 </tr>
             </thead>
@@ -240,6 +241,14 @@ sendVarToJS('z2m_network_map', $map);
                     echo '</td>';
                     echo '<td>';
                     echo $device_info['type'];
+                    echo '</td>';
+                    echo '<td>';
+                    if (is_object($eqLogic)) {
+                        $last_seen = $eqLogic->getCmd('info', 'last_seen');
+                        if (is_object($last_seen)) {
+                            echo $last_seen->execCmd();
+                        }
+                    }
                     echo '</td>';
                     echo '<td>';
                     echo '<a class="btn btn-danger bt_z2mRemoveNode"><i class="fas fa-trash-alt"></i></a>';
