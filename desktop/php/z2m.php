@@ -2,14 +2,25 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
-
-
 $z2m_instances = z2m::getDeamonInstanceDef();
 sendVarToJS('z2m_instances', $z2m_instances);
 // Déclaration des variables obligatoires
 $plugin = plugin::byId('z2m');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
+
+foreach ($eqLogics as $eqLogic) {
+	$eqLogicArray = array();
+	$eqLogicArray['HumanNameFull'] = $eqLogic->getHumanName(true);
+	$eqLogicArray['HumanName'] = $eqLogic->getHumanName();
+	$eqLogicArray['id'] = $eqLogic->getId();
+	$eqLogicArray['instance'] = $eqLogic->getConfiguration('instance', 1);
+	$eqLogicArray['img'] = 'plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'));
+	$devices[$eqLogic->getLogicalId()] = $eqLogicArray;
+	$deviceAttr[$eqLogic->getId()] = array('canbesplit' => $eqLogic->getConfiguration('canbesplit', 0), 'ischild' => $eqLogic->getConfiguration('ischild', 0), 'isgroup' => $eqLogic->getConfiguration('isgroup', 0));
+}
+$devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
+sendVarToJS('z2m_devices', $devices);
 ?>
 
 <div class="row row-overflow">

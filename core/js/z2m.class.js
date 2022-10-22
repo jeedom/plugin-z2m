@@ -18,6 +18,11 @@
 jeedom.z2m = function() {};
 jeedom.z2m.bridge = function() {};
 jeedom.z2m.device = function() {};
+jeedom.z2m.utils = function() {};
+
+jeedom.z2m.utils.convert_to_addr = function(_addr){
+  return _addr.replace('0x', '').match(/.{1,2}/g).join(':')
+}
 
 jeedom.z2m.bridge.include = function(_params){
   var paramsRequired = ['instance'];
@@ -34,6 +39,28 @@ jeedom.z2m.bridge.include = function(_params){
   paramsAJAX.data = {
     action: 'include',
     id : _params.instance,
+  };
+  $.ajax(paramsAJAX);
+}
+
+
+jeedom.z2m.bridge.updateNetworkMap = function(_params){
+  var paramsRequired = ['instance'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/networkmap',
+    message : '{"type": "raw", "routes": false}'
   };
   $.ajax(paramsAJAX);
 }
