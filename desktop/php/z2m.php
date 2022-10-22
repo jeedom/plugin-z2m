@@ -35,6 +35,11 @@ sendVarToJS('devices_attr', $deviceAttr);
 				<br />
 				<span>{{Mode inclusion}}</span>
 			</div>
+			<div class="cursor logoSecondary" id="bt_includeDeviceByCode">
+				<i class="fas fa-sign-in-alt fa-rotate-90"></i>
+				<br />
+				<span>{{Inclusion par code}}</span>
+			</div>
 			<div class="cursor logoSecondary" id="bt_z2mNetwork">
 				<i class="fas fa-sitemap"></i>
 				<br>

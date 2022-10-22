@@ -14,6 +14,39 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
+$('#bt_includeDeviceByCode').off('click').on('click',function(){
+  var inputOptions = [];
+  for(var i in z2m_instances){
+    if(z2m_instances[i].enable != 1){
+      continue;
+    }
+    inputOptions.push({value : z2m_instances[i].id,text : z2m_instances[i].name});
+  }
+  bootbox.prompt({
+    title: "{{Ajouter un équipement par code sur ?}}",
+    value : inputOptions[0].value,
+    inputType: 'select',
+    inputOptions:inputOptions,
+    callback: function (instance_result) {
+      if(instance_result === null){
+        return;
+      }
+      bootbox.prompt("{{Code ?}}", function(code){
+        jeedom.z2m.bridge.addByCode({
+          instance:instance_result,
+          code : code,
+          error: function (error) {
+            $('#div_alert').showAlert({message: error.message, level: 'danger'});
+          },
+          success: function () {
+            $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succes}}', level: 'success'});
+          }
+        });
+      });
+    }
+  });
+});
+
 $('#bt_addGroup').off('click').on('click',function(){
   var inputOptions = [];
   for(var i in z2m_instances){
