@@ -21,6 +21,7 @@ $eqLogic = zigbee::byId(init('id'));
 if (!is_object($eqLogic)) {
     throw new \Exception(__('Equipement introuvable : ', __FILE__) . init('id'));
 }
+$devices = eqLogic::byType('z2m');
 $infos = z2m::getDeviceInfo($eqLogic->getLogicalId());
 $bridge_info = z2m::getDeviceInfo('bridge' . $eqLogic->getConfiguration('instance', 1));
 sendVarToJS('z2m_device_id', $eqLogic->getId());
@@ -216,8 +217,17 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                                 continue;
                             }
                             foreach ($endpoint['bindings'] as $binding) {
-                                $edevice = eqLogic::byLogicalId(z2m::convert_to_addr($binding['target']['ieee_address']), 'z2m');
-                                echo '<tr data-cluster="' . $binding['cluster'] . '" data-from="' . $infos['ieee_address'] . '" data-to="' . $binding['target']['ieee_address'] . '/' . $binding['target']['endpoint'] . '">';
+                                $device = null;
+                                if ($binding['target']['type'] == 'endpoint') {
+                                    $device = eqLogic::byLogicalId(z2m::convert_to_addr($binding['target']['ieee_address']), 'z2m');
+                                    $to = $binding['target']['ieee_address'] . '/' . $binding['target']['endpoint'];
+                                }
+                                if ($binding['target']['type'] == 'group') {
+                                    $device = eqLogic::byLogicalId('group_' . z2m::convert_to_addr($binding['target']['id']), 'z2m');
+                                    $to = $device->getConfiguration('friendly_name');
+                                }
+
+                                echo '<tr data-cluster="' . $binding['cluster'] . '" data-from="' . $infos['ieee_address'] . '" data-to="' . $to . '">';
                                 echo '<td>';
                                 echo $endpoint_id;
                                 echo '</td>';
@@ -225,9 +235,14 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                                 echo $binding['cluster'];
                                 echo '</td>';
                                 echo '<td>';
-                                echo $binding['target']['ieee_address'];
-                                if (is_object($edevice)) {
-                                    echo ' / ' . $edevice->getHumanName();
+                                if ($binding['target']['type'] == 'endpoint') {
+                                    echo $binding['target']['ieee_address'];
+                                }
+                                if ($binding['target']['type'] == 'group') {
+                                    echo $binding['target']['id'];
+                                }
+                                if (is_object($device)) {
+                                    echo ' / ' . $device->getHumanName();
                                 }
                                 echo '</td>';
                                 echo '<td>';
@@ -236,7 +251,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                                 echo '<td>';
                                 echo $binding['target']['type'];
                                 echo '</td>';
-
                                 echo '<td>';
                                 echo '<a class="btn btn-warning bt_removeBinding"><i class="fas fa-trash"></i> {{Supprimer}}</a>';
                                 echo '</div>';
@@ -273,7 +287,8 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         <select class="form-control" id="sel_bindingTarget">
                             <option value="-1">{{Aucun}}</option>
                             <?php
-                            foreach (eqLogic::byType('z2m') as $device) {
+                            echo '<optgroup label="{{Equipement}}">';
+                            foreach ($devices as $device) {
                                 if ($eqLogic->getId() == $device->getId() || $device->getConfiguration('isgroup', 0) == 1) {
                                     continue;
                                 }
@@ -284,6 +299,14 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                                     }
                                     echo  '<option value="' . $device_infos['ieee_address'] . '/' . $endpoint_id . '">' . $device->getHumanName() . ' / endpoint ' . $endpoint_id . '</option>';
                                 }
+                            }
+                            echo '</optgroup>';
+                            echo '<optgroup label="{{Groupe}}">';
+                            foreach ($devices as $device) {
+                                if ($eqLogic->getId() == $device->getId() || $device->getConfiguration('isgroup', 0) == 0) {
+                                    continue;
+                                }
+                                echo  '<option value="' . $device->getConfiguration('friendly_name') . '">' . $device->getHumanName() . '</option>';
                             }
                             ?>
                         </select>
