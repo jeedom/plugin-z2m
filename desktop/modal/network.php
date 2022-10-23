@@ -89,6 +89,7 @@ sendVarToJS('z2m_network_map', $map);
 </select>
 <ul id="tabs_network" class="nav nav-tabs" data-tabs="tabs">
     <li class="active"><a href="#application_network" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Application}}</a></li>
+    <li><a href="#action_configuration" data-toggle="tab"><i class="fas fa-cogs"></i></i> {{Configuration}}</a></li>
     <li><a href="#action_network" data-toggle="tab"><i class="fas fa-terminal"></i></i> {{Actions}}</a></li>
     <li><a href="#devices_network" data-toggle="tab"><i class="fab fa-codepen"></i> {{Noeuds}} (<?php echo count($devices) - 1 ?>)</a></li>
     <li role="presentation" id="tab_graph"><a href="#graph_network" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-image"></i> {{Graphique du réseaux}}</a></li>
@@ -159,6 +160,129 @@ sendVarToJS('z2m_network_map', $map);
             </fieldset>
         </form>
     </div>
+
+    <div class="tab-pane" id="action_configuration">
+
+        <br>
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:100px">{{Catégorie}}</th>
+                    <th style="width:200px">{{Nom}}</th>
+                    <th style="width:400px">{{Description}}</th>
+                    <th style="width:100px">{{Type}}</th>
+                    <th style="width:100px">{{Redémarrage}}</th>
+                    <th>{{Valeur}}</th>
+                    <th style="width:50px">{{Action}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
+                foreach ($infos['config_schema']['properties'] as $type => $properties) {
+                    if (!isset($properties['properties'])) {
+                        continue;
+                    }
+                    foreach ($properties['properties'] as $propertie_id => $propertie) {
+                        if ($propertie['type'] == null || $propertie['type'] == 'object') {
+                            continue;
+                        }
+                        $default_value = '';
+                        if (isset($infos['config'][$type][$propertie_id])) {
+                            if (is_object($infos['config'][$type][$propertie_id]) || is_array($infos['config'][$type][$propertie_id])) {
+                                $default_value = json_encode($infos['config'][$type][$propertie_id]);
+                            } else {
+                                $default_value = $infos['config'][$type][$propertie_id];
+                            }
+                        }
+                        echo '<tr data-type="' . $type . '">';
+                        echo '<td>' . $type . '</td>';
+                        echo '<td>';
+                        echo $propertie['title'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $propertie['description'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo str_replace('"', '', json_encode($propertie['type']));
+                        echo '</td>';
+                        echo '<td>';
+                        if (isset($propertie['requiresRestart'])) {
+                            if ($propertie['requiresRestart']) {
+                                echo "oui";
+                            } else {
+                                echo "non";
+                            }
+                        } else {
+                            echo "N/A";
+                        }
+                        echo '</td>';
+                        echo '<td>';
+                        if (is_array($propertie['type'])) {
+                            echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
+                        }
+                        switch ($propertie['type']) {
+                            case 'binary':
+                                if ($default_value != '') {
+                                    $default_value = 'checked';
+                                } else {
+                                    $default_value = '';
+                                }
+                                echo '<input type="checkbox" data-name="' . $propertie_id . '" class="form-control" ' . $default_value . ' />';
+                                break;
+                            case 'boolean':
+                                if ($default_value != '') {
+                                    $default_value = 'checked';
+                                } else {
+                                    $default_value = '';
+                                }
+                                echo '<input type="checkbox" data-name="' . $propertie_id . '" class="form-control" ' . $default_value . ' />';
+                                break;
+                            case 'numeric':
+                                $min = '';
+                                $max = '';
+                                if (isset($option['value_min'])) {
+                                    $min = 'min=' . $option['value_min'];
+                                }
+                                if (isset($option['value_max'])) {
+                                    $max = 'max=' . $option['value_max'];
+                                }
+                                echo '<input type="number" data-name="' . $propertie_id . '" class="form-control" ' . $min . ' ' . $max . ' value="' . $default_value . '" />';
+                                break;
+                            case 'number':
+                                $min = '';
+                                $max = '';
+                                if (isset($option['value_min'])) {
+                                    $min = 'min=' . $option['value_min'];
+                                }
+                                if (isset($option['value_max'])) {
+                                    $max = 'max=' . $option['value_max'];
+                                }
+                                echo '<input type="number" data-name="' . $propertie_id . '" class="form-control" ' . $min . ' ' . $max . ' value="' . $default_value . '" />';
+                                break;
+                            case 'string':
+                                echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
+                                break;
+                            case 'array':
+                                echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
+                                break;
+                            case 'list':
+                                echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
+                                break;
+                        }
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a class="btn btn-success bt_validateBridgeOptions"><i class="fas fa-check"></i> {{Ok}}</a>';
+                        echo '</td>';
+                        echo '</tr>';
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+
 
     <div class="tab-pane" id="action_network">
         <table class="table table-bordered table-condensed">
@@ -337,6 +461,34 @@ sendVarToJS('z2m_network_map', $map);
 
 
 <script>
+    $('.bt_validateBridgeOptions').off('click').on('click', function() {
+        let tr = $(this).closest('tr');
+        let options = {};
+        options[tr.attr('data-type')] = {};
+        if (tr.find('input').attr('type') == 'checkbox') {
+            options[tr.attr('data-type')][tr.find('input').attr('data-name')] = (tr.find('input').value() == '1');
+        } else {
+            options[tr.attr('data-type')][tr.find('input').attr('data-name')] = tr.find('input').value();
+        }
+        jeedom.z2m.bridge.options({
+            instance: 1,
+            options: options,
+            error: function(error) {
+                $('#div_alert').showAlert({
+                    message: error.message,
+                    level: 'danger'
+                });
+            },
+            success: function() {
+                $('#div_alert').showAlert({
+                    message: '{{Paramètre envoyé. Attention cela peut demander un redemarrage du Z2M}}',
+                    level: 'success'
+                });
+            }
+        });
+    });
+
+
     $('#bt_refreshNetwork').off('click').on('click', function() {
         $('#md_modal').dialog({
             title: "{{Configuration du réseaux}}"

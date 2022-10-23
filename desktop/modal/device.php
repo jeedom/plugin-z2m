@@ -145,23 +145,30 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
     </div>
 
     <div role="tabpanel" class="tab-pane" id="configuration">
-        <form class="form-horizontal">
-            <fieldset>
-                <br>
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>{{Nom}}</th>
+                    <th>{{Valeur}}</th>
+                    <th>{{Action}}</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php
                 $current_value = $bridge_info['config']['devices'][z2m::convert_from_addr($eqLogic->getLogicalId())];
                 foreach ($infos['definition']['options'] as $option) {
                     if ($option['access'] == 1) {
                         continue;
                     }
+                    echo '<tr>';
                     $default_value = (isset($current_value[$option['name']])) ? $current_value[$option['name']] : '';
                     if (is_object($default_value) || is_array($default_value)) {
                         $default_value = json_encode($default_value);
                     }
-                    echo '<div class="form-group">';
-                    echo '<label class="col-sm-8 control-label">' . $option['description'];
-                    echo '</label>';
-                    echo '<div class="col-sm-3">';
+                    echo '<td>';
+                    echo $option['description'];
+                    echo '</td>';
+                    echo '<td>';
                     switch ($option['type']) {
                         case 'binary':
                             if ($default_value != '') {
@@ -186,85 +193,81 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                             echo '<input type="text" data-name="' . $option['name'] . '" class="form-control" value="' . $default_value . '" />';
                             break;
                     }
-                    echo '</div>';
-                    echo '<div class="col-sm-1">';
+                    echo '</td>';
+                    echo '<td>';
                     echo '<a class="btn btn-success bt_validateOptions"><i class="fas fa-check"></i> {{Ok}}</a>';
-                    echo '</div>';
-                    echo '</div>';
+                    echo '</td>';
+                    echo '</tr>';
                 }
                 ?>
-            </fieldset>
-        </form>
+            </tbody>
+        </table>
     </div>
 
     <div role="tabpanel" class="tab-pane" id="binding">
-        <form class="form-horizontal">
-            <fieldset>
-                <br>
-                <table class="table table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th>{{Endpoint source}}</th>
-                            <th>{{Cluster}}</th>
-                            <th>{{Addr destination}}</th>
-                            <th>{{Endpoint destination}}</th>
-                            <th>{{Type}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
-                            if (!isset($endpoint['bindings'])) {
-                                continue;
-                            }
-                            foreach ($endpoint['bindings'] as $binding) {
-                                $device = null;
-                                if ($binding['target']['type'] == 'endpoint') {
-                                    $device = eqLogic::byLogicalId(z2m::convert_to_addr($binding['target']['ieee_address']), 'z2m');
-                                    $to = $binding['target']['ieee_address'] . '/' . $binding['target']['endpoint'];
-                                }
-                                if ($binding['target']['type'] == 'group') {
-                                    $device = eqLogic::byLogicalId('group_' . z2m::convert_to_addr($binding['target']['id']), 'z2m');
-                                    $to = $device->getConfiguration('friendly_name');
-                                }
 
-                                echo '<tr data-cluster="' . $binding['cluster'] . '" data-from="' . $infos['ieee_address'] . '" data-to="' . $to . '">';
-                                echo '<td>';
-                                echo $endpoint_id;
-                                echo '</td>';
-                                echo '<td>';
-                                echo $binding['cluster'];
-                                echo '</td>';
-                                echo '<td>';
-                                if ($binding['target']['type'] == 'endpoint') {
-                                    echo $binding['target']['ieee_address'];
-                                }
-                                if ($binding['target']['type'] == 'group') {
-                                    echo $binding['target']['id'];
-                                }
-                                if (is_object($device)) {
-                                    echo ' / ' . $device->getHumanName();
-                                } elseif ($binding['target']['type'] == 'endpoint' && $bridge_info['coordinator']['ieee_address'] == $binding['target']['ieee_address']) {
-                                    echo ' / {{Coordinateur}}';
-                                }
-                                echo '</td>';
-                                echo '<td>';
-                                echo $binding['target']['endpoint'];
-                                echo '</td>';
-                                echo '<td>';
-                                echo $binding['target']['type'];
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<a class="btn btn-warning bt_removeBinding"><i class="fas fa-trash"></i> {{Supprimer}}</a>';
-                                echo '</div>';
-                                echo '</tr>';
-                            }
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>{{Endpoint source}}</th>
+                    <th>{{Cluster}}</th>
+                    <th>{{Addr destination}}</th>
+                    <th>{{Endpoint destination}}</th>
+                    <th>{{Type}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
+                    if (!isset($endpoint['bindings'])) {
+                        continue;
+                    }
+                    foreach ($endpoint['bindings'] as $binding) {
+                        $device = null;
+                        if ($binding['target']['type'] == 'endpoint') {
+                            $device = eqLogic::byLogicalId(z2m::convert_to_addr($binding['target']['ieee_address']), 'z2m');
+                            $to = $binding['target']['ieee_address'] . '/' . $binding['target']['endpoint'];
                         }
-                        ?>
-                    </tbody>
-                </table>
-            </fieldset>
-        </form>
+                        if ($binding['target']['type'] == 'group') {
+                            $device = eqLogic::byLogicalId('group_' . z2m::convert_to_addr($binding['target']['id']), 'z2m');
+                            $to = $device->getConfiguration('friendly_name');
+                        }
+
+                        echo '<tr data-cluster="' . $binding['cluster'] . '" data-from="' . $infos['ieee_address'] . '" data-to="' . $to . '">';
+                        echo '<td>';
+                        echo $endpoint_id;
+                        echo '</td>';
+                        echo '<td>';
+                        echo $binding['cluster'];
+                        echo '</td>';
+                        echo '<td>';
+                        if ($binding['target']['type'] == 'endpoint') {
+                            echo $binding['target']['ieee_address'];
+                        }
+                        if ($binding['target']['type'] == 'group') {
+                            echo $binding['target']['id'];
+                        }
+                        if (is_object($device)) {
+                            echo ' / ' . $device->getHumanName();
+                        } elseif ($binding['target']['type'] == 'endpoint' && $bridge_info['coordinator']['ieee_address'] == $binding['target']['ieee_address']) {
+                            echo ' / {{Coordinateur}}';
+                        }
+                        echo '</td>';
+                        echo '<td>';
+                        echo $binding['target']['endpoint'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $binding['target']['type'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a class="btn btn-warning bt_removeBinding"><i class="fas fa-trash"></i> {{Supprimer}}</a>';
+                        echo '</div>';
+                        echo '</tr>';
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
         <form class="form-horizontal">
             <fieldset>
                 <legend>{{Ajouter binding}}</legend>
@@ -344,54 +347,49 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
     </div>
 
     <div role="tabpanel" class="tab-pane" id="reporting">
-        <form class="form-horizontal">
-            <fieldset>
-                <br>
-                <table class="table table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th>{{Cluster}}</th>
-                            <th>{{Attribute}}</th>
-                            <th>{{Min report time}}</th>
-                            <th>{{Max report time}}</th>
-                            <th>{{Report change}}</th>
-                            <th>{{Action}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
-                            if (!isset($endpoint['configured_reportings'])) {
-                                continue;
-                            }
-                            foreach ($endpoint['configured_reportings'] as $reporting) {
-                                echo '<tr data-cluster="' . $reporting['cluster'] . '" data-attribute="' . $reporting['attribute'] . '">';
-                                echo '<td>';
-                                echo $reporting['cluster'];
-                                echo '</td>';
-                                echo '<td>';
-                                echo $reporting['attribute'];
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<input type="number" class="form-control minReportTime" value="' . $reporting['minimum_report_interval'] . '"/>';
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<input type="number" class="form-control maxReportTime" value="' . $reporting['maximum_report_interval'] . '"/>';
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<input type="number" class="form-control reportable_change" value="' . $reporting['reportable_change'] . '"/>';
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<a class="btn btn-success bt_validateReporting"><i class="fas fa-check"></i> {{Ok}}</a>';
-                                echo '</div>';
-                                echo '</tr>';
-                            }
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </fieldset>
-        </form>
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>{{Cluster}}</th>
+                    <th>{{Attribute}}</th>
+                    <th>{{Min report time}}</th>
+                    <th>{{Max report time}}</th>
+                    <th>{{Report change}}</th>
+                    <th>{{Action}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
+                    if (!isset($endpoint['configured_reportings'])) {
+                        continue;
+                    }
+                    foreach ($endpoint['configured_reportings'] as $reporting) {
+                        echo '<tr data-cluster="' . $reporting['cluster'] . '" data-attribute="' . $reporting['attribute'] . '">';
+                        echo '<td>';
+                        echo $reporting['cluster'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $reporting['attribute'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<input type="number" class="form-control minReportTime" value="' . $reporting['minimum_report_interval'] . '"/>';
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<input type="number" class="form-control maxReportTime" value="' . $reporting['maximum_report_interval'] . '"/>';
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<input type="number" class="form-control reportable_change" value="' . $reporting['reportable_change'] . '"/>';
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a class="btn btn-success bt_validateReporting"><i class="fas fa-check"></i> {{Ok}}</a>';
+                        echo '</div>';
+                        echo '</tr>';
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 
     <div role="tabpanel" class="tab-pane" id="rawNodeTab">
@@ -508,7 +506,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
     });
 
     $('.bt_validateOptions').off('click').on('click', function() {
-        let input = $(this).parent().parent().find('input');
+        let input = $(this).closest('tr').find('input');
         let options = {};
         if (input.attr('type') == 'checkbox') {
             options[input.attr('data-name')] = (input.value() == '1');

@@ -102,7 +102,6 @@ sendVarToJS('z2m_group_list_member', $list_members);
         }).load('index.php?v=d&plugin=z2m&modal=group&id=' + z2m_id).dialog('open');
     });
 
-
     $('#bt_addGroupMember').off('click').on('click', function() {
         var inputOptions = [];
         for (var i in z2m_group_list_member) {

@@ -48,6 +48,28 @@ jeedom.z2m.bridge.include = function(_params){
   $.ajax(paramsAJAX);
 }
 
+
+jeedom.z2m.bridge.options = function(_params){
+  var paramsRequired = ['instance','options'];
+  var paramsSpecifics = {};
+  try {
+    jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
+  } catch (e) {
+    (_params.error || paramsSpecifics.error || jeedom.private.default_params.error)(e);
+    return;
+  }
+  var params = $.extend({}, jeedom.private.default_params, paramsSpecifics, _params || {});
+  var paramsAJAX = jeedom.private.getParamsAJAX(params);
+  paramsAJAX.url = 'plugins/z2m/core/ajax/z2m.ajax.php';
+  paramsAJAX.data = {
+    action: 'publish',
+    instance : _params.instance,
+    topic : '/bridge/request/options',
+    message : JSON.stringify({options:_params.options})
+  };
+  $.ajax(paramsAJAX);
+}
+
 jeedom.z2m.bridge.updateNetworkMap = function(_params){
   var paramsRequired = ['instance'];
   var paramsSpecifics = {};
