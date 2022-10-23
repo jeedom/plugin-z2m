@@ -80,8 +80,19 @@ class z2m extends eqLogic {
   }
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
-    if (isset($_datas['logging']['level']) && $_datas['logging']['level'] == 'error') {
-      log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
+    if (isset($_datas['logging']) && isset($_datas['response'])) {
+      switch ($_datas['logging']['level']) {
+        case 'info':
+          event::add('jeedom::alert', array(
+            'level' => 'info',
+            'page' => 'z2m',
+            'message' => $_datas['logging']['message'],
+          ));
+          break;
+        case 'error':
+          log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
+          break;
+      }
     }
     if (isset($_datas['response']['status']) && $_datas['response']['status'] != 'ok') {
       log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . json_encode($_datas['response']));
@@ -175,7 +186,6 @@ class z2m extends eqLogic {
               }
               $cmd->save();
               $link_cmd_id = $cmd->getId();
-
               if (isset($feature['value_off'])) {
                 $cmd = $eqLogic->getCmd('action', $feature['name'] . '::' . $feature['value_off']);
                 if (!is_object($cmd)) {
@@ -358,6 +368,9 @@ class z2m extends eqLogic {
           $cmd->save();
         }
         file_put_contents(__DIR__ . '/../../data/devices/group_' . $group['id'] . '.json', json_encode($group));
+        if ($new !== null) {
+          event::add('z2m::includeDevice', $eqLogic->getId());
+        }
       }
     }
   }

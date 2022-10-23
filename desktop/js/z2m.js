@@ -82,12 +82,19 @@ $('#bt_addGroup').off('click').on('click',function(){
 
 $('body').off('z2m::includeDevice').on('z2m::includeDevice', function (_event, _options) {
   if (modifyWithoutSave) {
-    $('#div_inclusionAlert').showAlert({
+    $('#div_alert').showAlert({
       message: '{{Un périphérique vient d\'être inclu/exclu. Veuillez réactualiser la page}}',
       level: 'warning'
     });
   } else if (_options != '') {
-    window.location.href = 'index.php?v=d&p=z2m&m=z2m&id=' + _options;
+    $('#div_alert').showAlert({
+      message: '{{Un peripherique vient d\'etre inclus, pause de 60s le temps de l\'interview. Merci de maintenir le pépripherique éveillé}}',
+      level: 'warning',
+      ttl : 60000
+    });
+    setTimeout(function(){
+      window.location.href = 'index.php?v=d&p=z2m&m=z2m&id=' + _options;
+    },60000)
   }
 });
 
