@@ -87,14 +87,7 @@ $('body').off('z2m::includeDevice').on('z2m::includeDevice', function (_event, _
       level: 'warning'
     });
   } else if (_options != '') {
-    $('#div_alert').showAlert({
-      message: '{{Un peripherique vient d\'etre inclus, pause de 60s le temps de l\'interview. Merci de maintenir le pépripherique éveillé}}',
-      level: 'warning',
-      ttl : 60000
-    });
-    setTimeout(function(){
       window.location.href = 'index.php?v=d&p=z2m&m=z2m&id=' + _options;
-    },60000)
   }
 });
 

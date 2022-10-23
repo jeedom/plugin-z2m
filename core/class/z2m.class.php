@@ -80,6 +80,18 @@ class z2m extends eqLogic {
   }
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
+    if (isset($_datas['event'])) {
+      switch ($_datas['event']['type']) {
+        case 'device_announce':
+          event::add('jeedom::alert', array(
+            'level' => 'info',
+            'page' => 'z2m',
+            'ttl' => 60000,
+            'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . self::convert_to_addr($_datas['event']['data']['ieee_address']),
+          ));
+          break;
+      }
+    }
     if (isset($_datas['logging']) && isset($_datas['response'])) {
       switch ($_datas['logging']['level']) {
         case 'info':
@@ -127,7 +139,7 @@ class z2m extends eqLogic {
     if (isset($_datas['devices'])) {
       file_put_contents(__DIR__ . '/../../data/devices/devices' . $_instanceNumber . '.json', json_encode($_datas['devices']));
       foreach ($_datas['devices'] as $device) {
-        if ($device['type'] == 'Coordinator') {
+        if ($device['type'] == 'Coordinator' || $device['model_id'] == '') {
           continue;
         }
         $new = null;
@@ -139,9 +151,9 @@ class z2m extends eqLogic {
           $eqLogic->setName($device['friendly_name']);
           $eqLogic->setIsEnable(1);
           $eqLogic->setEqType_name('z2m');
-          $eqLogic->setConfiguration('device', $device['model_id']);
           $new = true;
         }
+        $eqLogic->setConfiguration('device', $device['model_id']);
         $eqLogic->setConfiguration('instance', $_instanceNumber);
         $eqLogic->save();
         $cmd = $eqLogic->getCmd('info', 'last_seen');
@@ -278,7 +290,11 @@ class z2m extends eqLogic {
           }
           $cmd->setEqLogic_id($eqLogic->getId());
           $cmd->setType('info');
-          $cmd->setSubType($expose['type']);
+          if ($expose['type'] == 'enum') {
+            $cmd->setSubType('string');
+          } else {
+            $cmd->setSubType($expose['type']);
+          }
           if ($expose['type'] == 'binary') {
             $cmd->setConfiguration('repeatEventManagement', 'never');
           } else if ($expose['type'] == 'numeric') {
