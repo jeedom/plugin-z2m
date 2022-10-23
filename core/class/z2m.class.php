@@ -35,6 +35,50 @@ class z2m extends eqLogic {
 
   /*     * ***********************Methode static*************************** */
 
+  public static function createHtmlControl($_name, $_configuration, $_value = '') {
+    $min = '';
+    $max = '';
+    if (isset($_configuration['value_min'])) {
+      $min = 'min=' . $_configuration['value_min'];
+    }
+    if (isset($_configuration['value_max'])) {
+      $max = 'max=' . $_configuration['value_max'];
+    }
+    if (is_array($_configuration['type'])) {
+      return '<input type="text" data-name="' . $_name . '" class="form-control valueResult" value="' . $_value . '" />';
+    }
+    if (isset($_configuration['enum'])) {
+      $return = '<select class="form-control valueResult" data-name="' . $_name . '">';
+      foreach ($_configuration['enum'] as $enum) {
+        if ($enum == $_value) {
+          $return .= '<option value="' . $enum . '" selected>' . $enum . '</option>';
+        } else {
+          $return .= '<option value="' . $enum . '">' . $enum . '</option>';
+        }
+      }
+      $return .= '</select>';
+      return $return;
+    }
+    switch ($_configuration['type']) {
+      case 'binary':
+        $_value = ($_value != '') ? 'checked' : '';
+        return '<input type="checkbox" data-name="' . $_name . '" class="form-control valueResult" ' . $_value . ' />';
+      case 'boolean':
+        $_value = ($_value != '') ? 'checked' : '';
+        return '<input type="checkbox" data-name="' . $_name . '" class="form-control valueResult" ' . $_value . ' />';
+      case 'numeric':
+        return '<input type="number" data-name="' . $_name . '" class="form-control valueResult" ' . $min . ' ' . $max . ' value="' . $_value . '" />';
+      case 'number':
+        return '<input type="number" data-name="' . $_name . '" class="form-control valueResult" ' . $min . ' ' . $max . ' value="' . $_value . '" />';
+      case 'string':
+        return '<input type="text" data-name="' . $_name . '" class="form-control valueResult" value="' . $_value . '" />';
+      case 'array':
+        return '<input type="text" data-name="' . $_name . '" class="form-control valueResult" value="' . $_value . '" />';
+      case 'list':
+        return '<input type="text" data-name="' . $_name . '" class="form-control valueResult" value="' . $_value . '" />';
+    }
+  }
+
   public static function cronDaily() {
     shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f --");
   }

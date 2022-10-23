@@ -161,38 +161,15 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         continue;
                     }
                     echo '<tr>';
-                    $default_value = (isset($current_value[$option['name']])) ? $current_value[$option['name']] : '';
-                    if (is_object($default_value) || is_array($default_value)) {
-                        $default_value = json_encode($default_value);
+                    $value = (isset($current_value[$option['name']])) ? $current_value[$option['name']] : '';
+                    if (is_object($value) || is_array($value)) {
+                        $value = json_encode($value);
                     }
                     echo '<td>';
                     echo $option['description'];
                     echo '</td>';
                     echo '<td>';
-                    switch ($option['type']) {
-                        case 'binary':
-                            if ($default_value != '') {
-                                $default_value = 'checked';
-                            } else {
-                                $default_value = '';
-                            }
-                            echo '<input type="checkbox" data-name="' . $option['name'] . '" class="form-control" ' . $default_value . ' />';
-                            break;
-                        case 'numeric':
-                            $min = '';
-                            $max = '';
-                            if (isset($option['value_min'])) {
-                                $min = 'min=' . $option['value_min'];
-                            }
-                            if (isset($option['value_max'])) {
-                                $max = 'max=' . $option['value_max'];
-                            }
-                            echo '<input type="number" data-name="' . $option['name'] . '" class="form-control" ' . $min . ' ' . $max . ' value="' . $default_value . '" />';
-                            break;
-                        case 'list':
-                            echo '<input type="text" data-name="' . $option['name'] . '" class="form-control" value="' . $default_value . '" />';
-                            break;
-                    }
+                    echo z2m::createHtmlControl($option['name'], $option, $value);
                     echo '</td>';
                     echo '<td>';
                     echo '<a class="btn btn-success bt_validateOptions"><i class="fas fa-check"></i> {{Ok}}</a>';
@@ -506,7 +483,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
     });
 
     $('.bt_validateOptions').off('click').on('click', function() {
-        let input = $(this).closest('tr').find('input');
+        let input = $(this).closest('tr').find('.valueResult');
         let options = {};
         if (input.attr('type') == 'checkbox') {
             options[input.attr('data-name')] = (input.value() == '1');

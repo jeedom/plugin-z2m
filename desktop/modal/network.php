@@ -187,12 +187,12 @@ sendVarToJS('z2m_network_map', $map);
                         if ($propertie['type'] == null || $propertie['type'] == 'object') {
                             continue;
                         }
-                        $default_value = '';
+                        $value = '';
                         if (isset($infos['config'][$type][$propertie_id])) {
                             if (is_object($infos['config'][$type][$propertie_id]) || is_array($infos['config'][$type][$propertie_id])) {
-                                $default_value = json_encode($infos['config'][$type][$propertie_id]);
+                                $value = json_encode($infos['config'][$type][$propertie_id]);
                             } else {
-                                $default_value = $infos['config'][$type][$propertie_id];
+                                $value = $infos['config'][$type][$propertie_id];
                             }
                         }
                         echo '<tr data-type="' . $type . '">';
@@ -218,58 +218,7 @@ sendVarToJS('z2m_network_map', $map);
                         }
                         echo '</td>';
                         echo '<td>';
-                        if (is_array($propertie['type'])) {
-                            echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
-                        }
-                        switch ($propertie['type']) {
-                            case 'binary':
-                                if ($default_value != '') {
-                                    $default_value = 'checked';
-                                } else {
-                                    $default_value = '';
-                                }
-                                echo '<input type="checkbox" data-name="' . $propertie_id . '" class="form-control" ' . $default_value . ' />';
-                                break;
-                            case 'boolean':
-                                if ($default_value != '') {
-                                    $default_value = 'checked';
-                                } else {
-                                    $default_value = '';
-                                }
-                                echo '<input type="checkbox" data-name="' . $propertie_id . '" class="form-control" ' . $default_value . ' />';
-                                break;
-                            case 'numeric':
-                                $min = '';
-                                $max = '';
-                                if (isset($option['value_min'])) {
-                                    $min = 'min=' . $option['value_min'];
-                                }
-                                if (isset($option['value_max'])) {
-                                    $max = 'max=' . $option['value_max'];
-                                }
-                                echo '<input type="number" data-name="' . $propertie_id . '" class="form-control" ' . $min . ' ' . $max . ' value="' . $default_value . '" />';
-                                break;
-                            case 'number':
-                                $min = '';
-                                $max = '';
-                                if (isset($option['value_min'])) {
-                                    $min = 'min=' . $option['value_min'];
-                                }
-                                if (isset($option['value_max'])) {
-                                    $max = 'max=' . $option['value_max'];
-                                }
-                                echo '<input type="number" data-name="' . $propertie_id . '" class="form-control" ' . $min . ' ' . $max . ' value="' . $default_value . '" />';
-                                break;
-                            case 'string':
-                                echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
-                                break;
-                            case 'array':
-                                echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
-                                break;
-                            case 'list':
-                                echo '<input type="text" data-name="' . $propertie_id . '" class="form-control" value="' . $default_value . '" />';
-                                break;
-                        }
+                        echo z2m::createHtmlControl($propertie_id, $propertie, $value);
                         echo '</td>';
                         echo '<td>';
                         echo '<a class="btn btn-success bt_validateBridgeOptions"><i class="fas fa-check"></i> {{Ok}}</a>';
@@ -463,12 +412,13 @@ sendVarToJS('z2m_network_map', $map);
 <script>
     $('.bt_validateBridgeOptions').off('click').on('click', function() {
         let tr = $(this).closest('tr');
+        let input = tr.find('.valueResult')
         let options = {};
         options[tr.attr('data-type')] = {};
-        if (tr.find('input').attr('type') == 'checkbox') {
-            options[tr.attr('data-type')][tr.find('input').attr('data-name')] = (tr.find('input').value() == '1');
+        if (input.attr('type') == 'checkbox') {
+            options[tr.attr('data-type')][input.attr('data-name')] = (input.value() == '1');
         } else {
-            options[tr.attr('data-type')][tr.find('input').attr('data-name')] = tr.find('input').value();
+            options[tr.attr('data-type')][input.attr('data-name')] = input.value();
         }
         jeedom.z2m.bridge.options({
             instance: 1,
