@@ -184,7 +184,7 @@ sendVarToJS('z2m_network_map', $map);
                         continue;
                     }
                     foreach ($properties['properties'] as $propertie_id => $propertie) {
-                        if ($propertie['type'] == null || $propertie['type'] == 'object') {
+                        if (!isset($propertie['type']) || $propertie['type'] == null ||  $propertie['type'] == 'object') {
                             continue;
                         }
                         $value = '';
@@ -278,21 +278,7 @@ sendVarToJS('z2m_network_map', $map);
                     echo '<tr data-ieee="' . $device_info['ieee_address'] . '">';
                     echo '<td>';
                     if (is_object($eqLogic)) {
-                        $child = ($eqLogic->getConfiguration('ischild', 0) == 1) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_orange fas fa-user" title="Ce device est un enfant"></i>' : '';
-                        $child .= ($eqLogic->getConfiguration('canbesplit', 0) == 1 && $eqLogic->getConfiguration('ischild', 0) == 0) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-random" title="Ce device peut être séparé en enfants"></i>' : '';
-                        if ($eqLogic->getConfiguration('device') != "") {
-                            if (z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
-                                echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
-                            } else if ($eqLogic->getConfiguration('ischild', 0) == 1 && file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('visual', 'none'))) {
-                                echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . $eqLogic->getConfiguration('visual') . '" height="40" width="40"/>' . $child;
-                            } else if ($eqLogic->getConfiguration('ischild', 0) == 1 && z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false) {
-                                echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '" height="40" width="40"/>' . $child;
-                            } else {
-                                echo '<img src="' . $plugin->getPathImgIcon() . '" height="40" width="40" />' . $child;
-                            }
-                        } else {
-                            echo '<img src="' . $plugin->getPathImgIcon() . '" height="40" width="40" />' . $child;
-                        }
+                        echo '<img src="' . $eqLogic->getImgFilePath() . '" height="40" width="40" />';
                     }
                     echo '</td>';
                     echo '<td>';

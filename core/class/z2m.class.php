@@ -197,7 +197,9 @@ class z2m extends eqLogic {
           $eqLogic->setEqType_name('z2m');
           $new = true;
         }
+        $eqLogic->setConfiguration('manufacturer', $device['manufacturer']);
         $eqLogic->setConfiguration('device', $device['model_id']);
+        $eqLogic->setConfiguration('model', $device['definition']['model']);
         $eqLogic->setConfiguration('instance', $_instanceNumber);
         $eqLogic->save();
         $cmd = $eqLogic->getCmd('info', 'last_seen');
@@ -234,10 +236,10 @@ class z2m extends eqLogic {
                   $cmd->setUnite($feature['unit']);
                 }
                 if (isset($feature['value_max'])) {
-                  $cmd->setConfiguration('maxValue', $expose['value_max']);
+                  $cmd->setConfiguration('maxValue', $feature['value_max']);
                 }
                 if (isset($feature['value_min'])) {
-                  $cmd->setConfiguration('minValue', $expose['value_min']);
+                  $cmd->setConfiguration('minValue', $feature['value_min']);
                 }
               }
               $cmd->save();
@@ -471,32 +473,21 @@ class z2m extends eqLogic {
     return $p;
   }
 
-  public static function getImgFilePath($_device, $_manufacturer = null) {
-    if ($_manufacturer != null) {
-      if (file_exists(__DIR__ . '/../config/devices/' . $_manufacturer . '/' . $_device . '.png')) {
-        return $_manufacturer . '/' . $_device . '.png';
-      }
-      if (file_exists(__DIR__ . '/../config/devices/' . mb_strtolower($_manufacturer) . '/' . $_device . '.png')) {
-        return mb_strtolower($_manufacturer) . '/' . $_device . '.png';
-      }
+  public function getImgFilePath() {
+    if ($this->getConfiguration('isgroup', 0) == 1) {
+      return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
-    $device = self::ciGlob($_device);
-    foreach (ls(__DIR__ . '/../config/devices', '*', false, array('folders', 'quiet')) as $folder) {
-      foreach (ls(__DIR__ . '/../config/devices/' . $folder, $device . '.{jpg,png}', false, array('files', 'quiet')) as $file) {
-        return $folder . $file;
-      }
+    if ($this->getConfiguration('model') == '') {
+      return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
-    foreach (ls(__DIR__ . '/../config/devices', '*', false, array('folders', 'quiet')) as $folder) {
-      foreach (ls(__DIR__ . '/../config/devices/' . $folder, '*.{jpg,png}', false, array('files', 'quiet')) as $file) {
-        if (strtolower($_device) . '.png' == strtolower($file)) {
-          return $file;
-        }
-        if (strtolower($_device) . '.jpg' == strtolower($file)) {
-          return $file;
-        }
-      }
+    $filename = __DIR__ . '/../../data/img/' . $this->getConfiguration('model') . '.jpg';
+    if (!file_exists($filename)) {
+      file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $this->getConfiguration('model') . '.jpg'));
     }
-    return false;
+    if (!file_exists($filename)) {
+      return 'plugins/z2m/plugin_info/z2m_icon.png';
+    }
+    return 'plugins/z2m/data/img/' . $this->getConfiguration('model') . '.jpg';
   }
 
   /*     * *********************Methode d'instance************************* */

@@ -15,9 +15,9 @@ foreach ($eqLogics as $eqLogic) {
 	$eqLogicArray['HumanName'] = $eqLogic->getHumanName();
 	$eqLogicArray['id'] = $eqLogic->getId();
 	$eqLogicArray['instance'] = $eqLogic->getConfiguration('instance', 1);
-	$eqLogicArray['img'] = 'plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'));
+	$eqLogicArray['img'] = $eqLogic->getImgFilePath();
 	$devices[$eqLogic->getLogicalId()] = $eqLogicArray;
-	$deviceAttr[$eqLogic->getId()] = array('canbesplit' => $eqLogic->getConfiguration('canbesplit', 0), 'ischild' => $eqLogic->getConfiguration('ischild', 0), 'isgroup' => $eqLogic->getConfiguration('isgroup', 0));
+	$deviceAttr[$eqLogic->getId()] = array('isgroup' => $eqLogic->getConfiguration('isgroup', 0));
 }
 $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
 sendVarToJS('z2m_devices', $devices);
@@ -64,32 +64,18 @@ sendVarToJS('devices_attr', $deviceAttr);
 				<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>
 			</div>
 		</div>
-		// Liste des équipements du plugin
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			foreach ($eqLogics as $eqLogic) {
-				if ($eqLogic->getConfiguration('isgroup', 0) == 0) {
-					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-					$child = ($eqLogic->getConfiguration('ischild', 0) == 1) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_orange fas fa-user" title="Ce device est un enfant"></i>' : '';
-					$child .= ($eqLogic->getConfiguration('canbesplit', 0) == 1 && $eqLogic->getConfiguration('ischild', 0) == 0) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-random" title="Ce device peut être séparé en enfants"></i>' : '';
-					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-					if ($eqLogic->getConfiguration('device') != "") {
-						if (z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
-							echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '"/>' . $child;
-						} else if ($eqLogic->getConfiguration('ischild', 0) == 1 && file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('visual', 'none'))) {
-							echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . $eqLogic->getConfiguration('visual') . '"/>' . $child;
-						} else if ($eqLogic->getConfiguration('ischild', 0) == 1 && z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false) {
-							echo '<img class="lazy" src="plugins/z2m/core/config/devices/' . z2m::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '"/>' . $child;
-						} else {
-							echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
-						}
-					} else {
-						echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
-					}
-					echo "<br/>";
-					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-					echo '</div>';
+				if ($eqLogic->getConfiguration('isgroup', 0) != 0) {
+					continue;
 				}
+				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+				echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+				echo '<img src="' . $eqLogic->getImgFilePath() . '" />';
+				echo "<br/>";
+				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+				echo '</div>';
 			}
 			?>
 		</div>
@@ -100,19 +86,9 @@ sendVarToJS('devices_attr', $deviceAttr);
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
 					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-					if ($eqLogic->getConfiguration('device') != "") {
-						if (zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false && $eqLogic->getConfiguration('ischild', 0) == 0) {
-							echo '<img class="lazy" src="plugins/zigbee/core/config/devices/' . zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '"/>' . $child;
-						} else if ($eqLogic->getConfiguration('ischild', 0) == 1 && file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('visual', 'none'))) {
-							echo '<img class="lazy" src="plugins/zigbee/core/config/devices/' . $eqLogic->getConfiguration('visual') . '"/>' . $child;
-						} else if ($eqLogic->getConfiguration('ischild', 0) == 1 && zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) !== false) {
-							echo '<img class="lazy" src="plugins/zigbee/core/config/devices/' . zigbee::getImgFilePath($eqLogic->getConfiguration('device'), $eqLogic->getConfiguration('manufacturer')) . '"/>' . $child;
-						} else {
-							echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
-						}
-					} else {
-						echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
-					}
+
+					echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
+
 					echo "<br/>";
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 					echo '</div>';
