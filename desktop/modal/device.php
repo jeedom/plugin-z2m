@@ -30,6 +30,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#infoNodeTab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-info"></i> {{Information}}</a></li>
     <li role="presentation"><a href="#configuration" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-info"></i> {{Configuration}}</a></li>
+    <li role="presentation"><a href="#binding" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-link"></i> {{Binding}}</a></li>
     <li role="presentation"><a href="#reporting" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-bars"></i> {{Reporting}}</a></li>
     <li role="presentation"><a href="#rawNodeTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
 </ul>
@@ -160,6 +161,14 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                     echo '</label>';
                     echo '<div class="col-sm-3">';
                     switch ($option['type']) {
+                        case 'binary':
+                            if ($default_value != '') {
+                                $default_value = 'checked';
+                            } else {
+                                $default_value = '';
+                            }
+                            echo '<input type="checkbox" data-name="' . $option['name'] . '" class="form-control" ' . $default_value . ' />';
+                            break;
                         case 'numeric':
                             $min = '';
                             $max = '';
@@ -182,6 +191,127 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                     echo '</div>';
                 }
                 ?>
+            </fieldset>
+        </form>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="binding">
+        <form class="form-horizontal">
+            <fieldset>
+                <br>
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>{{Endpoint source}}</th>
+                            <th>{{Cluster}}</th>
+                            <th>{{Addr destination}}</th>
+                            <th>{{Endpoint destination}}</th>
+                            <th>{{Type}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
+                            if (!isset($endpoint['bindings'])) {
+                                continue;
+                            }
+                            foreach ($endpoint['bindings'] as $binding) {
+                                $edevice = eqLogic::byLogicalId(z2m::convert_to_addr($binding['target']['ieee_address']), 'z2m');
+                                echo '<tr data-cluster="' . $binding['cluster'] . '" data-from="' . $infos['ieee_address'] . '" data-to="' . $binding['target']['ieee_address'] . '/' . $binding['target']['endpoint'] . '">';
+                                echo '<td>';
+                                echo $endpoint_id;
+                                echo '</td>';
+                                echo '<td>';
+                                echo $binding['cluster'];
+                                echo '</td>';
+                                echo '<td>';
+                                echo $binding['target']['ieee_address'];
+                                if (is_object($edevice)) {
+                                    echo ' / ' . $edevice->getHumanName();
+                                }
+                                echo '</td>';
+                                echo '<td>';
+                                echo $binding['target']['endpoint'];
+                                echo '</td>';
+                                echo '<td>';
+                                echo $binding['target']['type'];
+                                echo '</td>';
+
+                                echo '<td>';
+                                echo '<a class="btn btn-warning bt_removeBinding"><i class="fas fa-trash"></i> {{Supprimer}}</a>';
+                                echo '</div>';
+                                echo '</tr>';
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>{{Ajouter binding}}</legend>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{Endpoint source}}</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="sel_bindingSourceEndpoint">
+                            <option value="-1">{{Aucun}}</option>
+                            <?php
+                            foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
+                                if ($endpoint_id == 242) {
+                                    continue;
+                                }
+                                echo  '<option value="' . $endpoint_id . '">' . $endpoint_id . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{Destination}}</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="sel_bindingTarget">
+                            <option value="-1">{{Aucun}}</option>
+                            <?php
+                            foreach (eqLogic::byType('z2m') as $device) {
+                                if ($eqLogic->getId() == $device->getId() || $device->getConfiguration('isgroup', 0) == 1) {
+                                    continue;
+                                }
+                                $device_infos = z2m::getDeviceInfo($device->getLogicalId());
+                                foreach ($device_infos['endpoints'] as $endpoint_id => $endpoint) {
+                                    if ($endpoint_id == 242) {
+                                        continue;
+                                    }
+                                    echo  '<option value="' . $device_infos['ieee_address'] . '/' . $endpoint_id . '">' . $device->getHumanName() . ' / endpoint ' . $endpoint_id . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{Cluster}}</label>
+                    <div class="col-sm-10">
+                        <?php
+                        foreach ($infos['endpoints'] as $endpoint_id => $endpoint) {
+                            echo '<div class="bindingEndpoint ' . $endpoint_id . '" style="display:none;">';
+                            foreach ($endpoint['clusters']['output'] as $name) {
+                                if (!in_array($name, array('genScenes', 'genOnOff', 'genLevelCtrl', 'lightingColorCtrl', 'closuresWindowCovering'))) {
+                                    continue;
+                                }
+                                echo ' <label class="checkbox-inline"><input type="checkbox" class="deviceAddBindingCluster' . $endpoint_id . '" data-name="' . $name . '" checked>' . $name . '</label></span>';
+                            }
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{Ajouter}}</label>
+                    <div class="col-sm-10">
+                        <a class="btn btn-success" id="bt_deviceAddBinding"><i class="fas fa-check"></i> {{Valider}}</a>
+                    </div>
+                </div>
             </fieldset>
         </form>
     </div>
@@ -225,7 +355,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                                 echo '<input type="number" class="form-control reportable_change" value="' . $reporting['reportable_change'] . '"/>';
                                 echo '</td>';
                                 echo '<td>';
-                                echo '<div class="col-sm-1">';
                                 echo '<a class="btn btn-success bt_validateReporting"><i class="fas fa-check"></i> {{Ok}}</a>';
                                 echo '</div>';
                                 echo '</tr>';
@@ -245,6 +374,87 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
 </div>
 
 <script>
+    $('#bt_deviceAddBinding').off('click').on('click', function() {
+        if ($('#sel_bindingSourceEndpoint').value() == -1) {
+            $('#div_alert').showAlert({
+                message: '{{Aucun endpoint source de sélectionné}}',
+                level: 'danger'
+            });
+            return;
+        }
+        if ($('#sel_bindingTarget').value() == -1) {
+            $('#div_alert').showAlert({
+                message: '{{Aucune destination de sélectionné}}',
+                level: 'danger'
+            });
+            return;
+        }
+        clusters = []
+        $('.deviceAddBindingCluster' + $('#sel_bindingSourceEndpoint').value()).each(function() {
+            if ($(this).value() == 1) {
+                clusters.push($(this).attr('data-name'));
+            }
+        });
+        if (clusters.length == 0) {
+            $('#div_alert').showAlert({
+                message: '{{Aucun cluster de sélectionné}}',
+                level: 'danger'
+            });
+            return;
+        }
+        jeedom.z2m.device.bind({
+            instance: z2m_device_instance,
+            options: {
+                from: jeedom.z2m.utils.convert_from_addr(z2m_device_ieee) + '/' + $('#sel_bindingSourceEndpoint').value(),
+                to: $('#sel_bindingTarget').value(),
+                cluster: clusters
+            },
+            error: function(error) {
+                $('#div_alert').showAlert({
+                    message: error.message,
+                    level: 'danger'
+                });
+            },
+            success: function() {
+                $('#div_alert').showAlert({
+                    message: '{{Demande de d\'ajout du binding envoyée}}',
+                    level: 'success'
+                });
+            }
+        });
+    });
+
+    $('#sel_bindingSourceEndpoint').off('change').on('change', function() {
+        $('.bindingEndpoint').hide();
+        if ($(this).value() != '') {
+            $('.bindingEndpoint.' + $(this).value()).show();
+        }
+    })
+
+    $('.bt_removeBinding').off('click').on('click', function() {
+        let tr = $(this).closest('tr');
+        jeedom.z2m.device.unbind({
+            instance: z2m_device_instance,
+            options: {
+                from: tr.attr('data-from'),
+                to: tr.attr('data-to'),
+                cluster: tr.attr('data-cluster')
+            },
+            error: function(error) {
+                $('#div_alert').showAlert({
+                    message: error.message,
+                    level: 'danger'
+                });
+            },
+            success: function() {
+                $('#div_alert').showAlert({
+                    message: '{{Demande de suppression du binding envoyée}}',
+                    level: 'success'
+                });
+            }
+        });
+    });
+
     $('#bt_checkOta').off('click').on('click', function() {
         jeedom.z2m.device.ota_check({
             instance: z2m_device_instance,
@@ -264,15 +474,20 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
         });
     });
 
-
     $('.bt_validateOptions').off('click').on('click', function() {
         let input = $(this).parent().parent().find('input');
         let options = {};
-        options[input.attr('data-name')] = input.value();
+        if (input.attr('type') == 'checkbox') {
+            options[input.attr('data-name')] = (input.value() == '1');
+        } else {
+            options[input.attr('data-name')] = input.value();
+        }
         jeedom.z2m.device.setOptions({
             instance: z2m_device_instance,
-            id: jeedom.z2m.utils.convert_from_addr(z2m_device_ieee),
-            options: options,
+            options: {
+                id: jeedom.z2m.utils.convert_from_addr(z2m_device_ieee),
+                options: options
+            },
             error: function(error) {
                 $('#div_alert').showAlert({
                     message: error.message,

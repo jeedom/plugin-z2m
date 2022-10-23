@@ -173,7 +173,7 @@ jeedom.z2m.device.ota_update = function(_params){
 }
 
 jeedom.z2m.device.setOptions = function(_params){
-  var paramsRequired = ['instance','id','options'];
+  var paramsRequired = ['instance','options'];
   var paramsSpecifics = {};
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired);
@@ -188,7 +188,7 @@ jeedom.z2m.device.setOptions = function(_params){
     instance : _params.instance,
     action: 'publish',
     topic : '/bridge/request/device/options',
-    options : JSON.stringify(_params.options),
+    message : JSON.stringify(_params.options),
   };
   $.ajax(paramsAJAX);
 }

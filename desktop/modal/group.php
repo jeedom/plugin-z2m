@@ -32,6 +32,9 @@ foreach (eqLogic::byType('z2m') as $device) {
     }
     $device_infos = z2m::getDeviceInfo($device->getLogicalId());
     foreach ($device_infos['endpoints'] as $endpoint_id => $endpoint) {
+        if ($endpoint_id == 242) {
+            continue;
+        }
         foreach ($infos['members'] as $member) {
             if ($member['ieee_address'] == $device_infos['ieee_address'] && $member['endpoint'] == $endpoint_id) {
                 continue 2;
