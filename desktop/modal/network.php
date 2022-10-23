@@ -93,6 +93,7 @@ sendVarToJS('z2m_network_map', $map);
     <li><a href="#devices_network" data-toggle="tab"><i class="fab fa-codepen"></i> {{Noeuds}} (<?php echo count($devices) - 1 ?>)</a></li>
     <li role="presentation" id="tab_graph"><a href="#graph_network" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-image"></i> {{Graphique du réseaux}}</a></li>
     <li role="presentation"><a href="#rawBridgeTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
+    <a class="btn btn-info pull-right" id="bt_refreshNetwork"><i class="fas fa-sync"></i></a>
 </ul>
 
 <div id="network-tab-content" class="tab-content">
@@ -336,6 +337,12 @@ sendVarToJS('z2m_network_map', $map);
 
 
 <script>
+    $('#bt_refreshNetwork').off('click').on('click', function() {
+        $('#md_modal').dialog({
+            title: "{{Configuration du réseaux}}"
+        }).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
+    });
+
     $('#bt_z2mNetworkBackup').off('click').on('click', function() {
         jeedom.z2m.bridge.backup({
             instance: 1,

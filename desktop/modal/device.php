@@ -34,6 +34,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
     <li role="presentation"><a href="#binding" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-link"></i> {{Binding}}</a></li>
     <li role="presentation"><a href="#reporting" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-bars"></i> {{Reporting}}</a></li>
     <li role="presentation"><a href="#rawNodeTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
+    <a class="btn btn-info pull-right" id="bt_refreshDevice"><i class="fas fa-sync"></i></a>
 </ul>
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="infoNodeTab">
@@ -400,6 +401,12 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
 </div>
 
 <script>
+    $('#bt_refreshDevice').off('click').on('click', function() {
+        $('#md_modal').dialog({
+            title: "{{Configuration du noeud}}"
+        }).load('index.php?v=d&plugin=z2m&modal=device&id=' + z2m_device_id).dialog('open');
+    });
+
     $('#bt_deviceAddBinding').off('click').on('click', function() {
         if ($('#sel_bindingSourceEndpoint').value() == -1) {
             $('#div_alert').showAlert({

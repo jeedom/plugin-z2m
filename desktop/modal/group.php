@@ -48,6 +48,7 @@ sendVarToJS('z2m_group_list_member', $list_members);
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#infoGroupMemberTab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-info"></i> {{Membre}}</a></li>
     <li role="presentation"><a href="#rawGroupTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
+    <a class="btn btn-info pull-right" id="bt_refreshGroup"><i class="fas fa-sync"></i></a>
 </ul>
 
 <div class="tab-content">
@@ -95,6 +96,13 @@ sendVarToJS('z2m_group_list_member', $list_members);
 </div>
 
 <script>
+    $('#bt_refreshGroup').off('click').on('click', function() {
+        $('#md_modal').dialog({
+            title: "{{Configuration du groupe}}"
+        }).load('index.php?v=d&plugin=z2m&modal=group&id=' + z2m_id).dialog('open');
+    });
+
+
     $('#bt_addGroupMember').off('click').on('click', function() {
         var inputOptions = [];
         for (var i in z2m_group_list_member) {
