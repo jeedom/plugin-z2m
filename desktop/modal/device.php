@@ -243,6 +243,8 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                                 }
                                 if (is_object($device)) {
                                     echo ' / ' . $device->getHumanName();
+                                } elseif ($binding['target']['type'] == 'endpoint' && $bridge_info['coordinator']['ieee_address'] == $binding['target']['ieee_address']) {
+                                    echo ' / {{Coordinateur}}';
                                 }
                                 echo '</td>';
                                 echo '<td>';
@@ -287,6 +289,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         <select class="form-control" id="sel_bindingTarget">
                             <option value="-1">{{Aucun}}</option>
                             <?php
+                            echo  '<option value="Coordinator/1">{{Coordinateur}}</option>';
                             echo '<optgroup label="{{Equipement}}">';
                             foreach ($devices as $device) {
                                 if ($eqLogic->getId() == $device->getId() || $device->getConfiguration('isgroup', 0) == 1) {
