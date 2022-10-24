@@ -487,6 +487,8 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
         let options = {};
         if (input.attr('type') == 'checkbox') {
             options[input.attr('data-name')] = (input.value() == '1');
+        } else if (input.attr('type') == 'number') {
+            options[input.attr('data-name')] = parseInt(input.value());
         } else {
             options[input.attr('data-name')] = input.value();
         }

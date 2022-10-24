@@ -401,6 +401,8 @@ sendVarToJS('z2m_network_map', $map);
         options[tr.attr('data-type')] = {};
         if (input.attr('type') == 'checkbox') {
             options[tr.attr('data-type')][input.attr('data-name')] = (input.value() == '1');
+        } else if (input.attr('type') == 'number') {
+            options[tr.attr('data-type')][input.attr('data-name')] = parseInt(input.value());
         } else {
             options[tr.attr('data-type')][input.attr('data-name')] = input.value();
         }
