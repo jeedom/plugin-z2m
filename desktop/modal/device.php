@@ -492,6 +492,9 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
         } else {
             options[input.attr('data-name')] = input.value();
         }
+        if (parseInt(options[input.attr('data-name')]) != NaN) {
+            options[input.attr('data-name')] = parseInt(options[input.attr('data-name')]);
+        }
         jeedom.z2m.device.setOptions({
             instance: z2m_device_instance,
             options: {

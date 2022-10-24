@@ -406,6 +406,9 @@ sendVarToJS('z2m_network_map', $map);
         } else {
             options[tr.attr('data-type')][input.attr('data-name')] = input.value();
         }
+        if (parseInt(options[tr.attr('data-type')][input.attr('data-name')]) != NaN) {
+            options[tr.attr('data-type')][input.attr('data-name')] = parseInt(options[tr.attr('data-type')][input.attr('data-name')]);
+        }
         jeedom.z2m.bridge.options({
             instance: 1,
             options: options,
