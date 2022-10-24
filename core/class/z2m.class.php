@@ -189,7 +189,6 @@ class z2m extends eqLogic {
     }
   }
 
-
   public static function getInstanceTopic($_instanceNumber = 1) {
     return config::byKey('mqtt::topic', __CLASS__, 'z2m');
   }
@@ -522,6 +521,7 @@ class z2m extends eqLogic {
           $new = true;
         }
         $eqLogic->setConfiguration('friendly_name', $group['friendly_name']);
+        $eqLogic->setConfiguration('group_id', $group['id']);
         $eqLogic->setConfiguration('instance', $_instanceNumber);
         $eqLogic->save();
         foreach ($group['scenes'] as $scene) {
@@ -602,7 +602,7 @@ class z2m extends eqLogic {
   public function preRemove() {
     if ($this->getConfiguration('isgroup', 0) == 1) {
       $datas = array(
-        'id' => $this->getConfiguration('friendly_name'),
+        'id' => $this->getConfiguration('group_id'),
         'force' => true
       );
       mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/group/remove', json_encode($datas));

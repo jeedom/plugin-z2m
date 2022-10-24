@@ -291,7 +291,7 @@ sendVarToJS('z2m_network_map', $map);
                     echo '</td>';
                     echo '<td>';
                     if (is_object($eqLogic)) {
-                        $lqi = $eqLogic->getCmd('info', 'lqi');
+                        $lqi = $eqLogic->getCmd('info', 'linkquality');
                         if (is_object($lqi)) {
                             echo $lqi->execCmd();
                         }
