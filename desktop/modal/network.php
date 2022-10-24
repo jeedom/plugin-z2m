@@ -290,12 +290,10 @@ sendVarToJS('z2m_network_map', $map);
                     }
                     echo '</td>';
                     echo '<td>';
-                    foreach ($map['links'] as $link) {
-                        if ($link['target']['networkAddress'] == 0 && $link['sourceIeeeAddr'] == $device_info['ieee_address']) {
-                            echo '<i class="far fa-arrow-alt-circle-left"></i> ' . $link['lqi'] . ' ';
-                        }
-                        if ($link['source']['networkAddress'] == 0 && $link['targetIeeeAddr'] == $device_info['ieee_address']) {
-                            echo '<i class="far fa-arrow-alt-circle-right"></i> ' . $link['lqi'] . ' ';
+                    if (is_object($eqLogic)) {
+                        $lqi = $eqLogic->getCmd('info', 'lqi');
+                        if (is_object($lqi)) {
+                            echo $lqi->execCmd();
                         }
                     }
                     echo '</td>';

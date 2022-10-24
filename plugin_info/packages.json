@@ -1,0 +1,11 @@
+{
+  "pre-install" : {
+    "script" : "plugins/z2m/resources/pre-install.sh"
+  },
+  "apt" : {
+    "nodejs" : {}
+  },
+  "post-install" : {
+    "script" : "plugins/z2m/resources/post-install.sh"
+  }
+}

@@ -30,5 +30,57 @@ if (!isConnect()) {
         <input class="configKey form-control" data-l1key="mqtt::topic" />
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-md-4 control-label">{{Mode}}</label>
+      <div class="col-md-4">
+        <select class="configKey form-control" data-l1key="z2m::mode" id="sel_z2mMode">
+          <option value="distant">{{Distant}}</option>
+          <option value="local">{{Local}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group z2m_mode local">
+      <label class="col-md-5 control-label">{{Port du contrôleur}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le port du contrôleur Zigbee. Le mode Auto ne fonctionne qu'avec les clés Deconz}}"></i></sup>
+      </label>
+      <div class="col-md-6">
+        <select class="configKey form-control" data-l1key="port">
+          <option value="none">{{Aucun}}</option>
+          <option value="gateway">{{Passerelle distante}}</option>
+          <option value="/dev/ttyS2">{{Atlas}}</option>
+          <option value="/dev/ttyUSB1">{{Luna}}</option>
+          <?php
+          foreach (jeedom::getUsbMapping() as $name => $value) {
+            echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
+          }
+          foreach (ls('/dev/', 'tty*') as $value) {
+            echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
+          }
+          ?>
+        </select>
+      </div>
+    </div>
+    <div class="form-group z2m_mode local">
+      <label class="col-md-5 control-label">{{Type de contrôleur}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type de contrôleur Zigbee à utiliser}}"></i></sup>
+      </label>
+      <div class="col-md-6">
+        <select class="configKey form-control" data-l1key="controller">
+          <option value="ti">{{ZNP/TI}}</option>
+          <option value="ezsp">{{EZSP (Atlas/Luna)}}</option>
+          <option value="deconz">{{Conbee}}</option>
+          <option value="zigate">{{Zigate (alpha)}}</option>
+        </select>
+      </div>
+    </div>
   </fieldset>
 </form>
+
+<script>
+  $('#sel_z2mMode').off('change').on('change', function() {
+    $('.z2m_mode').hide();
+    if ($(this).value() != '') {
+      $('.z2m_mode.' + $(this).value()).show();
+    }
+  })
+</script>
