@@ -175,8 +175,7 @@ class z2m extends eqLogic {
 
   public static function deamon_stop() {
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
-    $find = 'ziqbee2mqtt';
-    $cmd = "(ps ax || ps w) | grep -ie '" . $find . "' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . "kill -15 > /dev/null 2>&1";
+    $cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
     exec($cmd);
     $i = 0;
     while ($i < 5) {
@@ -188,7 +187,7 @@ class z2m extends eqLogic {
       $i++;
     }
     if ($i >= 5) {
-      system::kill('ziqbee2mqtt', true);
+      system::kill('zigbee2mqtt', true);
       $i = 0;
       while ($i < 5) {
         $deamon_info = self::deamon_info();
