@@ -26,13 +26,13 @@ if (!isConnect()) {
   <fieldset>
     <div class="form-group">
       <label class="col-md-4 control-label">{{Topic racine}}</label>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <input class="configKey form-control" data-l1key="mqtt::topic" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-md-4 control-label">{{Mode}}</label>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <select class="configKey form-control" data-l1key="z2m::mode" id="sel_z2mMode">
           <option value="distant">{{Distant}}</option>
           <option value="local">{{Local}}</option>
@@ -40,10 +40,10 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode local">
-      <label class="col-md-5 control-label">{{Port du contrôleur}}
+      <label class="col-md-4 control-label">{{Port du contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le port du contrôleur Zigbee. Le mode Auto ne fonctionne qu'avec les clés Deconz}}"></i></sup>
       </label>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <select class="configKey form-control" data-l1key="port">
           <option value="none">{{Aucun}}</option>
           <option value="gateway">{{Passerelle distante}}</option>
@@ -61,14 +61,14 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode local">
-      <label class="col-md-5 control-label">{{Type de contrôleur}}
+      <label class="col-md-4 control-label">{{Type de contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type de contrôleur Zigbee à utiliser}}"></i></sup>
       </label>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <select class="configKey form-control" data-l1key="controller">
           <option value="ti">{{ZNP/TI}}</option>
           <option value="ezsp">{{EZSP (Atlas/Luna)}}</option>
-          <option value="deconz">{{Conbee}}</option>
+          <option value="deconz">{{Deconz/Conbee}}</option>
           <option value="zigate">{{Zigate (alpha)}}</option>
         </select>
       </div>

@@ -28,11 +28,11 @@ function z2m_install() {
 function z2m_update() {
   $plugin = plugin::byId('z2m');
   if (config::byKey('z2m::mode', 'z2m', 'local') == 'local') {
-    $plugin->dependancy_changeAutoMode(0);
-    $plugin->deamon_info(0);
-  } else {
     $plugin->dependancy_changeAutoMode(1);
     $plugin->deamon_info(1);
+  } else {
+    $plugin->dependancy_changeAutoMode(0);
+    $plugin->deamon_info(0);
   }
 }
 

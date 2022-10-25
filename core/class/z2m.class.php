@@ -84,7 +84,7 @@ class z2m extends eqLogic {
   }
 
   public static function isRunning() {
-    if (!empty(system::ps('ziqbee2mqtt.js'))) {
+    if (!empty(system::ps('zigbee2mqtt'))) {
       return true;
     }
     return false;
@@ -116,17 +116,39 @@ class z2m extends eqLogic {
     return $return;
   }
 
+  public static function configure_z2m_deamon() {
+    $mqtt = mqtt2::getFormatedInfos();
+    $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
+    $configuration = yaml_parse_file($z2m_path . '/data/configuration.yaml');
+    $configuration['permit_join'] = false;
+
+    $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'];
+    $configuration['mqtt']['port'] = (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
+    $configuration['mqtt']['user'] = $mqtt['user'];
+    $configuration['mqtt']['password'] = $mqtt['password'];
+    $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m') . '2';
+
+    $configuration['serial']['port'] = jeedom::getUsbMapping(config::byKey('port', 'z2m'));
+
+    if (config::byKey('controller', 'z2m') != 'ti') {
+      $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
+    }
+
+    $configuration['frontend']['port'] = 8080;
+    $configuration['frontend']['host'] = '0.0.0.0';
+
+    file_put_contents($z2m_path . '/data/configuration.yaml', yaml_emit($configuration));
+  }
+
   public static function deamon_start($_debug = false) {
     self::deamon_stop();
+    self::configure_z2m_deamon();
     $deamon_info = self::deamon_info();
     if ($deamon_info['launchable'] != 'ok') {
       throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
     }
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
-
-    chdir($z2m_path);
-    $cmd = 'npm start';
-
+    $cmd = 'npm start --prefix ' . $z2m_path;
     log::add(__CLASS__, 'info', __('Démarrage du démon Z2M', __FILE__) . ' : ' . $cmd);
     exec(system::getCmdSudo() . $cmd . ' >> ' . log::getPathToLog('z2md') . ' 2>&1 &');
     $i = 0;
@@ -139,7 +161,7 @@ class z2m extends eqLogic {
       $i++;
     }
     if ($i >= 10) {
-      log::add(__CLASS__, 'error', __('Impossible de démarrer le démon ZwaveJS, consultez les logs', __FILE__), 'unableStartDeamon');
+      log::add(__CLASS__, 'error', __('Impossible de démarrer le démon Zigbee2mqtt, consultez les logs', __FILE__), 'unableStartDeamon');
       return false;
     }
     message::removeAll(__CLASS__, 'unableStartDeamon');
@@ -147,6 +169,7 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_stop() {
+    return;
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
     $find = 'ziqbee2mqtt.js';
     $cmd = "(ps ax || ps w) | grep -ie '" . $find . "' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . "kill -15 > /dev/null 2>&1";
@@ -172,20 +195,17 @@ class z2m extends eqLogic {
         $i++;
       }
     }
-    $port = config::byKey('port', 'z2m');
-    if ($port != 'auto') {
-      system::fuserk(jeedom::getUsbMapping($port));
-    }
+    system::fuserk(jeedom::getUsbMapping(config::byKey('port', 'z2m')));
   }
 
-  public static function postConfig_z2m_local($_value) {
+  public static function postConfig_z2m_mode($_value) {
     $plugin = plugin::byId('z2m');
     if ($_value == 'local') {
-      $plugin->dependancy_changeAutoMode(0);
-      $plugin->deamon_info(0);
-    } else {
       $plugin->dependancy_changeAutoMode(1);
       $plugin->deamon_info(1);
+    } else {
+      $plugin->dependancy_changeAutoMode(0);
+      $plugin->deamon_info(0);
     }
   }
 

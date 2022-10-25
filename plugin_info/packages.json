@@ -3,9 +3,11 @@
     "script" : "plugins/z2m/resources/pre-install.sh"
   },
   "apt" : {
-    "nodejs" : {}
+    "nodejs" : {},
+    "php-yaml" : {}
   },
   "post-install" : {
+    "restart_apache" : true,
     "script" : "plugins/z2m/resources/post-install.sh"
   }
 }

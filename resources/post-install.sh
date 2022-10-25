@@ -23,5 +23,6 @@ BASEDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 mkdir ${BASEDIR}/zigbee2mqtt
 git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
+chown www-data:www-data -R ${BASEDIR}/zigbee2mqtt
 cd ${BASEDIR}/zigbee2mqtt
 npm ci
