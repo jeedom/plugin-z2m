@@ -23,12 +23,12 @@ BASEDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
     cd ${BASEDIR}/zigbee2mqtt
-    # Backup configuration
+    echo "Backup configuration"
     cp -R data data-backup
-    # Update
+    echo "Update z2m (git)"
     git pull
     npm ci
-    # Restore configuration
+     echo "Restore configuration"
     cp -R data-backup/* data
     rm -rf data-backup
 else
