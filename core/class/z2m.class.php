@@ -126,7 +126,7 @@ class z2m extends eqLogic {
     $configuration['mqtt']['port'] = (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
     $configuration['mqtt']['user'] = $mqtt['user'];
     $configuration['mqtt']['password'] = $mqtt['password'];
-    $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m') . '2';
+    $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m');
 
     $configuration['serial']['port'] = jeedom::getUsbMapping(config::byKey('port', 'z2m'));
 
