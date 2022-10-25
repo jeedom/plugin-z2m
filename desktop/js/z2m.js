@@ -119,7 +119,7 @@ $('.changeIncludeState').off('click').on('click', function () {
     inputOptions.push({value : z2m_instances[i].id,text : z2m_instances[i].name});
   }
   bootbox.prompt({
-    title: "Passage en inclusion sur ?",
+    title: "{{Passage en inclusion sur}} ?",
     value : inputOptions[0].value,
     inputType: 'select',
     inputOptions:inputOptions,

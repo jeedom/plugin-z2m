@@ -21,17 +21,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class z2m extends eqLogic {
   /*     * *************************Attributs****************************** */
 
-  /*
-  * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
-  * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
-  public static $_widgetPossibility = array();
-  */
-
-  /*
-  * Permet de crypter/décrypter automatiquement des champs de configuration du plugin
-  * Exemple : "param1" & "param2" seront cryptés mais pas "param3"
-  public static $_encryptConfigKey = array('param1', 'param2');
-  */
+  private static $_generic_type_converter = null;
 
   /*     * ***********************Methode static*************************** */
 
@@ -253,6 +243,24 @@ class z2m extends eqLogic {
     }
   }
 
+  public static function find_generic_type($_info, $_value = null) {
+    if (self::$_generic_type_converter == null) {
+      self::$_generic_type_converter = json_decode(file_get_contents(__DIR__ . '/../config/generic_type.json'), true);
+    }
+    if (!isset($_info['name'])) {
+      return null;
+    }
+    if ($_value != null) {
+      if (isset(self::$_generic_type_converter[$_info['name'] . '::' . $_value])) {
+        return self::$_generic_type_converter[$_info['name'] . '::' . $_value];
+      }
+    }
+    if (isset(self::$_generic_type_converter[$_info['name']])) {
+      return self::$_generic_type_converter[$_info['name']];
+    }
+    return null;
+  }
+
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
     if (isset($_datas['event'])) {
       switch ($_datas['event']['type']) {
@@ -371,6 +379,7 @@ class z2m extends eqLogic {
                 if (isset($feature['value_min'])) {
                   $cmd->setConfiguration('minValue', $feature['value_min']);
                 }
+                $cmd->setGeneric_Type(self::find_generic_type($feature));
               }
               $cmd->save();
               $link_cmd_id = $cmd->getId();
@@ -385,6 +394,7 @@ class z2m extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setValue($link_cmd_id);
+                $cmd->setGeneric_Type(self::find_generic_type($feature, $feature['value_off']));
                 $cmd->save();
               }
 
@@ -399,6 +409,7 @@ class z2m extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setValue($link_cmd_id);
+                $cmd->setGeneric_Type(self::find_generic_type($feature, $feature['value_on']));
                 $cmd->save();
               }
 
@@ -413,6 +424,7 @@ class z2m extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setValue($link_cmd_id);
+                $cmd->setGeneric_Type(self::find_generic_type($feature, $feature['value_toggle']));
                 $cmd->save();
               }
 
@@ -433,6 +445,7 @@ class z2m extends eqLogic {
                 if (isset($expose['value_min'])) {
                   $cmd->setConfiguration('minValue', $expose['value_min']);
                 }
+                $cmd->setGeneric_Type(self::find_generic_type($feature));
                 $cmd->save();
               }
 
@@ -448,6 +461,7 @@ class z2m extends eqLogic {
                   $cmd->setType('action');
                   $cmd->setSubType('other');
                   $cmd->setValue($link_cmd_id);
+                  $cmd->setGeneric_Type(self::find_generic_type($feature, $feature_value));
                   $cmd->save();
                 }
               }
@@ -484,6 +498,7 @@ class z2m extends eqLogic {
               $cmd->setConfiguration('minValue', $expose['value_min']);
             }
           }
+          $cmd->setGeneric_Type(self::find_generic_type($expose));
           $cmd->save();
           $link_cmd_id = $cmd->getId();
 
@@ -502,6 +517,7 @@ class z2m extends eqLogic {
               $cmd->setType('action');
               $cmd->setSubType('other');
               $cmd->setValue($link_cmd_id);
+              $cmd->setGeneric_Type(self::find_generic_type($expose, $expose['value_off']));
               $cmd->save();
             }
 
@@ -519,6 +535,7 @@ class z2m extends eqLogic {
               $cmd->setType('action');
               $cmd->setSubType('other');
               $cmd->setValue($link_cmd_id);
+              $cmd->setGeneric_Type(self::find_generic_type($expose, $expose['value_on']));
               $cmd->save();
             }
           }
