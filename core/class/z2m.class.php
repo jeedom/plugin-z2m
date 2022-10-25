@@ -137,10 +137,15 @@ class z2m extends eqLogic {
     $configuration['frontend']['port'] = 8080;
     $configuration['frontend']['host'] = '0.0.0.0';
 
+    if (config::byKey('z2m_auth_token', 'z2m', '') == '') {
+      config::save('z2m_auth_token', config::genKey(32), 'z2m');
+    }
+    $configuration['frontend']['auth_token'] = config::byKey('z2m_auth_token', 'z2m');
+
     file_put_contents($z2m_path . '/data/configuration.yaml', yaml_emit($configuration));
   }
 
-  public static function deamon_start($_debug = false) {
+  public static function deamon_start() {
     self::deamon_stop();
     self::configure_z2m_deamon();
     $deamon_info = self::deamon_info();
@@ -152,7 +157,7 @@ class z2m extends eqLogic {
     log::add(__CLASS__, 'info', __('Démarrage du démon Z2M', __FILE__) . ' : ' . $cmd);
     exec(system::getCmdSudo() . $cmd . ' >> ' . log::getPathToLog('z2md') . ' 2>&1 &');
     $i = 0;
-    while ($i < 10) {
+    while ($i < 30) {
       $deamon_info = self::deamon_info();
       if ($deamon_info['state'] == 'ok') {
         break;
@@ -160,7 +165,7 @@ class z2m extends eqLogic {
       sleep(1);
       $i++;
     }
-    if ($i >= 10) {
+    if ($i >= 30) {
       log::add(__CLASS__, 'error', __('Impossible de démarrer le démon Zigbee2mqtt, consultez les logs', __FILE__), 'unableStartDeamon');
       return false;
     }
@@ -169,9 +174,8 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_stop() {
-    return;
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
-    $find = 'ziqbee2mqtt.js';
+    $find = 'ziqbee2mqtt';
     $cmd = "(ps ax || ps w) | grep -ie '" . $find . "' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . "kill -15 > /dev/null 2>&1";
     exec($cmd);
     $i = 0;
@@ -184,7 +188,7 @@ class z2m extends eqLogic {
       $i++;
     }
     if ($i >= 5) {
-      system::kill('ziqbee2mqtt.js', true);
+      system::kill('ziqbee2mqtt', true);
       $i = 0;
       while ($i < 5) {
         $deamon_info = self::deamon_info();
@@ -196,6 +200,7 @@ class z2m extends eqLogic {
       }
     }
     system::fuserk(jeedom::getUsbMapping(config::byKey('port', 'z2m')));
+    sleep(1);
   }
 
   public static function postConfig_z2m_mode($_value) {
