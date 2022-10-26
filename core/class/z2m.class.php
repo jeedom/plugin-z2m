@@ -248,24 +248,6 @@ class z2m extends eqLogic {
     }
   }
 
-  public static function find_generic_type($_info, $_value = null) {
-    if (self::$_generic_type_converter == null) {
-      self::$_generic_type_converter = json_decode(file_get_contents(__DIR__ . '/../config/generic_type.json'), true);
-    }
-    if (!isset($_info['name'])) {
-      return null;
-    }
-    if ($_value != null) {
-      if (isset(self::$_generic_type_converter[$_info['name'] . '::' . $_value])) {
-        return self::$_generic_type_converter[$_info['name'] . '::' . $_value];
-      }
-    }
-    if (isset(self::$_generic_type_converter[$_info['name']])) {
-      return self::$_generic_type_converter[$_info['name']];
-    }
-    return null;
-  }
-
   public static function getCmdConf($_infos, $_suffix = null) {
     if (self::$_cmd_converter == null) {
       self::$_cmd_converter = json_decode(file_get_contents(__DIR__ . '/../config/cmd.json'), true);
@@ -299,70 +281,7 @@ class z2m extends eqLogic {
     return $cmd_ref;
   }
 
-  public function createCmd($_infos) {
-    $cmd_ref = self::getCmdConf($_infos);
-    $cmd = $this->getCmd('info', $_infos['name']);
-    if (!is_object($cmd)) {
-      $cmd = new z2mCmd();
-      $cmd->setLogicalId($_infos['name']);
-    }
-    utils::a2o($cmd, $cmd_ref);
-    $cmd->setEqLogic_id($this->getId());
-    $cmd->save();
-    $link_cmd_id = $cmd->getId();
 
-    if ($_infos['access'] == 7) {
-
-      foreach (self::$_action_cmd as $k => $v) {
-        if (isset($_infos[$k])) {
-          $cmd_ref = self::getCmdConf($_infos, $v);
-          $cmd_ref['type'] = 'action';
-          $cmd_ref['subType'] = 'other';
-          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $_infos[$k]);
-          if (!is_object($cmd)) {
-            $cmd = new z2mCmd();
-            $cmd->setLogicalId($_infos['name'] . '::' . $_infos[$k]);
-          }
-          utils::a2o($cmd, $cmd_ref);
-          $cmd->setEqLogic_id($this->getId());
-          $cmd->setValue($link_cmd_id);
-          $cmd->save();
-        }
-      }
-
-      if ($_infos['type'] == 'numeric') {
-        $cmd_ref = self::getCmdConf($_infos, 'slider');
-        $cmd_ref['type'] = 'action';
-        $cmd_ref['subType'] = 'slider';
-        $cmd = $this->getCmd('action', $_infos['name'] . '::#slider#');
-        if (!is_object($cmd)) {
-          $cmd = new z2mCmd();
-          $cmd->setLogicalId($_infos['name']  . '::#slider#');
-          $cmd->setName(__('Configurer ' . $_infos['name'], __FILE__));
-        }
-        utils::a2o($cmd, $cmd_ref);
-        $cmd->setEqLogic_id($this->getId());
-        $cmd->setValue($link_cmd_id);
-        $cmd->save();
-      }
-
-      if ($_infos['type'] == 'enum') {
-        foreach ($_infos['values'] as $feature_value) {
-          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $feature_value);
-          if (!is_object($cmd)) {
-            $cmd = new z2mCmd();
-            $cmd->setLogicalId($_infos['name'] . '::' . $feature_value);
-            $cmd->setName(__($_infos['name'] . ' ' . $feature_value, __FILE__));
-          }
-          $cmd->setEqLogic_id($this->getId());
-          $cmd->setType('action');
-          $cmd->setSubType('other');
-          $cmd->setValue($link_cmd_id);
-          $cmd->save();
-        }
-      }
-    }
-  }
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
     if (isset($_datas['event'])) {
@@ -565,6 +484,69 @@ class z2m extends eqLogic {
   }
 
   /*     * *********************Methode d'instance************************* */
+  public function createCmd($_infos) {
+    $cmd_ref = self::getCmdConf($_infos);
+    $cmd = $this->getCmd('info', $_infos['name']);
+    if (!is_object($cmd)) {
+      $cmd = new z2mCmd();
+      $cmd->setLogicalId($_infos['name']);
+    }
+    utils::a2o($cmd, $cmd_ref);
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->save();
+    $link_cmd_id = $cmd->getId();
+
+    if ($_infos['access'] == 7) {
+      foreach (self::$_action_cmd as $k => $v) {
+        if (isset($_infos[$k])) {
+          $cmd_ref = self::getCmdConf($_infos, $v);
+          $cmd_ref['type'] = 'action';
+          $cmd_ref['subType'] = 'other';
+          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $_infos[$k]);
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setLogicalId($_infos['name'] . '::' . $_infos[$k]);
+          }
+          utils::a2o($cmd, $cmd_ref);
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setValue($link_cmd_id);
+          $cmd->save();
+        }
+      }
+
+      if ($_infos['type'] == 'numeric') {
+        $cmd_ref = self::getCmdConf($_infos, 'slider');
+        $cmd_ref['type'] = 'action';
+        $cmd_ref['subType'] = 'slider';
+        $cmd = $this->getCmd('action', $_infos['name'] . '::#slider#');
+        if (!is_object($cmd)) {
+          $cmd = new z2mCmd();
+          $cmd->setLogicalId($_infos['name']  . '::#slider#');
+          $cmd->setName(__('Configurer ' . $_infos['name'], __FILE__));
+        }
+        utils::a2o($cmd, $cmd_ref);
+        $cmd->setEqLogic_id($this->getId());
+        $cmd->setValue($link_cmd_id);
+        $cmd->save();
+      }
+
+      if ($_infos['type'] == 'enum') {
+        foreach ($_infos['values'] as $feature_value) {
+          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $feature_value);
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setLogicalId($_infos['name'] . '::' . $feature_value);
+            $cmd->setName(__($_infos['name'] . ' ' . $feature_value, __FILE__));
+          }
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setType('action');
+          $cmd->setSubType('other');
+          $cmd->setValue($link_cmd_id);
+          $cmd->save();
+        }
+      }
+    }
+  }
 
   public function preRemove() {
     if ($this->getConfiguration('isgroup', 0) == 1) {
