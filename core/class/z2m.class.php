@@ -21,7 +21,12 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class z2m extends eqLogic {
   /*     * *************************Attributs****************************** */
 
-  private static $_generic_type_converter = null;
+  private static $_cmd_converter = null;
+  private static $_action_cmd = array(
+    'value_off' => 'off',
+    'value_on' => 'on',
+    'value_toggle' => 'toggle'
+  );
 
   /*     * ***********************Methode static*************************** */
 
@@ -261,6 +266,104 @@ class z2m extends eqLogic {
     return null;
   }
 
+  public static function getCmdConf($_infos, $_suffix = null) {
+    if (self::$_cmd_converter == null) {
+      self::$_cmd_converter = json_decode(file_get_contents(__DIR__ . '/../config/cmd.json'), true);
+    }
+    $cmd_ref = array();
+    $suffix = ($_suffix == null) ? '::' . $_suffix : '';
+    if (isset(self::$_cmd_converter[$_infos['name'] . $suffix])) {
+      $cmd_ref = self::$_cmd_converter[$_infos['name'] . $suffix];
+    }
+    if (!isset($cmd_ref['name'])) {
+      $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
+    }
+    if (!isset($cmd_ref['configuration'])) {
+      $cmd_ref['configuration'] = array();
+    }
+    if (!isset($cmd_ref['configuration']['maxValue']) && isset($_infos['value_max'])) {
+      $cmd_ref['configuration']['maxValue'] =  $_infos['value_max'];
+    }
+    if (!isset($cmd_ref['configuration']['minValue']) && isset($_infos['value_min'])) {
+      $cmd_ref['configuration']['minValue'] =  $_infos['value_min'];
+    }
+    if (!isset($cmd_ref['unite']) && isset($_infos['unit'])) {
+      $cmd_ref['unite'] = $_infos['unit'];
+    }
+    if (!isset($cmd_ref['type'])) {
+      $cmd_ref['type'] = 'info';
+    }
+    if (!isset($cmd_ref['subType'])) {
+      $cmd_ref['subType'] = ($_infos['type'] == 'enum') ? 'string' : $_infos['type'];
+    }
+    return $cmd_ref;
+  }
+
+  public function createCmd($_infos) {
+    $cmd_ref = self::getCmdConf($_infos);
+    $cmd = $this->getCmd('info', $_infos['name']);
+    if (!is_object($cmd)) {
+      $cmd = new z2mCmd();
+      $cmd->setLogicalId($_infos['name']);
+    }
+    utils::a2o($cmd, $cmd_ref);
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->save();
+    $link_cmd_id = $cmd->getId();
+
+    if ($_infos['access'] == 7) {
+
+      foreach (self::$_action_cmd as $k => $v) {
+        if (isset($_infos[$k])) {
+          $cmd_ref = self::getCmdConf($_infos, $v);
+          $cmd_ref['type'] = 'action';
+          $cmd_ref['subType'] = 'other';
+          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $_infos[$k]);
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setLogicalId($_infos['name'] . '::' . $_infos[$k]);
+          }
+          utils::a2o($cmd, $cmd_ref);
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setValue($link_cmd_id);
+          $cmd->save();
+        }
+      }
+
+      if ($_infos['type'] == 'numeric') {
+        $cmd_ref = self::getCmdConf($_infos, 'slider');
+        $cmd_ref['type'] = 'action';
+        $cmd_ref['subType'] = 'slider';
+        $cmd = $this->getCmd('action', $_infos['name'] . '::#slider#');
+        if (!is_object($cmd)) {
+          $cmd = new z2mCmd();
+          $cmd->setLogicalId($_infos['name']  . '::#slider#');
+          $cmd->setName(__('Configurer ' . $_infos['name'], __FILE__));
+        }
+        utils::a2o($cmd, $cmd_ref);
+        $cmd->setEqLogic_id($this->getId());
+        $cmd->setValue($link_cmd_id);
+        $cmd->save();
+      }
+
+      if ($_infos['type'] == 'enum') {
+        foreach ($_infos['values'] as $feature_value) {
+          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $feature_value);
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setLogicalId($_infos['name'] . '::' . $feature_value);
+            $cmd->setName(__($_infos['name'] . ' ' . $feature_value, __FILE__));
+          }
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setType('action');
+          $cmd->setSubType('other');
+          $cmd->setValue($link_cmd_id);
+          $cmd->save();
+        }
+      }
+    }
+  }
+
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
     if (isset($_datas['event'])) {
       switch ($_datas['event']['type']) {
@@ -354,191 +457,14 @@ class z2m extends eqLogic {
         foreach ($device['definition']['exposes'] as &$expose) {
           if (isset($expose['features'])) {
             foreach ($expose['features'] as $feature) {
-              $cmd = $eqLogic->getCmd('info', $feature['name']);
-              if (!is_object($cmd)) {
-                $cmd = new z2mCmd();
-                $cmd->setLogicalId($feature['name']);
-                $cmd->setName(__($feature['name'], __FILE__));
-              }
-              $cmd->setEqLogic_id($eqLogic->getId());
-              $cmd->setType('info');
-              if ($feature['type'] == 'enum') {
-                $cmd->setSubType('string');
-              } else {
-                $cmd->setSubType($feature['type']);
-              }
-              if ($feature['type'] == 'binary') {
-                $cmd->setConfiguration('repeatEventManagement', 'never');
-              } else if ($feature['type'] == 'numeric') {
-                if (isset($feature['unit'])) {
-                  $cmd->setUnite($feature['unit']);
-                }
-                if (isset($feature['value_max'])) {
-                  $cmd->setConfiguration('maxValue', $feature['value_max']);
-                }
-                if (isset($feature['value_min'])) {
-                  $cmd->setConfiguration('minValue', $feature['value_min']);
-                }
-                $cmd->setGeneric_Type(self::find_generic_type($feature));
-              }
-              $cmd->save();
-              $link_cmd_id = $cmd->getId();
-              if (isset($feature['value_off'])) {
-                $cmd = $eqLogic->getCmd('action', $feature['name'] . '::' . $feature['value_off']);
-                if (!is_object($cmd)) {
-                  $cmd = new z2mCmd();
-                  $cmd->setLogicalId($feature['name'] . '::' . $feature['value_off']);
-                  $cmd->setName(__($feature['name'] . ' Off', __FILE__));
-                }
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setValue($link_cmd_id);
-                $cmd->setGeneric_Type(self::find_generic_type($feature, $feature['value_off']));
-                $cmd->save();
-              }
-
-              if (isset($feature['value_on'])) {
-                $cmd = $eqLogic->getCmd('action', $feature['name'] . '::' . $feature['value_on']);
-                if (!is_object($cmd)) {
-                  $cmd = new z2mCmd();
-                  $cmd->setLogicalId($feature['name'] . '::' . $feature['value_on']);
-                  $cmd->setName(__($feature['name'] . ' On', __FILE__));
-                }
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setValue($link_cmd_id);
-                $cmd->setGeneric_Type(self::find_generic_type($feature, $feature['value_on']));
-                $cmd->save();
-              }
-
-              if (isset($feature['value_toggle'])) {
-                $cmd = $eqLogic->getCmd('action', $feature['name'] . '::' . $feature['value_toggle']);
-                if (!is_object($cmd)) {
-                  $cmd = new z2mCmd();
-                  $cmd->setLogicalId($feature['name']  . '::' . $feature['value_toggle']);
-                  $cmd->setName(__($feature['name'] . ' Toggle', __FILE__));
-                }
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setValue($link_cmd_id);
-                $cmd->setGeneric_Type(self::find_generic_type($feature, $feature['value_toggle']));
-                $cmd->save();
-              }
-
-              if ($feature['type'] == 'numeric') {
-                $cmd = $eqLogic->getCmd('action', $feature['name'] . '::#slider#');
-                if (!is_object($cmd)) {
-                  $cmd = new z2mCmd();
-                  $cmd->setLogicalId($feature['name']  . '::#slider#');
-                  $cmd->setName(__('Configurer ' . $feature['name'], __FILE__));
-                }
-                $cmd->setEqLogic_id($eqLogic->getId());
-                $cmd->setType('action');
-                $cmd->setSubType('slider');
-                $cmd->setValue($link_cmd_id);
-                if (isset($expose['value_max'])) {
-                  $cmd->setConfiguration('maxValue', $expose['value_max']);
-                }
-                if (isset($expose['value_min'])) {
-                  $cmd->setConfiguration('minValue', $expose['value_min']);
-                }
-                $cmd->setGeneric_Type(self::find_generic_type($feature));
-                $cmd->save();
-              }
-
-              if ($feature['type'] == 'enum') {
-                foreach ($feature['values'] as $feature_value) {
-                  $cmd = $eqLogic->getCmd('action', $feature['name'] . '::' . $feature_value);
-                  if (!is_object($cmd)) {
-                    $cmd = new z2mCmd();
-                    $cmd->setLogicalId($feature['name'] . '::' . $feature_value);
-                    $cmd->setName(__($feature_value, __FILE__));
-                  }
-                  $cmd->setEqLogic_id($eqLogic->getId());
-                  $cmd->setType('action');
-                  $cmd->setSubType('other');
-                  $cmd->setValue($link_cmd_id);
-                  $cmd->setGeneric_Type(self::find_generic_type($feature, $feature_value));
-                  $cmd->save();
-                }
-              }
+              $eqLogic->createCmd($feature);
             }
             continue;
           }
-
           if (!isset($expose['name'])) {
             continue;
           }
-          $cmd = $eqLogic->getCmd('info', $expose['name']);
-          if (!is_object($cmd)) {
-            $cmd = new z2mCmd();
-            $cmd->setLogicalId($expose['name']);
-            $cmd->setName(__($expose['name'], __FILE__));
-          }
-          $cmd->setEqLogic_id($eqLogic->getId());
-          $cmd->setType('info');
-          if ($expose['type'] == 'enum') {
-            $cmd->setSubType('string');
-          } else {
-            $cmd->setSubType($expose['type']);
-          }
-          if ($expose['type'] == 'binary') {
-            $cmd->setConfiguration('repeatEventManagement', 'never');
-          } else if ($expose['type'] == 'numeric') {
-            if (isset($expose['unit'])) {
-              $cmd->setUnite($expose['unit']);
-            }
-            if (isset($expose['value_max'])) {
-              $cmd->setConfiguration('maxValue', $expose['value_max']);
-            }
-            if (isset($expose['value_min'])) {
-              $cmd->setConfiguration('minValue', $expose['value_min']);
-            }
-          }
-          $cmd->setGeneric_Type(self::find_generic_type($expose));
-          $cmd->save();
-          $link_cmd_id = $cmd->getId();
-
-          if ($expose['access'] == 7) {
-            if (isset($expose['value_off'])) {
-              if (is_bool($expose['value_off']) && !$expose['value_off']) {
-                $expose['value_off'] = 'false';
-              }
-              $cmd = $eqLogic->getCmd('action', $expose['name'] . '::' . $expose['value_off']);
-              if (!is_object($cmd)) {
-                $cmd = new z2mCmd();
-                $cmd->setLogicalId($expose['name'] . '::' . $expose['value_off']);
-                $cmd->setName(__($expose['name'] . ' Off', __FILE__));
-              }
-              $cmd->setEqLogic_id($eqLogic->getId());
-              $cmd->setType('action');
-              $cmd->setSubType('other');
-              $cmd->setValue($link_cmd_id);
-              $cmd->setGeneric_Type(self::find_generic_type($expose, $expose['value_off']));
-              $cmd->save();
-            }
-
-            if (isset($expose['value_on'])) {
-              if (is_bool($expose['value_on']) && $expose['value_on']) {
-                $expose['value_on'] = 'true';
-              }
-              $cmd = $eqLogic->getCmd('action', $expose['name'] . '::' . $expose['value_on']);
-              if (!is_object($cmd)) {
-                $cmd = new z2mCmd();
-                $cmd->setLogicalId($expose['name'] . '::' . $expose['value_on']);
-                $cmd->setName(__($expose['name'] . ' On', __FILE__));
-              }
-              $cmd->setEqLogic_id($eqLogic->getId());
-              $cmd->setType('action');
-              $cmd->setSubType('other');
-              $cmd->setValue($link_cmd_id);
-              $cmd->setGeneric_Type(self::find_generic_type($expose, $expose['value_on']));
-              $cmd->save();
-            }
-          }
+          $eqLogic->createCmd($expose);
         }
         file_put_contents(__DIR__ . '/../../data/devices/' . $addr . '.json', json_encode($device));
         if ($new !== null) {

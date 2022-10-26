@@ -17,7 +17,7 @@
 if (!isConnect('admin')) {
     throw new Exception('401 Unauthorized');
 }
-$eqLogic = zigbee::byId(init('id'));
+$eqLogic = z2m::byId(init('id'));
 if (!is_object($eqLogic)) {
     throw new \Exception(__('Equipement introuvable : ', __FILE__) . init('id'));
 }

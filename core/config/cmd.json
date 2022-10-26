@@ -1,0 +1,77 @@
+{
+    "battery" : {
+        "name" : "Batterie",
+        "generic_type" : "BATTERY"
+    },
+    "temperature" : {
+        "name" : "Température",
+        "generic_type" : "TEMPERATURE"
+    },
+    "device_temperature" : {
+        "name" : "Température",
+        "generic_type" : "TEMPERATURE"
+    },
+    "voltage" : {
+        "name" : "Voltage",
+        "generic_type" : "VOLTAGE"
+    },
+    "illuminance_lux" : {
+        "name" : "Luminosité Lux",
+        "generic_type" : "BRIGHTNESS"
+    },
+    "illuminance" : {
+        "name" : "Luminosité",
+        "generic_type" : "BRIGHTNESS"
+    },
+    "power" : {
+        "name" : "Puissance",
+        "generic_type" : "POWER"
+    },
+    "energy" : {
+        "name" : "Consommation",
+        "generic_type" : "CONSUMPTION"
+    },
+    "position" : {
+        "name" : "Position",
+        "generic_type" : "FLAP_STATE"
+    },
+    "state" : {
+        "name" : "Etat",
+        "generic_type" : "ENERGY_STATE"
+    },
+    "state::on" : {
+        "name" : "On",
+        "generic_type" : "ENERGY_ON"
+    },
+    "state::off" : {
+        "name" : "Off",
+        "generic_type" : "ENERGY_ON"
+    },
+    "state::toggle" : {
+        "name" : "Toggle",
+        "generic_type" : "ENERGY_ON"
+    },
+    "state::open" : {
+        "name" : "Ouvrir",
+        "generic_type" : "FLAP_UP"
+    },
+    "state::close" : {
+        "name" : "Fermer",
+        "generic_type" : "FLAP_DOWN"
+    },
+    "state::stop" : {
+        "name" : "Stop",
+        "generic_type" : "FLAP_STOP"
+    },
+    "occupancy" : {
+        "name" : "Présence",
+        "generic_type" : "PRESENCE",
+        "configuration": {
+            "repeatEventManagement": "always"
+        },
+        "template" : {
+          "dashboard" : "presence",
+          "mobile" : "presence"
+        }
+    }
+}
