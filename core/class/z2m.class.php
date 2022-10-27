@@ -634,6 +634,7 @@ class z2mCmd extends cmd {
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
+    $replace = array();
     switch ($this->getSubType()) {
       case 'slider':
         $replace['#slider#'] = round(floatval($_options['slider']), 2);

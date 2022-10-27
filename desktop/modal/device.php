@@ -51,15 +51,15 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                             {{Nom :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $eqLogic->getHumanName() ?></span></b>
                             {{Modèle :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['definition']['model'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['definition']['model'] ?></span></b>
                             {{Fabricant :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['manufacturer'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['manufacturer'] ?></span></b>
                             {{Vendeur :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['definition']['vendor'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['definition']['vendor'] ?></span></b>
                             {{Modèle ID :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['model_id'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['model_id'] ?></span></b>
                             {{Type :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['type'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['type'] ?></span></b>
                             <br />
                             {{Interview en cours :}}
                             <?php
@@ -79,10 +79,10 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                             ?>
                             <br />
                             {{Alimentation :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['power_source'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['power_source'] ?></span></b>
                             <br />
                             {{Software :}}
-                            <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['software_build_id'] ?></span></b>
+                            <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['software_build_id'] ?></span></b>
                             {{Support OTA :}}
                             <?php
                             if ($infos['definition']['supports_ota']) {
@@ -99,7 +99,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         <h4 class="panel-title"><i class="fas fa-info-circle"></i> {{Description}}</h4>
                     </div>
                     <div class="panel-body">
-                        <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['definition']['description'] ?></span></b>
+                        <b><span class="label label-default" style="font-size : 1em;"><?php echo @$infos['definition']['description'] ?></span></b>
                         </p>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                 <?php
                 $current_value = $bridge_info['config']['devices'][z2m::convert_from_addr($eqLogic->getLogicalId())];
                 foreach ($infos['definition']['options'] as $option) {
-                    if ($option['access'] == 1) {
+                    if (!isset($option['access']) || $option['access'] == 1) {
                         continue;
                     }
                     echo '<tr>';
