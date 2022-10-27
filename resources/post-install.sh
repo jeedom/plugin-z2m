@@ -16,7 +16,7 @@
 #  along with Plugin zigbee for jeedom. If not, see <http://www.gnu.org/licenses/>.
 
 #set -x  # make sure each command is printed in the terminal
-
+set -x
 echo "Launch post-install of z2m dependancy"
 
 BASEDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -28,7 +28,8 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
     echo "Update z2m (git)"
     git pull
     npm ci
-     echo "Restore configuration"
+    npm run build
+    echo "Restore configuration"
     cp -R data-backup/* data
     rm -rf data-backup
 else
@@ -36,5 +37,6 @@ else
     git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
     cd ${BASEDIR}/zigbee2mqtt
     npm ci
+    npm run build
 fi
 chown www-data:www-data -R ${BASEDIR}/zigbee2mqtt
