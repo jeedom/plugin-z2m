@@ -57,10 +57,6 @@
         "name": "Consommation",
         "generic_type": "CONSUMPTION"
     },
-    "position": {
-        "name": "Position",
-        "generic_type": "FLAP_STATE"
-    },
     "consumer_connected": {
         "name": "Consomateur connecté"
     },
@@ -104,15 +100,26 @@
         "name": "Toggle",
         "generic_type": "ENERGY_ON"
     },
-    "state::open": {
+    "cover::state": {
+        "name": "Etat"
+    },
+    "cover::position": {
+        "name": "Etat position",
+        "generic_type": "FLAP_STATE"
+    },
+    "cover::position::slider": {
+        "name": "Position",
+        "generic_type": "FLAP_SLIDER"
+    },
+    "cover::state::open": {
         "name": "Ouvrir",
         "generic_type": "FLAP_UP"
     },
-    "state::close": {
+    "cover::state::close": {
         "name": "Fermer",
         "generic_type": "FLAP_DOWN"
     },
-    "state::stop": {
+    "cover::state::stop": {
         "name": "Stop",
         "generic_type": "FLAP_STOP"
     },
