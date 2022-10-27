@@ -238,8 +238,6 @@
         "Mode inclusion inactif": "Inclusion mode inactive",
         "Dernière communication": "Last message",
         "Démon": "Devil",
-        "Configurer ' . $_infos['name']": "Configure '. $_infos['name']",
-        "$_infos['name'] . ' ' . $feature_value": "$_info['name'] . ' ' . $feature_value",
         "Le message et le sujet ne peuvent pas être vide": "Message and subject cannot be empty"
     },
     "info.json": {
