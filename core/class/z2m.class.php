@@ -112,6 +112,7 @@ class z2m extends eqLogic {
   }
 
   public static function configure_z2m_deamon() {
+    self::postConfig_mqtt_topic();
     $mqtt = mqtt2::getFormatedInfos();
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
     $configuration = yaml_parse_file($z2m_path . '/data/configuration.yaml');
@@ -220,7 +221,7 @@ class z2m extends eqLogic {
     return '0x' . str_replace(':', '', $_addr);
   }
 
-  public static function postConfig_mqtt_topic($_value) {
+  public static function postConfig_mqtt_topic($_value = null) {
     mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__, 'z2m'));
   }
 

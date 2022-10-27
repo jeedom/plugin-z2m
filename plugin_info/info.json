@@ -19,7 +19,7 @@
     "category": "automation protocol",
     "hasDependency": true,
     "hasOwnDeamon": true,
-    "maxDependancyInstallTime": 0,
+    "maxDependancyInstallTime": 30,
     "changelog": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/z2m\/changelog",
     "documentation": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/z2m\/",
     "changelog_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/z2m\/beta\/changelog",
