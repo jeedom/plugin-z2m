@@ -237,7 +237,7 @@ class z2m extends eqLogic {
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
         foreach ($values as $logical_id => &$value) {
-          log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . $value);
+          log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value));
           if ($logical_id == 'last_seen') {
             $value = date('Y-m-d H:i:s', $value / 1000);
           }
@@ -247,41 +247,6 @@ class z2m extends eqLogic {
       }
     }
   }
-
-  public static function getCmdConf($_infos, $_suffix = null) {
-    if (self::$_cmd_converter == null) {
-      self::$_cmd_converter = json_decode(file_get_contents(__DIR__ . '/../config/cmd.json'), true);
-    }
-    $cmd_ref = array();
-    $suffix = ($_suffix == null) ? '::' . $_suffix : '';
-    if (isset(self::$_cmd_converter[$_infos['name'] . $suffix])) {
-      $cmd_ref = self::$_cmd_converter[$_infos['name'] . $suffix];
-    }
-    if (!isset($cmd_ref['name'])) {
-      $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
-    }
-    if (!isset($cmd_ref['configuration'])) {
-      $cmd_ref['configuration'] = array();
-    }
-    if (!isset($cmd_ref['configuration']['maxValue']) && isset($_infos['value_max'])) {
-      $cmd_ref['configuration']['maxValue'] =  $_infos['value_max'];
-    }
-    if (!isset($cmd_ref['configuration']['minValue']) && isset($_infos['value_min'])) {
-      $cmd_ref['configuration']['minValue'] =  $_infos['value_min'];
-    }
-    if (!isset($cmd_ref['unite']) && isset($_infos['unit'])) {
-      $cmd_ref['unite'] = $_infos['unit'];
-    }
-    if (!isset($cmd_ref['type'])) {
-      $cmd_ref['type'] = 'info';
-    }
-    if (!isset($cmd_ref['subType'])) {
-      $cmd_ref['subType'] = ($_infos['type'] == 'enum') ? 'string' : $_infos['type'];
-    }
-    return $cmd_ref;
-  }
-
-
 
   public static function handle_bridge($_datas, $_instanceNumber = 1) {
     if (isset($_datas['event'])) {
@@ -483,6 +448,39 @@ class z2m extends eqLogic {
     return 'plugins/z2m/data/img/' . $this->getConfiguration('model') . '.jpg';
   }
 
+  public static function getCmdConf($_infos, $_suffix = null) {
+    if (self::$_cmd_converter == null) {
+      self::$_cmd_converter = json_decode(file_get_contents(__DIR__ . '/../config/cmd.json'), true);
+    }
+    $cmd_ref = array();
+    $suffix = ($_suffix == null) ? '' : '::' . $_suffix;
+    if (isset(self::$_cmd_converter[$_infos['name'] . $suffix])) {
+      $cmd_ref = self::$_cmd_converter[$_infos['name'] . $suffix];
+    }
+    if (!isset($cmd_ref['name'])) {
+      $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
+    }
+    if (!isset($cmd_ref['configuration'])) {
+      $cmd_ref['configuration'] = array();
+    }
+    if (!isset($cmd_ref['configuration']['maxValue']) && isset($_infos['value_max'])) {
+      $cmd_ref['configuration']['maxValue'] =  $_infos['value_max'];
+    }
+    if (!isset($cmd_ref['configuration']['minValue']) && isset($_infos['value_min'])) {
+      $cmd_ref['configuration']['minValue'] =  $_infos['value_min'];
+    }
+    if (!isset($cmd_ref['unite']) && isset($_infos['unit'])) {
+      $cmd_ref['unite'] = $_infos['unit'];
+    }
+    if (!isset($cmd_ref['type'])) {
+      $cmd_ref['type'] = 'info';
+    }
+    if (!isset($cmd_ref['subType'])) {
+      $cmd_ref['subType'] = ($_infos['type'] == 'enum') ? 'string' : $_infos['type'];
+    }
+    return $cmd_ref;
+  }
+
   /*     * *********************Methode d'instance************************* */
   public function createCmd($_infos) {
     $cmd_ref = self::getCmdConf($_infos);
@@ -496,16 +494,23 @@ class z2m extends eqLogic {
     $cmd->save();
     $link_cmd_id = $cmd->getId();
 
-    if ($_infos['access'] == 7) {
+    if ($_infos['access'] == 7 || $_infos['access'] == 3) {
       foreach (self::$_action_cmd as $k => $v) {
         if (isset($_infos[$k])) {
+          if ($_infos[$k] === false) {
+            $logical_id =  $_infos['name'] . '::false';
+          } else  if ($_infos[$k] === true) {
+            $logical_id =  $_infos['name'] . '::true';
+          } else {
+            $logical_id =  $_infos['name'] . '::' . $_infos[$k];
+          }
           $cmd_ref = self::getCmdConf($_infos, $v);
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
-          $cmd = $this->getCmd('action', $_infos['name'] . '::' . $_infos[$k]);
+          $cmd = $this->getCmd('action', $logical_id);
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
-            $cmd->setLogicalId($_infos['name'] . '::' . $_infos[$k]);
+            $cmd->setLogicalId($logical_id);
           }
           utils::a2o($cmd, $cmd_ref);
           $cmd->setEqLogic_id($this->getId());

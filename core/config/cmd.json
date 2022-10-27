@@ -3,9 +3,23 @@
         "name" : "Batterie",
         "generic_type" : "BATTERY"
     },
+    "battery_low" : {
+        "name" : "Batterie faible"
+    },
+    "action" : {
+        "name" : "Button"
+    },
     "temperature" : {
         "name" : "Température",
         "generic_type" : "TEMPERATURE"
+    },
+    "humidity" : {
+        "name" : "Humidité",
+        "generic_type" : "HUMIDITY"
+    },
+    "pressure" : {
+        "name" : "Pression",
+        "generic_type" : "PRESSURE"
     },
     "device_temperature" : {
         "name" : "Température",
@@ -27,6 +41,15 @@
         "name" : "Puissance",
         "generic_type" : "POWER"
     },
+    "current" : {
+        "name" : "Courant"
+    },
+    "linkquality" : {
+        "name" : "Qualité connexion"
+    },
+    "power_outage_count" : {
+        "name" : "Nombre de perte d'alimentation"
+    },
     "energy" : {
         "name" : "Consommation",
         "generic_type" : "CONSUMPTION"
@@ -34,6 +57,33 @@
     "position" : {
         "name" : "Position",
         "generic_type" : "FLAP_STATE"
+    },
+    "consumer_connected" : {
+        "name" : "Consomateur connecté"
+    },
+    "overload_protection" : {
+        "name" : "Etat protection contre les surtentions"
+    },
+    "overload_protection::slider" : {
+        "name" : "Niveau protection contre les surtentions"
+    },
+    "led_disabled_night" : {
+        "name" : "Etat LED"
+    },
+    "led_disabled_night::off" : {
+        "name" : "LED off"
+    },
+    "led_disabled_night::on" : {
+        "name" : "LED on"
+    },
+    "power_outage_memory" : {
+        "name" : "Mémoire état"
+    },
+    "power_outage_memory::off" : {
+        "name" : "Mémoire état off"
+    },
+    "power_outage_memory::on" : {
+        "name" : "Mémoire état on"
     },
     "state" : {
         "name" : "Etat",
