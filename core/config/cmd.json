@@ -1,127 +1,130 @@
 {
-    "battery" : {
-        "name" : "Batterie",
-        "generic_type" : "BATTERY"
+    "ac_frequency": {
+        "name": "Fréquence courant"
     },
-    "battery_low" : {
-        "name" : "Batterie faible"
+    "battery": {
+        "name": "Batterie",
+        "generic_type": "BATTERY"
     },
-    "action" : {
-        "name" : "Button"
+    "battery_low": {
+        "name": "Batterie faible"
     },
-    "temperature" : {
-        "name" : "Température",
-        "generic_type" : "TEMPERATURE"
+    "action": {
+        "name": "Button"
     },
-    "humidity" : {
-        "name" : "Humidité",
-        "generic_type" : "HUMIDITY"
+    "temperature": {
+        "name": "Température",
+        "generic_type": "TEMPERATURE"
     },
-    "pressure" : {
-        "name" : "Pression",
-        "generic_type" : "PRESSURE"
+    "humidity": {
+        "name": "Humidité",
+        "generic_type": "HUMIDITY"
     },
-    "device_temperature" : {
-        "name" : "Température",
-        "generic_type" : "TEMPERATURE"
+    "pressure": {
+        "name": "Pression",
+        "generic_type": "PRESSURE"
     },
-    "voltage" : {
-        "name" : "Voltage",
-        "generic_type" : "VOLTAGE"
+    "device_temperature": {
+        "name": "Température",
+        "generic_type": "TEMPERATURE"
     },
-    "illuminance_lux" : {
-        "name" : "Luminosité Lux",
-        "generic_type" : "BRIGHTNESS"
+    "voltage": {
+        "name": "Voltage",
+        "generic_type": "VOLTAGE"
     },
-    "illuminance" : {
-        "name" : "Luminosité",
-        "generic_type" : "BRIGHTNESS"
+    "illuminance_lux": {
+        "name": "Luminosité Lux",
+        "generic_type": "BRIGHTNESS"
     },
-    "power" : {
-        "name" : "Puissance",
-        "generic_type" : "POWER"
+    "illuminance": {
+        "name": "Luminosité",
+        "generic_type": "BRIGHTNESS"
     },
-    "current" : {
-        "name" : "Courant"
+    "power": {
+        "name": "Puissance",
+        "generic_type": "POWER"
     },
-    "linkquality" : {
-        "name" : "Qualité connexion"
+    "current": {
+        "name": "Courant"
     },
-    "power_outage_count" : {
-        "name" : "Nombre de perte d'alimentation"
+    "linkquality": {
+        "name": "Qualité connexion"
     },
-    "energy" : {
-        "name" : "Consommation",
-        "generic_type" : "CONSUMPTION"
+    "power_outage_count": {
+        "name": "Nombre de perte d'alimentation"
     },
-    "position" : {
-        "name" : "Position",
-        "generic_type" : "FLAP_STATE"
+    "energy": {
+        "name": "Consommation",
+        "generic_type": "CONSUMPTION"
     },
-    "consumer_connected" : {
-        "name" : "Consomateur connecté"
+    "position": {
+        "name": "Position",
+        "generic_type": "FLAP_STATE"
     },
-    "overload_protection" : {
-        "name" : "Etat protection contre les surtentions"
+    "consumer_connected": {
+        "name": "Consomateur connecté"
     },
-    "overload_protection::slider" : {
-        "name" : "Niveau protection contre les surtentions"
+    "overload_protection": {
+        "name": "Etat protection contre les surtentions"
     },
-    "led_disabled_night" : {
-        "name" : "Etat LED"
+    "overload_protection::slider": {
+        "name": "Niveau protection contre les surtentions"
     },
-    "led_disabled_night::off" : {
-        "name" : "LED off"
+    "led_disabled_night": {
+        "name": "Etat LED"
     },
-    "led_disabled_night::on" : {
-        "name" : "LED on"
+    "led_disabled_night::off": {
+        "name": "LED off"
     },
-    "power_outage_memory" : {
-        "name" : "Mémoire état"
+    "led_disabled_night::on": {
+        "name": "LED on"
     },
-    "power_outage_memory::off" : {
-        "name" : "Mémoire état off"
+    "power_outage_memory": {
+        "name": "Mémoire état"
     },
-    "power_outage_memory::on" : {
-        "name" : "Mémoire état on"
+    "power_outage_memory::off": {
+        "name": "Mémoire état off"
     },
-    "state" : {
-        "name" : "Etat",
-        "generic_type" : "ENERGY_STATE"
+    "power_outage_memory::on": {
+        "name": "Mémoire état on"
     },
-    "state::on" : {
-        "name" : "On",
-        "generic_type" : "ENERGY_ON"
+    "state": {
+        "name": "Etat",
+        "generic_type": "ENERGY_STATE"
     },
-    "state::off" : {
-        "name" : "Off",
-        "generic_type" : "ENERGY_ON"
+    "state::on": {
+        "name": "On",
+        "generic_type": "ENERGY_ON"
     },
-    "state::toggle" : {
-        "name" : "Toggle",
-        "generic_type" : "ENERGY_ON"
+    "state::off": {
+        "name": "Off",
+        "generic_type": "ENERGY_ON"
     },
-    "state::open" : {
-        "name" : "Ouvrir",
-        "generic_type" : "FLAP_UP"
+    "state::toggle": {
+        "name": "Toggle",
+        "generic_type": "ENERGY_ON"
     },
-    "state::close" : {
-        "name" : "Fermer",
-        "generic_type" : "FLAP_DOWN"
+    "state::open": {
+        "name": "Ouvrir",
+        "generic_type": "FLAP_UP"
     },
-    "state::stop" : {
-        "name" : "Stop",
-        "generic_type" : "FLAP_STOP"
+    "state::close": {
+        "name": "Fermer",
+        "generic_type": "FLAP_DOWN"
     },
-    "occupancy" : {
-        "name" : "Présence",
-        "generic_type" : "PRESENCE",
+    "state::stop": {
+        "name": "Stop",
+        "generic_type": "FLAP_STOP"
+    },
+    "occupancy": {
+        "name": "Présence",
+        "generic_type": "PRESENCE",
         "configuration": {
             "repeatEventManagement": "always"
         },
-        "template" : {
-          "dashboard" : "presence",
-          "mobile" : "presence"
+        "template": {
+            "dashboard": "presence",
+            "mobile": "presence"
         }
     }
 }
