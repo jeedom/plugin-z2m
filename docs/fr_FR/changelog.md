@@ -1,3 +1,5 @@
+# Changelog Zigbee2Mqtt
+
 # Changelog plugin template
 
 >**IMPORTANT**
