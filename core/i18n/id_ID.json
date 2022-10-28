@@ -132,7 +132,7 @@
         "Demande de suppression envoyée avec success": "Demande de suppression envoyée avec success",
         "Demande de mise à jour de la carte réseaux envoyée. Veuillez attendre 3min et reouvrir la carte": "Demande de mise à jour de la carte réseaux envoyée. Veuillez attendre 3min et reouvrir la carte",
         "Controleur": "Controleur",
-        "Contrôleur": "Contrôleur",
+        "Contrôleur": "Controleur",
         "Modèle": "Modèle",
         "NWK": "NWK"
     },
@@ -238,8 +238,6 @@
         "Mode inclusion inactif": "Mode inclusion inactif",
         "Dernière communication": "Dernière communication",
         "Démon": "Démon",
-        "Configurer ' . $_infos['name']": "Configurer ' . $_infos['name']",
-        "$_infos['name'] . ' ' . $feature_value": "$_infos['name'] . ' ' . $feature_value",
         "Le message et le sujet ne peuvent pas être vide": "Le message et le sujet ne peuvent pas être vide"
     },
     "info.json": {
