@@ -238,6 +238,9 @@ class z2m extends eqLogic {
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
         foreach ($values as $logical_id => &$value) {
+          if ($value === null) {
+            continue;
+          }
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value));
           if ($logical_id == 'last_seen') {
             $value = date('Y-m-d H:i:s', $value / 1000);
