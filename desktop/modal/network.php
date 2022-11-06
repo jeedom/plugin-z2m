@@ -24,7 +24,7 @@ $devices = z2m::getDeviceInfo('devices1');
 $groups = z2m::getDeviceInfo('groups1');
 sendVarToJS('z2m_network_map', $map);
 ?>
-<script type="text/javascript" src="plugins/zigbee/3rdparty/vivagraph/vivagraph.min.js"></script>
+<script type="text/javascript" src="plugins/z2m/3rdparty/vivagraph/vivagraph.min.js"></script>
 <style>
     #graph_network {
         height: 80%;
