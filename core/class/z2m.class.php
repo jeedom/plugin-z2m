@@ -126,6 +126,8 @@ class z2m extends eqLogic {
 
     $configuration['serial']['port'] = jeedom::getUsbMapping(config::byKey('port', 'z2m'));
 
+    exec(system::getCmdSudo() . ' chmod 777 ' . $configuration['serial']['port'] . ' 2>&1');
+
     if (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
     }
