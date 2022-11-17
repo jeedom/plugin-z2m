@@ -25,7 +25,7 @@
         "generic_type": "PRESSURE"
     },
     "device_temperature": {
-        "name": "Température",
+        "name": "Température du module",
         "generic_type": "TEMPERATURE"
     },
     "voltage": {
