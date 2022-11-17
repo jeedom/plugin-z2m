@@ -499,8 +499,8 @@ class z2m extends eqLogic {
     if (!is_object($cmd)) {
       $cmd = new z2mCmd();
       $cmd->setLogicalId($_infos['name']);
+      utils::a2o($cmd, $cmd_ref);
     }
-    utils::a2o($cmd, $cmd_ref);
     $cmd->setEqLogic_id($this->getId());
     $cmd->save();
     $link_cmd_id = $cmd->getId();
@@ -522,8 +522,8 @@ class z2m extends eqLogic {
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             $cmd->setLogicalId($logical_id);
+            utils::a2o($cmd, $cmd_ref);
           }
-          utils::a2o($cmd, $cmd_ref);
           $cmd->setEqLogic_id($this->getId());
           $cmd->setValue($link_cmd_id);
           $cmd->save();
@@ -538,8 +538,8 @@ class z2m extends eqLogic {
         if (!is_object($cmd)) {
           $cmd = new z2mCmd();
           $cmd->setLogicalId($_infos['name']  . '::#slider#');
+          utils::a2o($cmd, $cmd_ref);
         }
-        utils::a2o($cmd, $cmd_ref);
         $cmd->setEqLogic_id($this->getId());
         $cmd->setValue($link_cmd_id);
         $cmd->save();
@@ -554,8 +554,8 @@ class z2m extends eqLogic {
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             $cmd->setLogicalId($_infos['name'] . '::' . $enum);
+            utils::a2o($cmd, $cmd_ref);
           }
-          utils::a2o($cmd, $cmd_ref);
           $cmd->setEqLogic_id($this->getId());
           $cmd->setValue($link_cmd_id);
           $cmd->save();
