@@ -356,6 +356,9 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         echo '<input type="number" class="form-control maxReportTime" value="' . $reporting['maximum_report_interval'] . '"/>';
                         echo '</td>';
                         echo '<td>';
+                        if (is_array($reporting['reportable_change'])) {
+                            $reporting['reportable_change'] = json_encode($reporting['reportable_change']);
+                        }
                         echo '<input type="number" class="form-control reportable_change" value="' . $reporting['reportable_change'] . '"/>';
                         echo '</td>';
                         echo '<td>';
