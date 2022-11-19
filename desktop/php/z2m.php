@@ -18,6 +18,8 @@ foreach ($eqLogics as $eqLogic) {
 	$eqLogicArray['img'] = $eqLogic->getImgFilePath();
 	$devices[$eqLogic->getLogicalId()] = $eqLogicArray;
 	$deviceAttr[$eqLogic->getId()] = array('isgroup' => $eqLogic->getConfiguration('isgroup', 0));
+	$deviceAttr[$eqLogic->getId()]['multipleEndpoints'] = $eqLogic->getConfiguration('multipleEndpoints', 0);
+	$deviceAttr[$eqLogic->getId()]['isChild'] = $eqLogic->getConfiguration('isChild', 0);
 }
 $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
 sendVarToJS('z2m_devices', $devices);
@@ -105,6 +107,7 @@ sendVarToJS('devices_attr', $deviceAttr);
 			<span class="input-group-btn">
 				<!-- Les balises <a></a> sont volontairement fermées à la ligne suivante pour éviter les espaces entre les boutons. Ne pas modifier -->
 				<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i><span class="hidden-xs"> {{Configuration avancée}}</span>
+				</a><a id="bt_childCreate" class="btn btn-success btn-sm childCreate" style="display : none;"><i class="fas fa-user"></i> {{Créer un enfant}}
 				</a><a class="btn btn-sm btn-default eqLogicAction" data-action="copy"><i class="fas fa-copy"></i><span class="hidden-xs"> {{Dupliquer}}</span>
 				</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 				</a><a class="btn btn-sm btn-danger eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}

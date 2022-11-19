@@ -34,6 +34,19 @@ try {
     mqtt2::publish(z2m::getInstanceTopic(init('instance')) . init('topic'), init('message', ''));
     ajax::success();
   }
+  
+  if (init('action') == 'childCreate') {
+    $eqLogic = z2m::byId(init('id'));
+    if (!is_object($eqLogic)) {
+      throw new Exception(__('Z2m eqLogic non trouvé : ', __FILE__) . init('id'));
+    }
+    $childeqLogic = eqLogic::byLogicalId($eqLogic->getLogicalId() . '|l' . init('endpoint'), 'z2m');
+    if (is_object($childeqLogic)) {
+      throw new Exception(__('Un enfant existe déjà sur cet endpoint', __FILE__));
+    }
+    $eqLogic->childCreate(init('endpoint'));
+    ajax::success();
+  }
 
   throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
   /*     * *********Catch exeption*************** */

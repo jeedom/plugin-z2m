@@ -107,6 +107,14 @@ $('#bt_z2mNetwork').off('click').on('click', function () {
 
 function printEqLogic(_eqLogic) {
   $('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
+  if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr){
+	console.log(devices_attr[$('.eqLogicAttr[data-l1key=id]').value()])
+    if ('multipleEndpoints' in devices_attr[$('.eqLogicAttr[data-l1key=id]').value()] && devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['multipleEndpoints']==1){
+       $('.childCreate').show();
+    } else {
+       $('.childCreate').hide();
+    }
+  }
   return _eqLogic;
 }
 
@@ -230,6 +238,23 @@ function addCmdToTable(_cmd) {
   });
 }
 
+$('#bt_childCreate').off('click').on('click', function () {
+  bootbox.prompt("{{Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)}}", function(endpoint){
+    if (endpoint) {
+      jeedom.z2m.device.childCreate({
+        id : $('.eqLogicAttr[data-l1key=id]').value(),
+        endpoint : endpoint,
+        error: function (error) {
+          $('#div_alert').showAlert({message: error.message, level: 'danger'});
+        },
+        success: function () {
+          $('#div_alert').showAlert({message: '{{Enfant créé avec succès}}', level: 'success'});
+          window.location.href = 'index.php?v=d&p=z2m&m=z2m';
+        }
+      });
+    }
+  });
+});
 
 
 function sync(){

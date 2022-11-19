@@ -21,6 +21,9 @@ $eqLogic = z2m::byId(init('id'));
 if (!is_object($eqLogic)) {
     throw new \Exception(__('Equipement introuvable : ', __FILE__) . init('id'));
 }
+if ($eqLogic->getConfiguration('isChild',0) == 1){
+    $eqLogic = eqLogic::byLogicalId(explode('|',$eqLogic->getLogicalId())[0],'z2m');
+}
 $devices = eqLogic::byType('z2m');
 $infos = z2m::getDeviceInfo($eqLogic->getLogicalId());
 $bridge_info = z2m::getDeviceInfo('bridge' . $eqLogic->getConfiguration('instance', 1));
