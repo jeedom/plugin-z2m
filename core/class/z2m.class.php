@@ -238,10 +238,9 @@ class z2m extends eqLogic {
         continue;
       }
 	  if (isset($values['device'])){
-		$eqLogic = eqLogic::byLogicalId(self::convert_to_addr($values['device']['ieeeAddr']), 'z2m');
-	  } else {
-		$eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
-	  }
+		$key = $values['device']['ieeeAddr'];
+	  } 
+	  $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
         foreach ($values as $logical_id => &$value) {
           if ($value === null) {
@@ -257,6 +256,7 @@ class z2m extends eqLogic {
           $eqLogic->checkAndUpdateCmd($logical_id, $value);
           if ($eqLogic->getConfiguration('multipleEndpoints',0) == 1){
             $explode = explode('_',$logical_id);
+            log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Searching for Child' . self::convert_to_addr($key).'|'.end($explode));
             $eqLogicChild = eqLogic::byLogicalId(self::convert_to_addr($key).'|'.end($explode), 'z2m');
             if (is_object($eqLogicChild)) {
               log::add('z2m', 'debug', $eqLogicChild->getHumanName() . ' Updating Child' . $logical_id . ' => ' . $value);
