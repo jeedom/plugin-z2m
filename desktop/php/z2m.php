@@ -58,7 +58,7 @@ sendVarToJS('devices_attr', $deviceAttr);
 				<span>{{Configuration}}</span>
 			</div>
 		</div>
-		<legend><i class="fas fa-table"></i> {{Mes templates}}</legend>
+		<legend><i class="fas fa-table"></i> {{Mes modules Zigbee}}</legend>
 		<div class="input-group" style="margin:5px;">
 			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic">
 			<div class="input-group-btn">
@@ -72,9 +72,11 @@ sendVarToJS('devices_attr', $deviceAttr);
 				if ($eqLogic->getConfiguration('isgroup', 0) != 0) {
 					continue;
 				}
+				$child = ($eqLogic->getConfiguration('isChild', 0) == 1) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_orange fas fa-user" title="Ce device est un enfant"></i>' : '';
+				$child .= ($eqLogic->getConfiguration('multipleEndpoints', 0) == 1 && $eqLogic->getConfiguration('ischild', 0) == 0) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-random" title="Ce device peut être séparé en enfants"></i>' : '';
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 				echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-				echo '<img src="' . $eqLogic->getImgFilePath() . '" />';
+				echo '<img src="' . $eqLogic->getImgFilePath() . '" />'. $child;
 				echo "<br/>";
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '</div>';

@@ -342,11 +342,22 @@ class z2m extends eqLogic {
           $eqLogic->setConfiguration('model', $device['definition']['model']);
         }
         $eqLogic->setConfiguration('instance', $_instanceNumber);
-        if (isset($device['endpoints']) && count(array_keys($device['endpoints']))>1){
-          $eqLogic->setConfiguration('multipleEndpoints', 1);
-        } else {
-          $eqLogic->setConfiguration('multipleEndpoints', 0);
+        $hasCmdEndpoints = 0;
+        foreach ($device['definition']['exposes'] as &$expose) {
+          if (isset($expose['features'])) {
+            foreach ($expose['features'] as $feature) {
+              if (isset($feature['endpoint'])){
+                $hasCmdEndpoints = 1;
+                break;
+              }
+            }
+          }
+          if (isset($expose['endpoint'])) {
+             $hasCmdEndpoints = 1;
+             break;
+          }
         }
+        $eqLogic->setConfiguration('multipleEndpoints', $hasCmdEndpoints);
         $eqLogic->save();
 
         $cmd = $eqLogic->getCmd('info', 'last_seen');
