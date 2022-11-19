@@ -237,10 +237,17 @@ class z2m extends eqLogic {
         self::handle_bridge($values);
         continue;
       }
-      $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
+	  if (isset($values['device'])){
+		$eqLogic = eqLogic::byLogicalId(self::convert_to_addr($values['device']['ieeeAddr']), 'z2m');
+	  } else {
+		$eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
+	  }
       if (is_object($eqLogic)) {
         foreach ($values as $logical_id => &$value) {
           if ($value === null) {
+            continue;
+          }
+		  if ($value == 'device') {
             continue;
           }
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value));
