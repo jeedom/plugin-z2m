@@ -247,7 +247,7 @@ class z2m extends eqLogic {
           if ($value === null) {
             continue;
           }
-		  if ($value == 'device') {
+		  if ($logical_id == 'device') {
             continue;
           }
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value));
