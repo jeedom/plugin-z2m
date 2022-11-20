@@ -237,16 +237,16 @@ class z2m extends eqLogic {
         self::handle_bridge($values);
         continue;
       }
-	  if (isset($values['device'])){
-		$key = $values['device']['ieeeAddr'];
-	  } 
-	  $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
+      if (isset($values['device'])){
+        $key = $values['device']['ieeeAddr'];
+      } 
+      $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
         foreach ($values as $logical_id => &$value) {
           if ($value === null) {
             continue;
           }
-		  if ($logical_id == 'device') {
+          if ($logical_id == 'device') {
             continue;
           }
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value));
@@ -261,7 +261,14 @@ class z2m extends eqLogic {
             if (is_object($eqLogicChild)) {
               log::add('z2m', 'debug', $eqLogicChild->getHumanName() . ' Updating Child' . $logical_id . ' => ' . $value);
               $eqLogicChild->checkAndUpdateCmd($logical_id, $value);
+              if (explode('_',$logical_id)[0] == 'battery' && strpos($logical_id, 'battery_low') === false) {
+                $eqLogicChild->batteryStatus(round($value));
+              }
             }
+          } else {
+              if (explode('_',$logical_id)[0] == 'battery' && strpos($logical_id, 'battery_low') === false) {
+                $eqLogic->batteryStatus(round($value));
+              }
           }
         }
         continue;
