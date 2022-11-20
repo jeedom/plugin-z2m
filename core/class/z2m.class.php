@@ -261,12 +261,12 @@ class z2m extends eqLogic {
             if (is_object($eqLogicChild)) {
               log::add('z2m', 'debug', $eqLogicChild->getHumanName() . ' Updating Child' . $logical_id . ' => ' . $value);
               $eqLogicChild->checkAndUpdateCmd($logical_id, $value);
-              if (explode('_',$logical_id)[0] == 'battery' && strpos($logical_id, 'battery_low') === false) {
+              if (explode('|',$logical_id)[0] == 'battery') {
                 $eqLogicChild->batteryStatus(round($value));
               }
             }
           } else {
-              if (explode('_',$logical_id)[0] == 'battery' && strpos($logical_id, 'battery_low') === false) {
+              if (explode('|',$logical_id)[0] == 'battery') {
                 $eqLogic->batteryStatus(round($value));
               }
           }
