@@ -239,7 +239,7 @@ function addCmdToTable(_cmd) {
 }
 
 $('#bt_childCreate').off('click').on('click', function () {
-  bootbox.prompt("{{Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)}}", function(endpoint){
+  bootbox.prompt("{{Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père). Si l'enfant existe il sera mis à jour avec les commandes manquantes.}}", function(endpoint){
     if (endpoint) {
       jeedom.z2m.device.childCreate({
         id : $('.eqLogicAttr[data-l1key=id]').value(),

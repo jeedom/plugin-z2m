@@ -41,9 +41,6 @@ try {
       throw new Exception(__('Z2m eqLogic non trouvé : ', __FILE__) . init('id'));
     }
     $childeqLogic = eqLogic::byLogicalId($eqLogic->getLogicalId() . '|l' . init('endpoint'), 'z2m');
-    if (is_object($childeqLogic)) {
-      throw new Exception(__('Un enfant existe déjà sur cet endpoint', __FILE__));
-    }
     $eqLogic->childCreate(init('endpoint'));
     ajax::success();
   }

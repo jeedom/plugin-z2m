@@ -495,25 +495,28 @@ class z2m extends eqLogic {
       $eqLogic->setConfiguration('multipleEndpoints', 0);
       $eqLogic->setConfiguration('isChild', 1);
       $eqLogic->save();
-      $cmd_link = array();
-      foreach($this->getCmd() as $sourceCmd){
-        if ($sourceCmd->getConfiguration('endpoint','l0') == 'l'.$_endpoint){
-            $cmdCopy = clone $sourceCmd;
-            $cmdCopy->setId('');
-            $cmdCopy->setName(str_replace(' l'.$_endpoint,'',$sourceCmd->getName()));
-            $cmdCopy->setEqLogic_id($eqLogic->getId());
-            $cmdCopy->save();
-            $cmd_link[$sourceCmd->getId()] = $cmdCopy;
+    }
+    $cmd_link = array();
+    foreach($this->getCmd() as $sourceCmd){
+      if ($sourceCmd->getConfiguration('endpoint','l0') == 'l'.$_endpoint){
+        $cmdCopy = $eqLogic->getCmd(null, $sourceCmd->getLogicalId());
+        if (!is_object($cmdCopy)) {
+          $cmdCopy = clone $sourceCmd;
+          $cmdCopy->setId('');
+          $cmdCopy->setName(str_replace(' l'.$_endpoint,'',$sourceCmd->getName()) .' '. $_endpoint);
+          $cmdCopy->setEqLogic_id($eqLogic->getId());
+          $cmdCopy->save();
+          $cmd_link[$sourceCmd->getId()] = $cmdCopy;
         }
       }
-      foreach (($this->getCmd()) as $cmd) {
-        if (!isset($cmd_link[$cmd->getId()])) {
-            continue;
-        }
-        if ($cmd->getValue() != '' && isset($cmd_link[$cmd->getValue()])) {
-            $cmd_link[$cmd->getId()]->setValue($cmd_link[$cmd->getValue()]->getId());
-            $cmd_link[$cmd->getId()]->save();
-        }
+    }
+    foreach (($this->getCmd()) as $cmd) {
+      if (!isset($cmd_link[$cmd->getId()])) {
+          continue;
+      }
+      if ($cmd->getValue() != '' && isset($cmd_link[$cmd->getValue()])) {
+          $cmd_link[$cmd->getId()]->setValue($cmd_link[$cmd->getValue()]->getId());
+          $cmd_link[$cmd->getId()]->save();
       }
     }
   }
