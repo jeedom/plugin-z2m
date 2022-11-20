@@ -159,10 +159,11 @@
         "Réseaux Zigbee": "Réseaux Zigbee",
         "Ajouter un groupe": "Ajouter un groupe",
         "Configuration": "Configuration",
-        "Mes templates": "Mes templates",
+        "Mes modules Zigbee": "Mes modules Zigbee",
         "Rechercher": "Rechercher",
         "Mes groupes Zigbee": "Mes groupes Zigbee",
         "Configuration avancée": "Configuration avancée",
+        "Créer un enfant": "Créer un enfant",
         "Dupliquer": "Dupliquer",
         "Sauvegarder": "Sauvegarder",
         "Supprimer": "Supprimer",
@@ -217,11 +218,15 @@
         "Historiser": "Historiser",
         "Inverser": "Inverser",
         "Tester": "Tester",
+        "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)": "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)",
+        "Enfant créé avec succès": "Enfant créé avec succès",
         "Synchronisation en cours": "Synchronisation en cours",
         "Operation realisee avec succes": "Operation realisee avec succes"
     },
     "plugins\/z2m\/core\/ajax\/z2m.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Z2m eqLogic non trouvé : ": "Z2m eqLogic non trouvé :",
+        "Un enfant existe déjà sur cet endpoint": "Un enfant existe déjà sur cet endpoint",
         "Aucune méthode correspondante à": "Aucune méthode correspondante à"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {

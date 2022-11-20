@@ -159,10 +159,11 @@
         "Réseaux Zigbee": "Zigbee-Netzwerke",
         "Ajouter un groupe": "Gruppe hinzufügen",
         "Configuration": "Aufbau",
-        "Mes templates": "Meine Vorlagen",
+        "Mes modules Zigbee": "Meine Zigbee-Module",
         "Rechercher": "Forschen",
         "Mes groupes Zigbee": "Meine Zigbee-Gruppen",
         "Configuration avancée": "Erweiterte Einrichtung",
+        "Créer un enfant": "Erstellen Sie ein Kind",
         "Dupliquer": "Duplikat",
         "Sauvegarder": "Zu schützen",
         "Supprimer": "Löschen",
@@ -217,11 +218,15 @@
         "Historiser": "Historisiere",
         "Inverser": "Umkehren",
         "Tester": "Prüfen",
+        "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)": "Sie möchten auf welchem Endpunkt ein Kind erstellen? (Vorsicht, niemals das Elterngerät löschen)",
+        "Enfant créé avec succès": "Kind erfolgreich erstellt",
         "Synchronisation en cours": "Synchronisierung läuft",
         "Operation realisee avec succes": "Operation erfolgreich durchgeführt"
     },
     "plugins\/z2m\/core\/ajax\/z2m.ajax.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "Z2m eqLogic non trouvé : ": "Z2m eqLogic nicht gefunden:",
+        "Un enfant existe déjà sur cet endpoint": "Auf diesem Endpunkt ist bereits ein Kind vorhanden",
         "Aucune méthode correspondante à": "Keine Matching-Methode"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {
