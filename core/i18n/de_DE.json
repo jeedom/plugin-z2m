@@ -218,7 +218,7 @@
         "Historiser": "Historisiere",
         "Inverser": "Umkehren",
         "Tester": "Prüfen",
-        "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)": "Sie möchten auf welchem Endpunkt ein Kind erstellen? (Vorsicht, niemals das Elterngerät löschen)",
+        "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père). Si l'enfant existe il sera mis à jour avec les commandes manquantes.": "Sie möchten auf welchem Endpunkt ein Kind erstellen? (Vorsicht, Sie sollten niemals das übergeordnete Gerät löschen). Wenn das untergeordnete Element vorhanden ist, wird es mit den fehlenden Befehlen aktualisiert",
         "Enfant créé avec succès": "Kind erfolgreich erstellt",
         "Synchronisation en cours": "Synchronisierung läuft",
         "Operation realisee avec succes": "Operation erfolgreich durchgeführt"
@@ -226,7 +226,6 @@
     "plugins\/z2m\/core\/ajax\/z2m.ajax.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Z2m eqLogic non trouvé : ": "Z2m eqLogic nicht gefunden:",
-        "Un enfant existe déjà sur cet endpoint": "Auf diesem Endpunkt ist bereits ein Kind vorhanden",
         "Aucune méthode correspondante à": "Keine Matching-Methode"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {

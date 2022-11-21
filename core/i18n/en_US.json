@@ -218,7 +218,7 @@
         "Historiser": "Historize",
         "Inverser": "Reverse",
         "Tester": "Test",
-        "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père)": "You want to create a child on which endpoint? (be careful, never delete the parent device)",
+        "Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père). Si l'enfant existe il sera mis à jour avec les commandes manquantes.": "You want to create a child on which endpoint? (be careful, you should never delete the parent device). If the child exists it will be updated with the missing commands",
         "Enfant créé avec succès": "Child created successfully",
         "Synchronisation en cours": "Synchronization in progress",
         "Operation realisee avec succes": "Operation carried out successfully"
@@ -226,7 +226,6 @@
     "plugins\/z2m\/core\/ajax\/z2m.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
         "Z2m eqLogic non trouvé : ": "Z2m eqLogic not found:",
-        "Un enfant existe déjà sur cet endpoint": "A child already exists on this endpoint",
         "Aucune méthode correspondante à": "No matching method"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {
