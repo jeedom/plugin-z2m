@@ -237,9 +237,9 @@ class z2m extends eqLogic {
         self::handle_bridge($values);
         continue;
       }
-      if (isset($values['device'])){
+      if (isset($values['device'])) {
         $key = $values['device']['ieeeAddr'];
-      } 
+      }
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
         foreach ($values as $logical_id => &$value) {
@@ -254,21 +254,21 @@ class z2m extends eqLogic {
             $value = date('Y-m-d H:i:s', $value / 1000);
           }
           $eqLogic->checkAndUpdateCmd($logical_id, $value);
-          if ($eqLogic->getConfiguration('multipleEndpoints',0) == 1){
-            $explode = explode('_',$logical_id);
-            log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Searching for Child' . self::convert_to_addr($key).'|'.end($explode));
-            $eqLogicChild = eqLogic::byLogicalId(self::convert_to_addr($key).'|'.end($explode), 'z2m');
+          if ($eqLogic->getConfiguration('multipleEndpoints', 0) == 1) {
+            $explode = explode('_', $logical_id);
+            log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Searching for Child' . self::convert_to_addr($key) . '|' . end($explode));
+            $eqLogicChild = eqLogic::byLogicalId(self::convert_to_addr($key) . '|' . end($explode), 'z2m');
             if (is_object($eqLogicChild)) {
               log::add('z2m', 'debug', $eqLogicChild->getHumanName() . ' Updating Child' . $logical_id . ' => ' . $value);
               $eqLogicChild->checkAndUpdateCmd($logical_id, $value);
-              if (explode('|',$logical_id)[0] == 'battery') {
+              if (explode('|', $logical_id)[0] == 'battery') {
                 $eqLogicChild->batteryStatus(round($value));
               }
             }
           } else {
-              if (explode('|',$logical_id)[0] == 'battery') {
-                $eqLogic->batteryStatus(round($value));
-              }
+            if (explode('|', $logical_id)[0] == 'battery') {
+              $eqLogic->batteryStatus(round($value));
+            }
           }
         }
         continue;
@@ -360,15 +360,15 @@ class z2m extends eqLogic {
         foreach ($device['definition']['exposes'] as &$expose) {
           if (isset($expose['features'])) {
             foreach ($expose['features'] as $feature) {
-              if (isset($feature['endpoint'])){
+              if (isset($feature['endpoint'])) {
                 $hasCmdEndpoints = 1;
                 break;
               }
             }
           }
           if (isset($expose['endpoint'])) {
-             $hasCmdEndpoints = 1;
-             break;
+            $hasCmdEndpoints = 1;
+            break;
           }
         }
         $eqLogic->setConfiguration('multipleEndpoints', $hasCmdEndpoints);
@@ -478,7 +478,7 @@ class z2m extends eqLogic {
     }
     return $p;
   }
-  
+
   public function childCreate($_endpoint) {
     log::add('z2m', 'debug', 'Child Create For : ' . $_endpoint);
     $ieee = $this->getLogicalId();
@@ -497,13 +497,13 @@ class z2m extends eqLogic {
       $eqLogic->save();
     }
     $cmd_link = array();
-    foreach($this->getCmd() as $sourceCmd){
-      if ($sourceCmd->getConfiguration('endpoint','l0') == 'l'.$_endpoint){
+    foreach ($this->getCmd() as $sourceCmd) {
+      if ($sourceCmd->getConfiguration('endpoint', 'l0') == 'l' . $_endpoint) {
         $cmdCopy = $eqLogic->getCmd(null, $sourceCmd->getLogicalId());
         if (!is_object($cmdCopy)) {
           $cmdCopy = clone $sourceCmd;
           $cmdCopy->setId('');
-          $cmdCopy->setName(str_replace(' l'.$_endpoint,'',$sourceCmd->getName()) .' '. $_endpoint);
+          $cmdCopy->setName(str_replace(' l' . $_endpoint, '', $sourceCmd->getName()) . ' ' . $_endpoint);
           $cmdCopy->setEqLogic_id($eqLogic->getId());
           $cmdCopy->save();
           $cmd_link[$sourceCmd->getId()] = $cmdCopy;
@@ -512,11 +512,11 @@ class z2m extends eqLogic {
     }
     foreach (($this->getCmd()) as $cmd) {
       if (!isset($cmd_link[$cmd->getId()])) {
-          continue;
+        continue;
       }
       if ($cmd->getValue() != '' && isset($cmd_link[$cmd->getValue()])) {
-          $cmd_link[$cmd->getId()]->setValue($cmd_link[$cmd->getValue()]->getId());
-          $cmd_link[$cmd->getId()]->save();
+        $cmd_link[$cmd->getId()]->setValue($cmd_link[$cmd->getValue()]->getId());
+        $cmd_link[$cmd->getId()]->save();
       }
     }
   }
@@ -551,7 +551,7 @@ class z2m extends eqLogic {
     if (!isset($cmd_ref['name'])) {
       $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
     }
-	if (isset($_infos['endpoint'])) {
+    if (isset($_infos['endpoint'])) {
       $cmd_ref['name'] .= ' ' . $_infos['endpoint'];
     }
     if (!isset($cmd_ref['configuration'])) {
@@ -576,11 +576,11 @@ class z2m extends eqLogic {
   }
 
   /*     * *********************Methode d'instance************************* */
-   public function createCmd($_infos, $_type = null) {
+  public function createCmd($_infos, $_type = null) {
     $cmd_ref = self::getCmdConf($_infos, null, $_type);
     $logical = $_infos['name'];
-    if (isset($_infos['endpoint'])){
-        $logical.='_'.$_infos['endpoint'];
+    if (isset($_infos['endpoint'])) {
+      $logical .= '_' . $_infos['endpoint'];
     }
     $cmd = $this->getCmd('info', $logical);
     if (!is_object($cmd)) {
@@ -588,8 +588,8 @@ class z2m extends eqLogic {
       $cmd->setLogicalId($logical);
       utils::a2o($cmd, $cmd_ref);
     }
-    if (isset($_infos['endpoint'])){
-      $cmd->setConfiguration('endpoint',$_infos['endpoint']);
+    if (isset($_infos['endpoint'])) {
+      $cmd->setConfiguration('endpoint', $_infos['endpoint']);
     }
     $cmd->setEqLogic_id($this->getId());
     $cmd->save();
@@ -611,8 +611,8 @@ class z2m extends eqLogic {
           $cmd = $this->getCmd('action', $logical_id);
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
-            if (isset($_infos['endpoint'])){
-              $cmd->setConfiguration('endpoint',$_infos['endpoint']);
+            if (isset($_infos['endpoint'])) {
+              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
             }
             $cmd->setLogicalId($logical_id);
             utils::a2o($cmd, $cmd_ref);
@@ -630,8 +630,8 @@ class z2m extends eqLogic {
         $cmd = $this->getCmd('action', $logical . '::#slider#');
         if (!is_object($cmd)) {
           $cmd = new z2mCmd();
-          if (isset($_infos['endpoint'])){
-            $cmd->setConfiguration('endpoint',$_infos['endpoint']);
+          if (isset($_infos['endpoint'])) {
+            $cmd->setConfiguration('endpoint', $_infos['endpoint']);
           }
           $cmd->setLogicalId($logical  . '::#slider#');
           utils::a2o($cmd, $cmd_ref);
@@ -649,8 +649,8 @@ class z2m extends eqLogic {
           $cmd = $this->getCmd('action', $logical . '::' . $enum);
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
-            if (isset($_infos['endpoint'])){
-              $cmd->setConfiguration('endpoint',$_infos['endpoint']);
+            if (isset($_infos['endpoint'])) {
+              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
             }
             $cmd->setLogicalId($logical . '::' . $enum);
             utils::a2o($cmd, $cmd_ref);
@@ -744,6 +744,7 @@ class z2mCmd extends cmd {
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
+    $replace = array();
     switch ($this->getSubType()) {
       case 'slider':
         $replace['#slider#'] = round(floatval($_options['slider']), 2);
@@ -775,7 +776,7 @@ class z2mCmd extends cmd {
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
     }
-    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|',$eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
+    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
   }
 
   /*     * **********************Getteur Setteur*************************** */
