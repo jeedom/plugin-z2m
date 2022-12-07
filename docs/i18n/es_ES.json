@@ -1,5 +1,6 @@
 {
     "changelog.md": {
+        "Changelog jeeZigbee": "Registro de cambios jeeZigbee",
         "Changelog Zigbee2Mqtt": "Registro de cambios Zigbee2Mqtt",
         "Changelog plugin template": "Plantilla de complemento de registro de cambios",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
