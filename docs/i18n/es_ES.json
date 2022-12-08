@@ -1,5 +1,6 @@
 {
     "changelog.md": {
+        "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "Changelog jeeZigbee": "Registro de cambios jeeZigbee",
         "Changelog Zigbee2Mqtt": "Registro de cambios Zigbee2Mqtt",
         "Changelog plugin template": "Plantilla de complemento de registro de cambios",
