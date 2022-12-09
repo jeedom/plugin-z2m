@@ -114,8 +114,11 @@ class z2m extends eqLogic {
   public static function configure_z2m_deamon() {
     self::postConfig_mqtt_topic();
     $mqtt = mqtt2::getFormatedInfos();
-    $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
-    $configuration = yaml_parse_file($z2m_path . '/data/configuration.yaml');
+    $data_path = dirname(__FILE__) . '/../../data';
+    if (!is_dir($data_path)) {
+        mkdir($data_path, 0777, true);
+    }
+    $configuration = yaml_parse_file($data_path . '/configuration.yaml');
     $configuration['permit_join'] = false;
 
     $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'];
@@ -123,6 +126,7 @@ class z2m extends eqLogic {
     $configuration['mqtt']['user'] = $mqtt['user'];
     $configuration['mqtt']['password'] = $mqtt['password'];
     $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m');
+    $configuration['mqtt']['include_device_information'] = true;
 
     $configuration['serial']['port'] = jeedom::getUsbMapping(config::byKey('port', 'z2m'));
 
@@ -135,23 +139,37 @@ class z2m extends eqLogic {
     $configuration['frontend']['port'] = 8080;
     $configuration['frontend']['host'] = '0.0.0.0';
 
+    $configuration['advanced']['last_seen'] = 'ISO_8601';
+
     if (config::byKey('z2m_auth_token', 'z2m', '') == '') {
       config::save('z2m_auth_token', config::genKey(32), 'z2m');
     }
     $configuration['frontend']['auth_token'] = config::byKey('z2m_auth_token', 'z2m');
+    
+    $converter_path =  dirname(__FILE__) . '/../config/converters';
+    $converters = array();
+    foreach (ls($converter_path, '*', false, array('folders', 'quiet')) as $folder) {
+        foreach (ls($converter_path . '/' . $folder, '*.js', false, array('files', 'quiet')) as $file) {
+            $converters[] = $converter_path . '/' . $folder . $file;
+        }
+    }
+    $configuration['external_converters'] = $converters;
 
-    file_put_contents($z2m_path . '/data/configuration.yaml', yaml_emit($configuration));
+    file_put_contents($data_path . '/configuration.yaml', yaml_emit($configuration));
   }
 
   public static function deamon_start() {
     self::deamon_stop();
     self::configure_z2m_deamon();
+    $data_path = dirname(__FILE__) . '/../../data';
     $deamon_info = self::deamon_info();
     if ($deamon_info['launchable'] != 'ok') {
       throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
     }
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
-    $cmd = 'npm start --prefix ' . $z2m_path;
+    $cmd = '';
+    $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
+    $cmd .= ' npm start --prefix ' . $z2m_path;
     log::add(__CLASS__, 'info', __('Démarrage du démon Z2M', __FILE__) . ' : ' . $cmd);
     exec(system::getCmdSudo() . $cmd . ' >> ' . log::getPathToLog('z2md') . ' 2>&1 &');
     $i = 0;
