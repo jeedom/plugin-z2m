@@ -76,7 +76,7 @@ module.exports = [
             {modelID: '0x8035', manufacturerName: 'Danfoss'}], // RTbattery Dial Infrared
         model: 'Icon',
         vendor: 'Danfoss',
-        description: 'Icon floor heating (regulator, Zigbee module & thermostats)',
+        description: 'Icon floor heating (regulator, Zigbee module & thermostats) - Jeedom',
         fromZigbee: [
             fz.temperature,
             fz.danfoss_icon_regulator,
