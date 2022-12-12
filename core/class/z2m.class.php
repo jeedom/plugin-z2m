@@ -121,8 +121,8 @@ class z2m extends eqLogic {
     $configuration = yaml_parse_file($data_path . '/configuration.yaml');
     $configuration['permit_join'] = false;
 
-    $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'];
-    $configuration['mqtt']['port'] = (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
+    $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'].':';
+    $configuration['mqtt']['server'] .= (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
     $configuration['mqtt']['user'] = $mqtt['user'];
     $configuration['mqtt']['password'] = $mqtt['password'];
     $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m');
