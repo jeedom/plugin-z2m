@@ -150,7 +150,7 @@ class z2m extends eqLogic {
     $converters = array();
     foreach (ls($converter_path, '*', false, array('folders', 'quiet')) as $folder) {
         foreach (ls($converter_path . '/' . $folder, '*.js', false, array('files', 'quiet')) as $file) {
-            $converters[] = '/../core/config/converters/' . $folder . $file;
+            $converters[] = $converter_path .'/' . $folder . $file;
         }
     }
     $configuration['external_converters'] = $converters;
