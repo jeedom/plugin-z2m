@@ -116,12 +116,12 @@ class z2m extends eqLogic {
     $mqtt = mqtt2::getFormatedInfos();
     $data_path = dirname(__FILE__) . '/../../data';
     if (!is_dir($data_path)) {
-        mkdir($data_path, 0777, true);
+      mkdir($data_path, 0777, true);
     }
     $configuration = yaml_parse_file($data_path . '/configuration.yaml');
     $configuration['permit_join'] = false;
 
-    $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'].':';
+    $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'] . ':';
     $configuration['mqtt']['server'] .= (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
     $configuration['mqtt']['user'] = $mqtt['user'];
     $configuration['mqtt']['password'] = $mqtt['password'];
@@ -145,13 +145,13 @@ class z2m extends eqLogic {
       config::save('z2m_auth_token', config::genKey(32), 'z2m');
     }
     $configuration['frontend']['auth_token'] = config::byKey('z2m_auth_token', 'z2m');
-    
+
     $converter_path =  dirname(__FILE__) . '/../config/converters';
     $converters = array();
     foreach (ls($converter_path, '*', false, array('folders', 'quiet')) as $folder) {
-        foreach (ls($converter_path . '/' . $folder, '*.js', false, array('files', 'quiet')) as $file) {
-            $converters[] = $converter_path .'/' . $folder . $file;
-        }
+      foreach (ls($converter_path . '/' . $folder, '*.js', false, array('files', 'quiet')) as $file) {
+        $converters[] = $converter_path . '/' . $folder . $file;
+      }
     }
     $configuration['external_converters'] = $converters;
 
@@ -269,7 +269,7 @@ class z2m extends eqLogic {
           }
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value));
           if ($logical_id == 'last_seen') {
-            $value = date('Y-m-d H:i:s', $value / 1000);
+            $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
           $eqLogic->checkAndUpdateCmd($logical_id, $value);
           if ($eqLogic->getConfiguration('multipleEndpoints', 0) == 1) {
@@ -610,7 +610,11 @@ class z2m extends eqLogic {
       $cmd->setConfiguration('endpoint', $_infos['endpoint']);
     }
     $cmd->setEqLogic_id($this->getId());
-    $cmd->save();
+    try {
+      $cmd->save();
+    } catch (\Throwable $th) {
+      log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+    }
     $link_cmd_id = $cmd->getId();
 
     if ($_infos['access'] == 7 || $_infos['access'] == 3) {
@@ -637,7 +641,11 @@ class z2m extends eqLogic {
           }
           $cmd->setEqLogic_id($this->getId());
           $cmd->setValue($link_cmd_id);
-          $cmd->save();
+          try {
+            $cmd->save();
+          } catch (\Throwable $th) {
+            log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          }
         }
       }
 
@@ -656,7 +664,11 @@ class z2m extends eqLogic {
         }
         $cmd->setEqLogic_id($this->getId());
         $cmd->setValue($link_cmd_id);
-        $cmd->save();
+        try {
+          $cmd->save();
+        } catch (\Throwable $th) {
+          log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+        }
       }
 
       if ($_infos['type'] == 'enum') {
@@ -675,7 +687,11 @@ class z2m extends eqLogic {
           }
           $cmd->setEqLogic_id($this->getId());
           $cmd->setValue($link_cmd_id);
-          $cmd->save();
+          try {
+            $cmd->save();
+          } catch (\Throwable $th) {
+            log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          }
         }
       }
     }

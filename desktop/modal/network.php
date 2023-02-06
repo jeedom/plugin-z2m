@@ -294,7 +294,11 @@ sendVarToJS('z2m_network_map', $map);
                         $lqi = $eqLogic->getCmd('info', 'linkquality');
                         if (is_object($lqi)) {
                             echo $lqi->execCmd();
+                        } else {
+                            echo 'N/A';
                         }
+                    } else {
+                        echo 'N/A';
                     }
                     echo '</td>';
                     echo '<td>';
@@ -305,7 +309,11 @@ sendVarToJS('z2m_network_map', $map);
                         $last_seen = $eqLogic->getCmd('info', 'last_seen');
                         if (is_object($last_seen)) {
                             echo $last_seen->execCmd();
+                        } else {
+                            echo 'N/A';
                         }
+                    } else {
+                        echo 'N/A';
                     }
                     echo '</td>';
                     echo '<td>';
