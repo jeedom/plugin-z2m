@@ -694,6 +694,42 @@ class z2m extends eqLogic {
           }
         }
       }
+      if ($_infos['type'] == 'composite') {
+        switch ($_infos['name']) {
+          case 'color_xy':
+            $cmd = $this->getCmd('action', $logical);
+            if (!is_object($cmd)) {
+              $cmd = new z2mCmd();
+              $cmd->setName('Couleur');
+              if (isset($_infos['endpoint'])) {
+                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+                $cmd->setName('Couleur ' . $_infos['endpoint']);
+              }
+              $cmd->setLogicalId($logical);
+            }
+            $cmd->setType('action');
+            $cmd->setSubType('color');
+            $cmd->setconfiguration('color_mode', 'xy');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->save();
+
+            if (!is_object($cmd)) {
+              $cmd = new z2mCmd();
+              $cmd->setName('Couleur état');
+              if (isset($_infos['endpoint'])) {
+                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+                $cmd->setName('Couleur état ' . $_infos['endpoint']);
+              }
+              $cmd->setLogicalId($logical);
+            }
+            $cmd->setType('info');
+            $cmd->setSubType('string');
+            $cmd->setconfiguration('color_mode', 'xy');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->save();
+            break;
+        }
+      }
     }
   }
 
@@ -786,7 +822,7 @@ class z2mCmd extends cmd {
       case 'color':
         list($r, $g, $b) = str_split(str_replace('#', '', $_options['color']), 2);
         $info = self::convertRGBToXY(hexdec($r), hexdec($g), hexdec($b));
-        $replace['#color#'] = round($info['x'] * 65535) . '::' . round($info['y'] * 65535);
+        $color = array('x' => round($info['x'] * 65535), 'y' => round($info['y'] * 65535));
         break;
       case 'select':
         $replace['#select#'] = $_options['select'];
@@ -805,7 +841,12 @@ class z2mCmd extends cmd {
     } else if ($info[1] == 'false') {
       $info[1] = false;
     }
-    $datas = array($info[0] =>  $info[1]);
+
+    if ($this->getSubtype() == 'color' && isset($color)) {
+      $datas = array('color' =>  $color);
+    } else {
+      $datas = array($info[0] =>  $info[1]);
+    }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
