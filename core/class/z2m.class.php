@@ -831,7 +831,7 @@ class z2mCmd extends cmd {
       case 'color':
         list($r, $g, $b) = str_split(str_replace('#', '', $_options['color']), 2);
         $info = self::convertRGBToXY(hexdec($r), hexdec($g), hexdec($b));
-        $color = array('x' => round($info['x'] * 65535), 'y' => round($info['y'] * 65535));
+        $color = array('x' => round($info['x']), 'y' => round($info['y']));
         break;
       case 'select':
         $replace['#select#'] = $_options['select'];
