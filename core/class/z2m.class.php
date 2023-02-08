@@ -711,8 +711,13 @@ class z2m extends eqLogic {
             $cmd->setSubType('color');
             $cmd->setconfiguration('color_mode', 'xy');
             $cmd->setEqLogic_id($this->getId());
-            $cmd->save();
+            try {
+              $cmd->save();
+            } catch (\Throwable $th) {
+              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            }
 
+            $cmd = $this->getCmd('info', $logical);
             if (!is_object($cmd)) {
               $cmd = new z2mCmd();
               $cmd->setName('Couleur état');
@@ -726,7 +731,11 @@ class z2m extends eqLogic {
             $cmd->setSubType('string');
             $cmd->setconfiguration('color_mode', 'xy');
             $cmd->setEqLogic_id($this->getId());
-            $cmd->save();
+            try {
+              $cmd->save();
+            } catch (\Throwable $th) {
+              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            }
             break;
         }
       }
