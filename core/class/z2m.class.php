@@ -271,9 +271,8 @@ class z2m extends eqLogic {
           if ($logical_id == 'last_seen') {
             $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
-          if($logical_id == 'color'){
-            $value = z2mCmd::convertXYToRGB($value['x'],$value['y']);
-            $logical_id = 
+          if ($logical_id == 'color') {
+            $value = z2mCmd::convertXYToRGB($value['x'], $value['y']);
           }
           $eqLogic->checkAndUpdateCmd($logical_id, $value);
           if ($eqLogic->getConfiguration('multipleEndpoints', 0) == 1) {
