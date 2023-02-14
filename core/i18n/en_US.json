@@ -245,6 +245,6 @@
         "Le message et le sujet ne peuvent pas être vide": "Message and subject cannot be empty"
     },
     "info.json": {
-        "Template servant de base à la création de plugins pour Jeedom": "Template serving as a basis for the creation of plugins for Jeedom"
+        "Plugin permettant d'utiliser le zigbee, basé sur zigbee2mqtt.": "Plugin allowing to use the zigbee, based on zigbee2mqtt"
     }
 }
