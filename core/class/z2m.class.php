@@ -272,8 +272,9 @@ class z2m extends eqLogic {
             $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
           if ($logical_id == 'color') {
-            $color = z2mCmd::convertXYToRGB($value['x'], $value['y']);
-            $value = sprintf("#%02x%02x%02x", $color['red'], $color['blue'], $color['green']);
+            $bri = (isset($values['brightness'])) ? $values['brightness'] : 255;
+            $color = z2mCmd::convertXYToRGB($value['x'], $value['y'], $bri);
+            $value = sprintf("#%02x%02x%02x", $color['red'], $color['green'], $color['blue']);
           }
           log::add('z2m', 'debug', $eqLogic->getHumanName() . ' Check for update ' . $logical_id . ' => ' . json_encode($value) . ', raw : ' . json_encode($raw_value));
           $eqLogic->checkAndUpdateCmd($logical_id, $value);
