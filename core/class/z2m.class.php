@@ -702,6 +702,28 @@ class z2m extends eqLogic {
       if ($_infos['type'] == 'composite') {
         switch ($_infos['name']) {
           case 'color_xy':
+            $info_color_id = null;
+            $cmd = $this->getCmd('info', $logical);
+            if (!is_object($cmd)) {
+              $cmd = new z2mCmd();
+              $cmd->setName('Couleur état');
+              if (isset($_infos['endpoint'])) {
+                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+                $cmd->setName('Couleur état ' . $_infos['endpoint']);
+              }
+              $cmd->setLogicalId('color');
+            }
+            $cmd->setType('info');
+            $cmd->setSubType('string');
+            $cmd->setconfiguration('color_mode', 'xy');
+            $cmd->setEqLogic_id($this->getId());
+            try {
+              $cmd->save();
+              $info_color_id = $cmd->getId();
+            } catch (\Throwable $th) {
+              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            }
+
             $cmd = $this->getCmd('action', $logical);
             if (!is_object($cmd)) {
               $cmd = new z2mCmd();
@@ -716,26 +738,7 @@ class z2m extends eqLogic {
             $cmd->setSubType('color');
             $cmd->setconfiguration('color_mode', 'xy');
             $cmd->setEqLogic_id($this->getId());
-            try {
-              $cmd->save();
-            } catch (\Throwable $th) {
-              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
-            }
-
-            $cmd = $this->getCmd('info', $logical);
-            if (!is_object($cmd)) {
-              $cmd = new z2mCmd();
-              $cmd->setName('Couleur état');
-              if (isset($_infos['endpoint'])) {
-                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-                $cmd->setName('Couleur état ' . $_infos['endpoint']);
-              }
-              $cmd->setLogicalId($logical);
-            }
-            $cmd->setType('info');
-            $cmd->setSubType('string');
-            $cmd->setconfiguration('color_mode', 'xy');
-            $cmd->setEqLogic_id($this->getId());
+            $cmd->setValue($info_color_id);
             try {
               $cmd->save();
             } catch (\Throwable $th) {
