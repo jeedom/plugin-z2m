@@ -704,7 +704,7 @@ class z2m extends eqLogic {
         switch ($_infos['name']) {
           case 'color_xy':
             $info_color_id = null;
-            $cmd = $this->getCmd('info', $logical);
+            $cmd = $this->getCmd('info', 'color');
             if (!is_object($cmd)) {
               $cmd = new z2mCmd();
               $cmd->setName('Couleur état');
