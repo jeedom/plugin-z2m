@@ -174,6 +174,9 @@ class z2m extends eqLogic {
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
     $cmd = '';
     $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
+    if (log::convertLogLevel(log::getLogLevel('z2m')) == 'debug') {
+      $cmd .= ' DEBUG=zigbee-herdsman*';
+    }
     $cmd .= ' npm start --prefix ' . $z2m_path;
     log::add(__CLASS__, 'info', __('Démarrage du démon Z2M', __FILE__) . ' : ' . $cmd);
     exec(system::getCmdSudo() . $cmd . ' >> ' . log::getPathToLog('z2md') . ' 2>&1 &');
