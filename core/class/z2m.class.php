@@ -155,6 +155,11 @@ class z2m extends eqLogic {
     }
     $configuration['external_converters'] = $converters;
 
+    if (log::convertLogLevel(log::getLogLevel('z2m')) == 'debug') {
+      $configuration['advanced']['log_level'] = 'debug';
+    } else {
+      $configuration['advanced']['log_level'] = 'info';
+    }
     file_put_contents($data_path . '/configuration.yaml', yaml_emit($configuration));
   }
 
