@@ -571,6 +571,9 @@ class z2m extends eqLogic {
   }
 
   public static function getCmdConf($_infos, $_suffix = null, $_preffix = null) {
+    if ($_infos['type'] == 'composite' && $_infos['name'] == 'color_xy') {
+      return null;
+    }
     if (self::$_cmd_converter == null) {
       self::$_cmd_converter = json_decode(file_get_contents(__DIR__ . '/../config/cmd.json'), true);
     }
@@ -610,8 +613,8 @@ class z2m extends eqLogic {
   /*     * *********************Methode d'instance************************* */
   public function createCmd($_infos, $_type = null) {
     $link_cmd_id = null;
-    if ($_infos['type'] != 'composite') {
-      $cmd_ref = self::getCmdConf($_infos, null, $_type);
+    $cmd_ref = self::getCmdConf($_infos, null, $_type);
+    if (is_array($cmd_ref) && count($cmd_ref) > 0) {
       $logical = $_infos['name'];
       if (isset($_infos['endpoint'])) {
         $logical .= '_' . $_infos['endpoint'];
