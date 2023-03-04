@@ -731,6 +731,7 @@ class z2m extends eqLogic {
             $cmd->setType('info');
             $cmd->setSubType('string');
             $cmd->setconfiguration('color_mode', 'xy');
+            $cmd->setGenericType('LIGHT_COLOR');
             $cmd->setEqLogic_id($this->getId());
             try {
               $cmd->save();
@@ -751,6 +752,7 @@ class z2m extends eqLogic {
             }
             $cmd->setType('action');
             $cmd->setSubType('color');
+            $cmd->setGenericType('LIGHT_SET_COLOR');
             $cmd->setconfiguration('color_mode', 'xy');
             $cmd->setEqLogic_id($this->getId());
             $cmd->setValue($info_color_id);
