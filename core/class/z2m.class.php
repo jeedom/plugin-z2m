@@ -613,31 +613,33 @@ class z2m extends eqLogic {
   /*     * *********************Methode d'instance************************* */
   public function createCmd($_infos, $_type = null) {
     $link_cmd_id = null;
-    $cmd_ref = self::getCmdConf($_infos, null, $_type);
-    if (is_array($cmd_ref) && count($cmd_ref) > 0) {
-      $logical = $_infos['name'];
-      if (isset($_infos['endpoint'])) {
-        $logical .= '_' . $_infos['endpoint'];
+    if ($_infos['access'] != 2) {
+      $cmd_ref = self::getCmdConf($_infos, null, $_type);
+      if (is_array($cmd_ref) && count($cmd_ref) > 0) {
+        $logical = $_infos['name'];
+        if (isset($_infos['endpoint'])) {
+          $logical .= '_' . $_infos['endpoint'];
+        }
+        $cmd = $this->getCmd('info', $logical);
+        if (!is_object($cmd)) {
+          $cmd = new z2mCmd();
+          $cmd->setLogicalId($logical);
+          utils::a2o($cmd, $cmd_ref);
+        }
+        if (isset($_infos['endpoint'])) {
+          $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+        }
+        $cmd->setEqLogic_id($this->getId());
+        try {
+          $cmd->save();
+        } catch (\Throwable $th) {
+          log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+        }
+        $link_cmd_id = $cmd->getId();
       }
-      $cmd = $this->getCmd('info', $logical);
-      if (!is_object($cmd)) {
-        $cmd = new z2mCmd();
-        $cmd->setLogicalId($logical);
-        utils::a2o($cmd, $cmd_ref);
-      }
-      if (isset($_infos['endpoint'])) {
-        $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-      }
-      $cmd->setEqLogic_id($this->getId());
-      try {
-        $cmd->save();
-      } catch (\Throwable $th) {
-        log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
-      }
-      $link_cmd_id = $cmd->getId();
     }
 
-    if ($_infos['access'] == 7 || $_infos['access'] == 3) {
+    if ($_infos['access'] == 7 || $_infos['access'] == 3 || $_infos['access'] == 2) {
       foreach (self::$_action_cmd as $k => $v) {
         if (isset($_infos[$k])) {
           if ($_infos[$k] === false) {
