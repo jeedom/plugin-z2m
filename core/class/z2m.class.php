@@ -613,7 +613,7 @@ class z2m extends eqLogic {
   /*     * *********************Methode d'instance************************* */
   public function createCmd($_infos, $_type = null) {
     $link_cmd_id = null;
-    if ($_infos['access'] != 2) {
+    if ($_infos['access'] != 2 && $_infos['access'] != 4 && $_infos['access'] != 6) {
       $cmd_ref = self::getCmdConf($_infos, null, $_type);
       if (is_array($cmd_ref) && count($cmd_ref) > 0) {
         $logical = $_infos['name'];
@@ -639,7 +639,7 @@ class z2m extends eqLogic {
       }
     }
 
-    if ($_infos['access'] == 7 || $_infos['access'] == 3 || $_infos['access'] == 2) {
+    if ($_infos['access'] == 7 || $_infos['access'] == 3 || $_infos['access'] == 2 || $_infos['access'] == 6) {
       foreach (self::$_action_cmd as $k => $v) {
         if (isset($_infos[$k])) {
           if ($_infos[$k] === false) {
