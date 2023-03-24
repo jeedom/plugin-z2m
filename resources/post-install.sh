@@ -26,6 +26,7 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
     echo "Backup configuration"
     cp -R data data-backup
     echo "Update z2m (git)"
+    git config --global --add safe.directory ${BASEDIR}/zigbee2mqtt
     git reset --hard HEAD
     git pull
     npm ci
