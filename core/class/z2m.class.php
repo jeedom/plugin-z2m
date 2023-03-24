@@ -671,6 +671,11 @@ class z2m extends eqLogic {
         }
       }
 
+      $logical = $_infos['name'];
+      if (isset($_infos['endpoint'])) {
+        $logical .= '_' . $_infos['endpoint'];
+      }
+
       if ($_infos['type'] == 'numeric') {
         $cmd_ref = self::getCmdConf($_infos, 'slider', $_type);
         $cmd_ref['type'] = 'action';
