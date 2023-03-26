@@ -47,6 +47,11 @@ sendVarToJS('devices_attr', $deviceAttr);
 				<br>
 				<span>{{Réseaux Zigbee}}</span>
 			</div>
+			<div class="cursor logoSecondary" id="bt_syncEqLogicZ2m">
+				<i class="fas fa-sync-alt"></i>
+				<br>
+				<span>{{Synchronisation}}</span>
+			</div>
 			<div class="cursor logoSecondary" id="bt_addGroup">
 				<i class="fas fa-object-group"></i>
 				<br>
@@ -76,7 +81,7 @@ sendVarToJS('devices_attr', $deviceAttr);
 				$child .= ($eqLogic->getConfiguration('multipleEndpoints', 0) == 1 && $eqLogic->getConfiguration('ischild', 0) == 0) ? '<i style="position:absolute;font-size:1.5rem!important;right:10px;top:10px;" class="icon_green fas fa-random" title="Ce device peut être séparé en enfants"></i>' : '';
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 				echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-				echo '<img src="' . $eqLogic->getImgFilePath() . '" />'. $child;
+				echo '<img src="' . $eqLogic->getImgFilePath() . '" />' . $child;
 				echo "<br/>";
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '</div>';
