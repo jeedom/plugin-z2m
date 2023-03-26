@@ -605,7 +605,17 @@ class z2m extends eqLogic {
       $cmd_ref['type'] = 'info';
     }
     if (!isset($cmd_ref['subType'])) {
-      $cmd_ref['subType'] = ($_infos['type'] == 'enum') ? 'string' : $_infos['type'];
+      switch ($_infos['type']) {
+        case 'enum':
+          $cmd_ref['subType'] = 'string';
+          break;
+        case 'text':
+          $cmd_ref['subType'] = 'string';
+          break;
+        default:
+          $cmd_ref['subType'] = $_infos['type'];
+          break;
+      }
     }
     return $cmd_ref;
   }
