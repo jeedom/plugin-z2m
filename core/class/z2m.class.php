@@ -623,13 +623,13 @@ class z2m extends eqLogic {
   /*     * *********************Methode d'instance************************* */
   public function createCmd($_infos, $_type = null) {
     $link_cmd_id = null;
+    $logical = $_infos['property'];
+    if (isset($_infos['endpoint'])) {
+      $logical .= '_' . $_infos['endpoint'];
+    }
     if ($_infos['access'] != 2 && $_infos['access'] != 4 && $_infos['access'] != 6) {
       $cmd_ref = self::getCmdConf($_infos, null, $_type);
       if (is_array($cmd_ref) && count($cmd_ref) > 0) {
-        $logical = $_infos['name'];
-        if (isset($_infos['endpoint'])) {
-          $logical .= '_' . $_infos['endpoint'];
-        }
         $cmd = $this->getCmd('info', $logical);
         if (!is_object($cmd)) {
           $cmd = new z2mCmd();
@@ -679,11 +679,6 @@ class z2m extends eqLogic {
             log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
           }
         }
-      }
-
-      $logical = $_infos['name'];
-      if (isset($_infos['endpoint'])) {
-        $logical .= '_' . $_infos['endpoint'];
       }
 
       if ($_infos['type'] == 'numeric') {
