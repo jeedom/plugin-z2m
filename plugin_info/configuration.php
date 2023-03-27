@@ -54,7 +54,13 @@ if (!isConnect()) {
             echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
           }
           foreach (ls('/dev/', 'tty*') as $value) {
-            echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
+            if ($value == "ttyLuna-Zigbee") {
+              echo '<option value="/dev/' . $value . '">Luna Zigbee V2</option>';
+            } else if ($value == "ttyUSB1") {
+              echo '<option value="/dev/' . $value . '">Luna Zigbee Old</option>';
+            } else {
+              echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
+            }
           }
           ?>
         </select>
