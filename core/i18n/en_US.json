@@ -10,6 +10,7 @@
         "Passerelle distante": "Remote Gateway",
         "Atlas": "Atlas",
         "Luna": "Luna",
+        "Renseigner l'adresse de la passerelle distante": "Fill in the address of the remote gateway",
         "Type de contrôleur": "Controller type",
         "Sélectionner le type de contrôleur Zigbee à utiliser": "Select the type of Zigbee controller to use",
         "ZNP\/TI": "ZNP\/IT",
