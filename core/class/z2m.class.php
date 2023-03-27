@@ -128,9 +128,15 @@ class z2m extends eqLogic {
     $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m');
     $configuration['mqtt']['include_device_information'] = true;
 
-    $configuration['serial']['port'] = jeedom::getUsbMapping(config::byKey('port', 'z2m'));
+    $port = config::byKey('port', 'z2m');
+    if ($port == 'gateway') {
+      $port = 'socket://' . config::byKey('gateway', 'z2m');
+    } else if ($port != 'auto') {
+      $port = jeedom::getUsbMapping($port);
+      exec(system::getCmdSudo() . ' chmod 777 ' . $port . ' 2>&1');
+    }
 
-    exec(system::getCmdSudo() . ' chmod 777 ' . $configuration['serial']['port'] . ' 2>&1');
+    $configuration['serial']['port'] = $port;
 
     if (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');

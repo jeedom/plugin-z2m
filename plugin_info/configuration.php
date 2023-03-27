@@ -60,6 +60,14 @@ if (!isConnect()) {
         </select>
       </div>
     </div>
+    <div class="form-group zigbee_portConf gateway" style="display:none;">
+      <label class="col-md-4 control-label">{{Passerelle distante}} <sub>(tcp://IP:PORT)</sub>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'adresse de la passerelle distante}}"></i></sup>
+      </label>
+      <div class="col-md-3">
+        <input class="configKey form-control" data-l1key="gateway" />
+      </div>
+    </div>
     <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Type de contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type de contrôleur Zigbee à utiliser}}"></i></sup>
@@ -93,4 +101,10 @@ if (!isConnect()) {
       $('.z2m_mode.' + $(this).value()).show();
     }
   })
+  $('.configKey[data-l1key="port"]').off('change').on('change', function() {
+    $('.zigbee_portConf').hide();
+    if ($(this).value() == 'pizigate' || $(this).value() == 'wifizigate' || $(this).value() == 'gateway') {
+      $('.zigbee_portConf.' + $(this).value()).show();
+    }
+  });
 </script>
