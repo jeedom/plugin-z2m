@@ -163,8 +163,10 @@ class z2m extends eqLogic {
 
     if (log::convertLogLevel(log::getLogLevel('z2m')) == 'debug') {
       $configuration['advanced']['log_level'] = 'debug';
-    } else {
+    } else if (log::convertLogLevel(log::getLogLevel('z2m')) == 'info') {
       $configuration['advanced']['log_level'] = 'info';
+    } else if (log::convertLogLevel(log::getLogLevel('z2m')) == 'error' || log::convertLogLevel(log::getLogLevel('z2m')) == 'none') {
+      $configuration['advanced']['log_level'] = 'error';
     }
     file_put_contents($data_path . '/configuration.yaml', yaml_emit($configuration));
   }
