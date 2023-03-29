@@ -94,8 +94,7 @@ class z2m extends eqLogic {
       $return['state'] = 'ok';
     }
     $port = config::byKey('port', __CLASS__);
-    $port = jeedom::getUsbMapping($port);
-    if (@!file_exists($port)) {
+    if ($port == 'none') {
       $return['launchable'] = 'nok';
       $return['launchable_message'] = __('Le port n\'est pas configuré', __FILE__);
     }
@@ -130,7 +129,7 @@ class z2m extends eqLogic {
 
     $port = config::byKey('port', 'z2m');
     if ($port == 'gateway') {
-      $port = 'socket://' . config::byKey('gateway', 'z2m');
+      $port = 'tcp://' . config::byKey('gateway', 'z2m');
     } else if ($port != 'auto') {
       $port = jeedom::getUsbMapping($port);
       exec(system::getCmdSudo() . ' chmod 777 ' . $port . ' 2>&1');

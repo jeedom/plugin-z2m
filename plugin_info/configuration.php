@@ -67,7 +67,7 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group zigbee_portConf gateway" style="display:none;">
-      <label class="col-md-4 control-label">{{Passerelle distante}} <sub>(tcp://IP:PORT)</sub>
+      <label class="col-md-4 control-label">{{Passerelle distante}} <sub>(IP:PORT)</sub>
         <sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'adresse de la passerelle distante}}"></i></sup>
       </label>
       <div class="col-md-3">
