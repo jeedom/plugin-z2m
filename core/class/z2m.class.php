@@ -561,20 +561,21 @@ class z2m extends eqLogic {
   }
 
   public function getImgFilePath() {
+    $model = str_replace('/', '-', $this->getConfiguration('model'));
     if ($this->getConfiguration('isgroup', 0) == 1) {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     if ($this->getConfiguration('model') == '') {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
-    $filename = __DIR__ . '/../../data/img/' . $this->getConfiguration('model') . '.jpg';
+    $filename = __DIR__ . '/../../data/img/' . $model . '.jpg';
     if (!file_exists($filename)) {
-      file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $this->getConfiguration('model') . '.jpg'));
+      file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.jpg'));
     }
     if (!file_exists($filename)) {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
-    return 'plugins/z2m/data/img/' . $this->getConfiguration('model') . '.jpg';
+    return 'plugins/z2m/data/img/' . $model . '.jpg';
   }
 
   public static function getCmdConf($_infos, $_suffix = null, $_preffix = null) {
