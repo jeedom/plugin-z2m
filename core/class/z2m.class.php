@@ -632,7 +632,7 @@ class z2m extends eqLogic {
   public function createCmd($_infos, $_type = null) {
     $link_cmd_id = null;
     $logical = $_infos['property'];
-    if (isset($_infos['endpoint'])) {
+    if (isset($_infos['endpoint']) && strpos(strtolower($logical), strtolower($_infos['endpoint'])) === false) {
       $logical .= '_' . $_infos['endpoint'];
     }
     if ($_infos['access'] != 2 && $_infos['access'] != 4 && $_infos['access'] != 6) {
