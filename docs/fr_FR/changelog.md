@@ -1,3 +1,9 @@
+# Changelog JeeZigbee
+
+# Changelog jeeZigbee
+
+# Changelog Zigbee2Mqtt
+
 # Changelog plugin template
 
 >**IMPORTANT**

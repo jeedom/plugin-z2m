@@ -54,10 +54,24 @@ if (!isConnect()) {
             echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
           }
           foreach (ls('/dev/', 'tty*') as $value) {
-            echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
+            if ($value == "ttyLuna-Zigbee") {
+              echo '<option value="/dev/' . $value . '">Luna Zigbee V2</option>';
+            } else if ($value == "ttyUSB1") {
+              echo '<option value="/dev/' . $value . '">Luna Zigbee Old</option>';
+            } else {
+              echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
+            }
           }
           ?>
         </select>
+      </div>
+    </div>
+    <div class="form-group zigbee_portConf gateway" style="display:none;">
+      <label class="col-md-4 control-label">{{Passerelle distante}} <sub>(IP:PORT)</sub>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'adresse de la passerelle distante}}"></i></sup>
+      </label>
+      <div class="col-md-3">
+        <input class="configKey form-control" data-l1key="gateway" />
       </div>
     </div>
     <div class="form-group z2m_mode local">
@@ -93,4 +107,10 @@ if (!isConnect()) {
       $('.z2m_mode.' + $(this).value()).show();
     }
   })
+  $('.configKey[data-l1key="port"]').off('change').on('change', function() {
+    $('.zigbee_portConf').hide();
+    if ($(this).value() == 'pizigate' || $(this).value() == 'wifizigate' || $(this).value() == 'gateway') {
+      $('.zigbee_portConf.' + $(this).value()).show();
+    }
+  });
 </script>

@@ -26,12 +26,28 @@ try {
   ajax::init();
 
   if (init('action') == 'include') {
-    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/bridge/request/permit_join', '{"value": true, "time": 180}');
+    mqtt2::publish(z2m::getInstanceTopic(init('instance', 1)) . '/bridge/request/permit_join', '{"value": true, "time": 180}');
     ajax::success();
   }
 
   if (init('action') == 'publish') {
-    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . init('topic'), init('message', ''));
+    mqtt2::publish(z2m::getInstanceTopic(init('instance', 1)) . init('topic'), init('message', ''));
+    ajax::success();
+  }
+
+  if (init('action') == 'sync') {
+    $devices = json_decode(file_get_contents(__DIR__ . '/../../data/devices/devices' . init('instance', 1) . '.json'), true);
+    z2m::handle_bridge(array('devices' => $devices));
+    ajax::success();
+  }
+
+  if (init('action') == 'childCreate') {
+    $eqLogic = z2m::byId(init('id'));
+    if (!is_object($eqLogic)) {
+      throw new Exception(__('Z2m eqLogic non trouvé : ', __FILE__) . init('id'));
+    }
+    $childeqLogic = eqLogic::byLogicalId($eqLogic->getLogicalId() . '|l' . init('endpoint'), 'z2m');
+    $eqLogic->childCreate(init('endpoint'));
     ajax::success();
   }
 

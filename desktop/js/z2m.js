@@ -14,23 +14,9 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 $('#bt_includeDeviceByCode').off('click').on('click',function(){
-  var inputOptions = [];
-  for(var i in z2m_instances){
-    if(z2m_instances[i].enable != 1){
-      continue;
-    }
-    inputOptions.push({value : z2m_instances[i].id,text : z2m_instances[i].name});
-  }
-  bootbox.prompt({
-    title: "{{Ajouter un équipement par code sur ?}}",
-    value : inputOptions[0].value,
-    inputType: 'select',
-    inputOptions:inputOptions,
-    callback: function (instance_result) {
-      if(instance_result === null){
-        return;
-      }
+    jeedom.z2m.utils.promptInstance("{{Ajouter un équipement par code sur ?}}}",function (instance_result) {
       bootbox.prompt("{{Code ?}}", function(code){
         jeedom.z2m.bridge.addByCode({
           instance:instance_result,
@@ -43,28 +29,29 @@ $('#bt_includeDeviceByCode').off('click').on('click',function(){
           }
         });
       });
-    }
-  });
+    });
+});
+
+$('#bt_syncEqLogicZ2m').off('click').on('click',function(){
+  jeedom.z2m.utils.promptInstance("{{Synchroniser sur ?}}",function (instance_result) {
+      jeedom.z2m.bridge.sync({
+        instance:instance_result,
+        error: function (error) {
+          $('#div_alert').showAlert({message: error.message, level: 'danger'});
+        },
+        success: function () {
+          $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succes}}', level: 'success'});
+        }
+      });
+    });
 });
 
 $('#bt_addGroup').off('click').on('click',function(){
-  var inputOptions = [];
-  for(var i in z2m_instances){
-    if(z2m_instances[i].enable != 1){
-      continue;
-    }
-    inputOptions.push({value : z2m_instances[i].id,text : z2m_instances[i].name});
-  }
-  bootbox.prompt({
-    title: "{{Ajouter un groupe sur ?}}",
-    value : inputOptions[0].value,
-    inputType: 'select',
-    inputOptions:inputOptions,
-    callback: function (instance_result) {
-      if(instance_result === null){
-        return;
-      }
+    jeedom.z2m.utils.promptInstance("{{Ajouter un groupe sur ?}}",function (instance_result) {
       bootbox.prompt("{{Nom du groupe ?}}", function(group){
+        if(group == null){
+          return;
+        }
         jeedom.z2m.group.add({
           instance:instance_result,
           name : group,
@@ -76,8 +63,7 @@ $('#bt_addGroup').off('click').on('click',function(){
           }
         });
       });
-    }
-  });
+    });
 });
 
 $('body').off('z2m::includeDevice').on('z2m::includeDevice', function (_event, _options) {
@@ -107,26 +93,19 @@ $('#bt_z2mNetwork').off('click').on('click', function () {
 
 function printEqLogic(_eqLogic) {
   $('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
+  if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr){
+	console.log(devices_attr[$('.eqLogicAttr[data-l1key=id]').value()])
+    if ('multipleEndpoints' in devices_attr[$('.eqLogicAttr[data-l1key=id]').value()] && devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['multipleEndpoints']==1){
+       $('.childCreate').show();
+    } else {
+       $('.childCreate').hide();
+    }
+  }
   return _eqLogic;
 }
 
 $('.changeIncludeState').off('click').on('click', function () {
-  var inputOptions = [];
-  for(var i in z2m_instances){
-    if(z2m_instances[i].enable != 1){
-      continue;
-    }
-    inputOptions.push({value : z2m_instances[i].id,text : z2m_instances[i].name});
-  }
-  bootbox.prompt({
-    title: "{{Passage en inclusion sur}} ?",
-    value : inputOptions[0].value,
-    inputType: 'select',
-    inputOptions:inputOptions,
-    callback: function (instance_result) {
-      if(instance_result === null){
-        return;
-      }
+  jeedom.z2m.utils.promptInstance("{{Passage en inclusion sur}} ?",function (instance_result) {
       jeedom.z2m.bridge.include({
         instance:instance_result,
         error: function (error) {
@@ -136,8 +115,7 @@ $('.changeIncludeState').off('click').on('click', function () {
           $('#div_alert').showAlert({message: '{{Lancement du mode inclusion sur }} '+z2m_instances[instance_result].name, level: 'success'});
         }
       });
-    }
-  });
+    });
 });
 
 
@@ -216,7 +194,7 @@ function addCmdToTable(_cmd) {
   tr += '</tr>';
   $('#table_cmd tbody').append(tr);
   var tr = $('#table_cmd tbody tr').last();
-  jeedom.eqLogic.builSelectCmd({
+  jeedom.eqLogic.buildSelectCmd({
     id: $('.eqLogicAttr[data-l1key=id]').value(),
     filter: {type: 'info'},
     error: function (error) {
@@ -230,6 +208,23 @@ function addCmdToTable(_cmd) {
   });
 }
 
+$('#bt_childCreate').off('click').on('click', function () {
+  bootbox.prompt("{{Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père). Si l'enfant existe il sera mis à jour avec les commandes manquantes.}}", function(endpoint){
+    if (endpoint) {
+      jeedom.z2m.device.childCreate({
+        id : $('.eqLogicAttr[data-l1key=id]').value(),
+        endpoint : endpoint,
+        error: function (error) {
+          $('#div_alert').showAlert({message: error.message, level: 'danger'});
+        },
+        success: function () {
+          $('#div_alert').showAlert({message: '{{Enfant créé avec succès}}', level: 'success'});
+          window.location.href = 'index.php?v=d&p=z2m&m=z2m';
+        }
+      });
+    }
+  });
+});
 
 
 function sync(){

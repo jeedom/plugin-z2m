@@ -21,6 +21,9 @@ $eqLogic = z2m::byId(init('id'));
 if (!is_object($eqLogic)) {
     throw new \Exception(__('Equipement introuvable : ', __FILE__) . init('id'));
 }
+if ($eqLogic->getConfiguration('isChild',0) == 1){
+    $eqLogic = eqLogic::byLogicalId(explode('|',$eqLogic->getLogicalId())[0],'z2m');
+}
 $devices = eqLogic::byType('z2m');
 $infos = z2m::getDeviceInfo($eqLogic->getLogicalId());
 $bridge_info = z2m::getDeviceInfo('bridge' . $eqLogic->getConfiguration('instance', 1));
@@ -356,6 +359,9 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         echo '<input type="number" class="form-control maxReportTime" value="' . $reporting['maximum_report_interval'] . '"/>';
                         echo '</td>';
                         echo '<td>';
+                        if (is_array($reporting['reportable_change'])) {
+                            $reporting['reportable_change'] = json_encode($reporting['reportable_change']);
+                        }
                         echo '<input type="number" class="form-control reportable_change" value="' . $reporting['reportable_change'] . '"/>';
                         echo '</td>';
                         echo '<td>';

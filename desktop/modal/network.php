@@ -24,7 +24,7 @@ $devices = z2m::getDeviceInfo('devices1');
 $groups = z2m::getDeviceInfo('groups1');
 sendVarToJS('z2m_network_map', $map);
 ?>
-<script type="text/javascript" src="plugins/zigbee/3rdparty/vivagraph/vivagraph.min.js"></script>
+<script type="text/javascript" src="plugins/z2m/3rdparty/vivagraph/vivagraph.min.js"></script>
 <style>
     #graph_network {
         height: 80%;
@@ -294,7 +294,11 @@ sendVarToJS('z2m_network_map', $map);
                         $lqi = $eqLogic->getCmd('info', 'linkquality');
                         if (is_object($lqi)) {
                             echo $lqi->execCmd();
+                        } else {
+                            echo 'N/A';
                         }
+                    } else {
+                        echo 'N/A';
                     }
                     echo '</td>';
                     echo '<td>';
@@ -305,7 +309,11 @@ sendVarToJS('z2m_network_map', $map);
                         $last_seen = $eqLogic->getCmd('info', 'last_seen');
                         if (is_object($last_seen)) {
                             echo $last_seen->execCmd();
+                        } else {
+                            echo 'N/A';
                         }
+                    } else {
+                        echo 'N/A';
                     }
                     echo '</td>';
                     echo '<td>';
@@ -406,7 +414,7 @@ sendVarToJS('z2m_network_map', $map);
         } else {
             options[tr.attr('data-type')][input.attr('data-name')] = input.value();
         }
-        if (parseInt(options[tr.attr('data-type')][input.attr('data-name')]) != NaN) {
+        if (!isNaN(options[tr.attr('data-type')][input.attr('data-name')])) {
             options[tr.attr('data-type')][input.attr('data-name')] = parseInt(options[tr.attr('data-type')][input.attr('data-name')]);
         }
         jeedom.z2m.bridge.options({
