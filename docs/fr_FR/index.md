@@ -77,6 +77,16 @@ La partie **Informations** permet de voir le model de l'équipement. On y retrou
 
 Dans l'onglet **Commandes**, nous retrouvons, comme à l'accoutumée, les commandes permettant d'interagir avec le module.
 
+### Configuration du module
+
+C'est une fenetre important vous retrouverez ici : 
+
+- Informations : contient toute les informations utilent sur votre modules (modele, fabricant, état, alimentation, OTA, description, endpoints....)
+- Configuration : contient les parametres de configuration de votre module, si il y en a (souvent il n'y en a pas donc c'est vide)
+- Binding : Vous retrouverez ici le binding (lien) existant (en général vous avec toujours une ligne pour liée votre module à votre coordinateur). Vous pouvez aussi ajouter un binding (lien) entre deux module, attention a bien reveiller les modules sur batterie lors du binging. Important le binding dépend des fabricant (et non du plugin), certain fabricant ne supporte pas le binding direct et il faut absolument un groupe, il y a aussi des incompatibilité entre fabricants (nous ne pouvons malheureusement pas en faire la liste)
+- Reporting : si le module le support vous pouvez configurer ici la fréquence d'envoi des informations du module au coordinateur (Jeedom donc)
+- Informations brutes : sert juste au support, il vous sera demandé en cas de soucis avec un module
+
 ### Module non reconnu
 
 Si le module n'est pas reconnu par le plugin (pas de commande) il faut regarde [ici](https://www.zigbee2mqtt.io/supported-devices/), si il est supporté alors il faut contacter le support Jeedom (ou écrire sur le community) pour qu'on regarde pourquoi. Si votre module n'est pas dans la liste des modules supporté par zigbee2mqtt alors il faut attendre qu'il l'ajoute.
