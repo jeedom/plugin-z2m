@@ -27,10 +27,10 @@ De plus, le plugin est doté de nombreux outils permettant :
 
 >**TRES IMPORTANT**
 >
-> Du à la valse des firmware/hardware coté fabricant et des bugs possible dans leur firmware (sans avoir forcement la possibilité de le mettre à jour depuis Jeedom car la pluspart des fabricant ne les communiques pas) il se peut qu'un module marqué compatible ne le soit que partiellement (un bouton qui marche pas, ou pas de difference entre le bouton haut et pas, pas de remonté de CO2 ou d'un capteur du module...). Nous ne pouvons malheureusement pas vous prévenir à l'avance dans la liste car : 
->- nous n'avons pas forcement le module en question, beaucoup de module sont ajoutés par les retours utilisateurs
->- d'une semaine à l'autre le module peut avoir changé (nouveau hardware, nouveau firmware ou meme nouveau module qui n'a pas changé de nom)
->En aucun cas Jeedom ne pourra etre tenu responsable en cas de fonction manquante (ou meme de module ne marchant pas) alors qu'il est indiqué compatible, nous subissons comme vous les changements imposés par le fabricant
+> Du à la valse des firmware/hardware coté fabricant et des bugs possible dans leur firmware (sans avoir forcement la possibilité de le mettre à jour depuis Jeedom car la plupart des fabricants ne les communiquent pas), il se peut qu'un module marqué compatible ne le soit que partiellement (un bouton qui marche pas, ou pas de difference entre le bouton haut et bas, pas de remontée de CO2 ou d'un capteur du module...). Nous ne pouvons malheureusement pas vous prévenir à l'avance dans la liste car : 
+>- nous n'avons pas forcement le module en question, beaucoup de modules sont ajoutés par les retours utilisateurs
+>- d'une semaine à l'autre le module peut avoir changé (nouveau hardware, nouveau firmware ou même nouveau module qui n'a pas changé de nom)
+>En aucun cas Jeedom ne pourra etre tenu responsable en cas de fonction manquante (ou même de module ne fonctionnant pas) alors qu'il est indiqué compatible, nous subissons comme vous les changements imposés par le fabricant
 
 # Configuration
 
@@ -38,7 +38,7 @@ De plus, le plugin est doté de nombreux outils permettant :
 
 **Le plugin jeezigbee** utilise des dépendances qu'il faudra installer en premier lieu (en fonction de votre systeme cela peut prendre plusieurs heures). 
 
-Le plugin utilise le protocole MQTT pour discuter avec Jeedom; il est donc necessaire d'avoir le plugin MQTT manager d'installé et correctement configuré (en pratique si ce n'est pas le cas Jeedom devrait tout faire de lui meme).
+Le plugin utilise le protocole MQTT pour discuter avec Jeedom; il est donc necessaire d'avoir le plugin MQTT manager installé et correctement configuré (en pratique, si ce n'est pas le cas, Jeedom devrait tout faire de lui meme).
 
 Une fois les dépendances installées, vous pouvez configurer un contrôleur Zigbee en renseignant **le type de contrôleur, le port du contrôleur**, puis (re)démarrer le démon.    
 
@@ -52,7 +52,7 @@ Vous pouvez trouver [ici](https://www.zigbee2mqtt.io/supported-devices/) la list
 
 >**IMPORTANT**
 >
->Pour le moment le plugin fait de l'autoconfiguration, c'est a dire qu'il ne contient aucune configuration spécifique pour un module donné, il récupère les informations de zigbee2mqtt pour générer automatiquement les commandes. Cela implique que tout module compatible zigbee2mqtt devrait marcher immédiatement avec le plugin. Par contre cela a pour consequence de générer énormement de commandes qui ne sont pas toujours toutes utiles. Nous sommes en train d'ajouter un systeme de configuration spécifique pour certains modules et ainsi améliorer les commandes et la présentation de ceux-ci
+>Pour le moment le plugin fait de l'autoconfiguration, c'est a dire qu'il ne contient aucune configuration spécifique pour un module donné, il récupère les informations de zigbee2mqtt pour générer automatiquement les commandes. Cela implique que tout module compatible zigbee2mqtt devrait fonctionner immédiatement avec le plugin. Par contre cela a pour consequence de générer énormement de commandes qui ne sont pas toujours toutes utiles. Nous sommes en train d'ajouter un systeme de configuration spécifique pour certains modules et ainsi améliorer les commandes et la présentation de ceux-ci
 
 ## Configuration des équipements
 
@@ -136,9 +136,9 @@ Pour finir et même si cela peut paraître évident pour certains, nous rappelon
 
 # FAQ
 
->**J’ai plein de message d'information (bleu) en bas a droite et je ne comprends rien**
+>**J’ai plein de messages d'informations (bleu) en bas a droite et je n'y comprends rien**
 >
->C'est normal; nous sommes en train de trier les messages utiles ou non que renvoi Zigbee2mqtt mais par défaut nous preferons tout vous afficher.
+>Nous sommes actuellement en train de trier les messages utiles ou non que renvoi Zigbee2mqtt; mais par défaut nous préferons tout afficher.
 
 >**J’ai des erreurs bizarres sur des modules sur piles ou des soucis d’inclusion**
 >
@@ -146,18 +146,18 @@ Pour finir et même si cela peut paraître évident pour certains, nous rappelon
 
 >**Mon module vide ses batteries très vite**
 >
->Vérifiez que vous etes bien sur un firmware à jour sur votre clef zigbee. Dans 90% des cas une consommation excessive des piles vient du firmware qui a un souci.
+>Vérifiez que vous êtes bien sur un firmware à jour sur votre clef zigbee. Dans 90% des cas une consommation excessive des piles vient du firmware qui a un souci.
 
 >**Je n'arrive pas à inclure de nouveaux modules**
 >
 >Plusieurs possibilités pour cela :
 >- Vous avez deja beaucoup de module et avez dépassé la limite du nombre de module en direct (31 en général). Il faut soit mettre une autre clef Zigbee (le plugin en gère jusqu'a 3), soit essayer en ajoutant des noeud routeur (attention il n'y a pas de norme clair sur les noeuds routeur il y a donc des incompatibilités entre fabricant...)
->- Vous etes sous Conbee : essayez de debrancher la clef pendant 2 minutes, de la remettre et relancer le demon, c'est une maladie connu des clef Conbee (meme sous deconz) ou il faut un cold reboot pour que l'inclusion remarche
+>- Vous êtes sous Conbee : essayez de debrancher la clef pendant 2 minutes, de la remettre et relancer le demon; c'est une maladie connu des clés Conbee (même sous deconz), il faut un cold reboot pour que l'inclusion remarche
 >- Vous avez un SSD branché en USB3, essayez de le brancher sur un port USB2
 
 >**J'ai pas autant de commande que de bouton sur ma télécommande**
 >
->Sur ma télécommande j'ai par exemple 2 boutons mais dans la liste des commandes Jeedom je n'ai qu'une commande !!! C'est normal la commande dans jeedom prends une valeur differente en fonction du bouton physique appuyé. Le plus simple pour le voir et d'aller dans "Configuration avancée" (en haut a droite) puis "Logs" (en haut a droite aussi) et d'appuyer sur les boutons de la télécommandes pour voir les differentes valeurs des commandes.
+>Sur ma télécommande j'ai par exemple 2 boutons mais dans la liste des commandes Jeedom je n'ai qu'une commande !!! C'est normal; la commande dans jeedom prends une valeur differente en fonction du bouton physique appuyé. Le plus simple pour le voir et d'aller dans "Configuration avancée" (en haut a droite) puis "Logs" (en haut a droite aussi) et d'appuyer sur les boutons de la télécommandes pour voir les differentes valeurs des commandes.
 
 >**J'ai pas l'image de mon module**
 >
