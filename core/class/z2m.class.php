@@ -331,11 +331,11 @@ class z2m extends eqLogic {
     if (isset($_datas['logging']) && isset($_datas['response'])) {
       switch ($_datas['logging']['level']) {
         case 'info':
-          event::add('jeedom::alert', array(
+          /*event::add('jeedom::alert', array(
             'level' => 'info',
             'page' => 'z2m',
             'message' => $_datas['logging']['message'],
-          ));
+          ));*/
           break;
         case 'error':
           log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
