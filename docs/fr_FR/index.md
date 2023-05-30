@@ -158,3 +158,7 @@ Pour finir et même si cela peut paraître évident pour certains, nous rappelon
 >**J'ai pas autant de commande que de bouton sur ma télécommande**
 >
 >Sur ma télécommande j'ai par exemple 2 boutons mais dans la liste des commandes Jeedom j'ai que 1 commande !!! C'est normal la commande dans jeedom prends une valeur differente en fonction du bouton physique appuyé. Le plus simple pour le voir et d'aller dans "Configuration avancée" (en haut a droite) puis "Logs" (en haut a droite aussi) et d'appuyer sur les boutons de la télécommandes pour voir les differentes valeurs des commandes.
+
+>**J'ai pas l'image de mon module**
+>
+>Rien de grave, ce ne veut pas dire qu'il n'est pas utilisable ou reconnu, l'image est juste la pour faire jolie. Si vraiment vous la voulez il faut contacter le support pour qu'il regarde pourquoi vous ne l'avez pas (en général c'est due à un caractere non standard dans le nom du modele du module)
