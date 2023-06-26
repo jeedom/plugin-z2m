@@ -374,7 +374,10 @@ class z2m extends eqLogic {
     }
     if (isset($_datas['devices'])) {
       file_put_contents(__DIR__ . '/../../data/devices/devices' . $_instanceNumber . '.json', json_encode($_datas['devices']));
-      foreach ($_datas['devices'] as $device) {
+      foreach ($_datas['devices'] as &$device) {
+        if ((!isset($device['model_id']) || $device['model_id'] == '') && isset($device['definition']['model']) &&  isset($device['definition']['vendor'])) {
+          $device['model_id'] = $device['definition']['vendor'].' '.$device['definition']['model'];
+        }
         if ($device['type'] == 'Coordinator' || !isset($device['model_id']) || $device['model_id'] == '') {
           continue;
         }
