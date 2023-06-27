@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
+        "27\/06\/2023": "27\/06\/2023",
+        "Correction d'un soucis de detection de certain module (dont profalux": "Se solucionó un problema con la detección de ciertos módulos (incluido profalux",
         "30\/05\/2023": "30\/05\/2023",
         "Version initiale": "Versión inicial",
         " IMPORTANT.": " IMPORTANTE.",
