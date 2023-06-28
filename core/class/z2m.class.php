@@ -319,12 +319,16 @@ class z2m extends eqLogic {
     if (isset($_datas['event'])) {
       switch ($_datas['event']['type']) {
         case 'device_announce':
-          event::add('jeedom::alert', array(
-            'level' => 'info',
-            'page' => 'z2m',
-            'ttl' => 60000,
-            'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . self::convert_to_addr($_datas['event']['data']['ieee_address']),
-          ));
+          $addr = self::convert_to_addr($_datas['event']['data']['ieee_address']);
+          $eqLogic = eqLogic::byLogicalId($addr, 'z2m');
+          if(!is_object($eqLogic)){
+            event::add('jeedom::alert', array(
+              'level' => 'info',
+              'page' => 'z2m',
+              'ttl' => 60000,
+              'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . $addr),
+            ));
+          }
           break;
       }
     }
