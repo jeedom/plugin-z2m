@@ -326,7 +326,7 @@ class z2m extends eqLogic {
               'level' => 'info',
               'page' => 'z2m',
               'ttl' => 60000,
-              'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . $addr),
+              'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . $addr,
             ));
           }
           break;
