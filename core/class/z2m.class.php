@@ -908,6 +908,9 @@ class z2mCmd extends cmd {
     } else {
       $datas = array($info[0] =>  $info[1]);
     }
+    if(isset($datas['position'])){
+      $datas['position'] = round(floatval($datas['position']), 2);
+    }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
