@@ -319,12 +319,16 @@ class z2m extends eqLogic {
     if (isset($_datas['event'])) {
       switch ($_datas['event']['type']) {
         case 'device_announce':
-          event::add('jeedom::alert', array(
-            'level' => 'info',
-            'page' => 'z2m',
-            'ttl' => 60000,
-            'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . self::convert_to_addr($_datas['event']['data']['ieee_address']),
-          ));
+          $addr = self::convert_to_addr($_datas['event']['data']['ieee_address']);
+          $eqLogic = eqLogic::byLogicalId($addr, 'z2m');
+          if(!is_object($eqLogic)){
+            event::add('jeedom::alert', array(
+              'level' => 'info',
+              'page' => 'z2m',
+              'ttl' => 60000,
+              'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . $addr,
+            ));
+          }
           break;
       }
     }
@@ -903,6 +907,9 @@ class z2mCmd extends cmd {
       $datas = array('color' =>  $color);
     } else {
       $datas = array($info[0] =>  $info[1]);
+    }
+    if(isset($datas['position'])){
+      $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
