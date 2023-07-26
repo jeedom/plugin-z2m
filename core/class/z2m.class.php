@@ -75,10 +75,16 @@ class z2m extends eqLogic {
   }
 
   public static function cronDaily() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
   }
 
   public static function isRunning() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return true;
+    }
     if (!empty(system::ps('zigbee2mqtt'))) {
       return true;
     }
@@ -86,6 +92,13 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_info() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      $return = array();
+      $return['log'] = __CLASS__;
+      $return['launchable'] = 'ok';
+      $return['state'] = 'ok';
+      return $return;
+    }
     $return = array();
     $return['log'] = __CLASS__;
     $return['launchable'] = 'ok';
@@ -111,6 +124,9 @@ class z2m extends eqLogic {
   }
 
   public static function configure_z2m_deamon() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     self::postConfig_mqtt_topic();
     $mqtt = mqtt2::getFormatedInfos();
     $data_path = dirname(__FILE__) . '/../../data';
@@ -171,6 +187,9 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_start() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     self::deamon_stop();
     self::configure_z2m_deamon();
     $data_path = dirname(__FILE__) . '/../../data';
@@ -205,6 +224,9 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_stop() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
     $cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
     exec($cmd);
