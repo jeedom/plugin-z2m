@@ -75,7 +75,7 @@ class z2m extends eqLogic {
   }
 
   public static function cronDaily() {
-    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f --");
+    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
   }
 
   public static function isRunning() {
