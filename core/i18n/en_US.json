@@ -17,6 +17,7 @@
         "EZSP (Atlas\/Luna)": "EZSP (Atlas\/Luna)",
         "Deconz\/Conbee": "Deconz\/Conbee",
         "Zigate (alpha)": "Zigate (alpha)",
+        "Port d'écoute de Zigbee2mqtt": "Zigbee2mqtt listening port",
         "Interface z2m": "Z2m interface",
         "Ici": "Here",
         "Identifiant": "ID"

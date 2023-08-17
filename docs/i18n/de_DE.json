@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Possibilité de configurer le port d'écoute de zigbee2mqtt": "Möglichkeit, den Überwachungsport von zigbee2mqtt zu konfigurieren",
         "03\/07\/2023": "07.03.2023",
         "Correction d'un soucis lors de l'envoi d'une commande de positionnement (type volet": "Ein Problem beim Senden eines Positionierungsbefehls (Verschlusstyp) wurde behoben",
         "27\/06\/2023": "27.06.2023",
