@@ -157,7 +157,7 @@ class z2m extends eqLogic {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
     }
 
-    $configuration['frontend']['port'] = config::byKey('z2m_listen_port', 'z2m',8080);
+    $configuration['frontend']['port'] = intval(config::byKey('z2m_listen_port', 'z2m','8080'));
     $configuration['frontend']['host'] = '0.0.0.0';
 
     $configuration['advanced']['last_seen'] = 'ISO_8601';
