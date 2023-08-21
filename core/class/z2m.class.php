@@ -282,6 +282,26 @@ class z2m extends eqLogic {
     mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__, 'z2m'));
   }
 
+  public function findIeeeAddrRecursive($data) {
+      // MQTT Manager ne transmet que les topics mis à jour donc l'appel à la recursivité n'est pas un problème
+      $ret = null; // Variable pour stocker le résultat
+      foreach ($data as $key => $value) {
+          if (is_array($value)) { // Vérifie si la valeur est un tableau
+              if(isset($value['device'])) { // Vérifie si la clé 'device' existe dans le tableau
+                  log::add('z2m', 'debug', json_encode($data[$key])); // Debug Log
+                  if (isset($value['device']['ieeeAddr'] )) { // Vérifie si la clé 'ieeeAddr' existe dans le sous-tableau 'device'
+                      $ret =  $data[$key]; // Stocke le sous-tableau actuel dans la variable de résultat
+                  }
+              }
+              if($ret === null) { // Si le résultat est on cherche dans plus loin dans le tableau
+                  $ret = self::findIeeeAddrRecursive($value); // Appelle récursivement la fonction avec le sous-tableau actuel pour chercher dedans
+              }
+          }
+      }
+      return $ret; // Renvoie le résultat (peut être null si aucun 'ieeeAddr' n'a été trouvé)
+  }
+  
+
   public static function handleMqttMessage($_datas) {
     log::add('z2m', 'debug', json_encode($_datas));
     if (!isset($_datas['zigbee2mqtt'])) {
@@ -294,6 +314,14 @@ class z2m extends eqLogic {
       }
       if (isset($values['device'])) {
         $key = $values['device']['ieeeAddr'];
+      } else{
+      	// Ajout BeGood 07/08/2023
+      	// On recherche IeeeAddr de l'équipement dans les topics enfants 
+        $dev = self::findIeeeAddrRecursive($values);
+        if ($dev !== null) {
+          $key = $dev['device']['ieeeAddr'];
+          $values = $dev;          
+        }
       }
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
