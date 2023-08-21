@@ -686,7 +686,7 @@ class z2m extends eqLogic {
   }
 
   /*     * *********************Methode d'instance************************* */
-  public function createCmd($_infos, $_type = null) {
+   public function createCmd($_infos, $_type = null) {
     $link_cmd_id = null;
     $logical = $_infos['property'];
     if (isset($_infos['endpoint']) && strpos(strtolower($logical), strtolower($_infos['endpoint'])) === false) {
@@ -708,7 +708,7 @@ class z2m extends eqLogic {
         try {
           $cmd->save();
         } catch (\Throwable $th) {
-          log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
         }
         $link_cmd_id = $cmd->getId();
       }
@@ -741,7 +741,7 @@ class z2m extends eqLogic {
           try {
             $cmd->save();
           } catch (\Throwable $th) {
-            log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
           }
         }
       }
@@ -764,7 +764,7 @@ class z2m extends eqLogic {
         try {
           $cmd->save();
         } catch (\Throwable $th) {
-          log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
         }
       }
 
@@ -787,59 +787,58 @@ class z2m extends eqLogic {
           try {
             $cmd->save();
           } catch (\Throwable $th) {
-            log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
           }
         }
       }
-      if ($_infos['type'] == 'composite') {
-        switch ($_infos['name']) {
-          case 'color_xy':
-            $info_color_id = null;
-            $cmd = $this->getCmd('info', 'color');
-            if (!is_object($cmd)) {
-              $cmd = new z2mCmd();
-              $cmd->setName('Couleur état');
-              if (isset($_infos['endpoint'])) {
-                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-                $cmd->setName('Couleur état ' . $_infos['endpoint']);
-              }
-              $cmd->setLogicalId('color');
+    }
+    if ($_infos['type'] == 'composite') {
+      switch ($_infos['name']) {
+        case 'color_xy':
+          $info_color_id = null;
+          $cmd = $this->getCmd('info', 'color');
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setName('Couleur état');
+            if (isset($_infos['endpoint'])) {
+              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+              $cmd->setName('Couleur état ' . $_infos['endpoint']);
             }
-            $cmd->setType('info');
-            $cmd->setSubType('string');
-            $cmd->setconfiguration('color_mode', 'xy');
-            $cmd->setGeneric_type('LIGHT_COLOR');
-            $cmd->setEqLogic_id($this->getId());
-            try {
-              $cmd->save();
-              $info_color_id = $cmd->getId();
-            } catch (\Throwable $th) {
-              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            $cmd->setLogicalId('color');
+          }
+          $cmd->setType('info');
+          $cmd->setSubType('string');
+          $cmd->setconfiguration('color_mode', 'xy');
+          $cmd->setGeneric_type('LIGHT_COLOR');
+          $cmd->setEqLogic_id($this->getId());
+          try {
+            $cmd->save();
+            $info_color_id = $cmd->getId();
+          } catch (\Throwable $th) {
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          }
+          $cmd = $this->getCmd('action', $logical);
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setName('Couleur');
+            if (isset($_infos['endpoint'])) {
+              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+              $cmd->setName('Couleur ' . $_infos['endpoint']);
             }
-
-            $cmd = $this->getCmd('action', $logical);
-            if (!is_object($cmd)) {
-              $cmd = new z2mCmd();
-              $cmd->setName('Couleur');
-              if (isset($_infos['endpoint'])) {
-                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-                $cmd->setName('Couleur ' . $_infos['endpoint']);
-              }
-              $cmd->setLogicalId($logical);
-            }
-            $cmd->setType('action');
-            $cmd->setSubType('color');
-            $cmd->setGeneric_type('LIGHT_SET_COLOR');
-            $cmd->setconfiguration('color_mode', 'xy');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setValue($info_color_id);
-            try {
-              $cmd->save();
-            } catch (\Throwable $th) {
-              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
-            }
-            break;
-        }
+            $cmd->setLogicalId($logical);
+          }
+          $cmd->setType('action');
+          $cmd->setSubType('color');
+          $cmd->setGeneric_type('LIGHT_SET_COLOR');
+          $cmd->setconfiguration('color_mode', 'xy');
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setValue($info_color_id);
+          try {
+            $cmd->save();
+          } catch (\Throwable $th) {
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          }
+          break;
       }
     }
   }
