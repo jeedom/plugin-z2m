@@ -484,8 +484,9 @@ class z2m extends eqLogic {
         foreach ($device['definition']['exposes'] as &$expose) {
           if (isset($expose['features'])) {
             $type = isset($expose['type']) ? $expose['type'] : null;
+            $property = isset($expose['property']) ? $expose['property'] : null;
             foreach ($expose['features'] as $feature) {
-              $eqLogic->createCmd($feature, $type);
+              $eqLogic->createCmd($feature, $type,$property);
             }
             continue;
           }
@@ -635,7 +636,7 @@ class z2m extends eqLogic {
     return 'plugins/z2m/data/img/' . $model . '.jpg';
   }
 
-  public static function getCmdConf($_infos, $_suffix = null, $_preffix = null) {
+  public static function getCmdConf($_infos, $_suffix = null, $_preffix = null,$_father_property = null) {
     if ($_infos['type'] == 'composite' && $_infos['name'] == 'color_xy') {
       return null;
     }
@@ -645,11 +646,14 @@ class z2m extends eqLogic {
     $cmd_ref = array();
     $suffix = ($_suffix == null) ? '' : '::' . strtolower($_suffix);
     $preffix = ($_preffix == null) ? '' : strtolower($_preffix) . '::';
-    if (isset(self::$_cmd_converter[$preffix . $_infos['name'] . $suffix])) {
+    if ($_father_property != null && isset(self::$_cmd_converter[$_father_property.'::'.$preffix . $_infos['name'] . $suffix])) {
+      $cmd_ref = self::$_cmd_converter[$preffix . $_infos['name'] . $suffix];
+    }else if (isset(self::$_cmd_converter[$preffix . $_infos['name'] . $suffix])) {
       $cmd_ref = self::$_cmd_converter[$preffix . $_infos['name'] . $suffix];
     }
     if (!isset($cmd_ref['name'])) {
       $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
+      $cmd_ref['name'] = ($_father_property == null) ? $_infos['name'] : $_father_property. ' '. $cmd_ref['name'];
     }
     if (isset($_infos['endpoint'])) {
       $cmd_ref['name'] .= ' ' . $_infos['endpoint'];
@@ -686,14 +690,18 @@ class z2m extends eqLogic {
   }
 
   /*     * *********************Methode d'instance************************* */
-   public function createCmd($_infos, $_type = null) {
+   public function createCmd($_infos, $_type = null,$_father_property = null) {
     $link_cmd_id = null;
-    $logical = $_infos['property'];
+    $logical = '';
+    if($_father_property != null){
+      $logical .=  $_father_property . '::';
+    }
+    $logical .= $_infos['property'];
     if (isset($_infos['endpoint']) && strpos(strtolower($logical), strtolower($_infos['endpoint'])) === false) {
       $logical .= '_' . $_infos['endpoint'];
     }
     if ($_infos['access'] != 2 && $_infos['access'] != 4 && $_infos['access'] != 6) {
-      $cmd_ref = self::getCmdConf($_infos, null, $_type);
+      $cmd_ref = self::getCmdConf($_infos, $_father_property, $_type);
       if (is_array($cmd_ref) && count($cmd_ref) > 0) {
         $cmd = $this->getCmd('info', $logical);
         if (!is_object($cmd)) {
@@ -724,7 +732,7 @@ class z2m extends eqLogic {
           } else {
             $logical_id =  $logical . '::' . $_infos[$k];
           }
-          $cmd_ref = self::getCmdConf($_infos, $v, $_type);
+          $cmd_ref = self::getCmdConf($_infos, $v, $_type, $_father_property);
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical_id);
@@ -747,7 +755,7 @@ class z2m extends eqLogic {
       }
 
       if ($_infos['type'] == 'numeric') {
-        $cmd_ref = self::getCmdConf($_infos, 'slider', $_type);
+        $cmd_ref = self::getCmdConf($_infos,'slider', $_type, $_father_property);
         $cmd_ref['type'] = 'action';
         $cmd_ref['subType'] = 'slider';
         $cmd = $this->getCmd('action', $logical . '::#slider#');
@@ -770,7 +778,7 @@ class z2m extends eqLogic {
 
       if ($_infos['type'] == 'enum') {
         foreach ($_infos['values'] as $enum) {
-          $cmd_ref = self::getCmdConf($_infos, $enum, $_type);
+          $cmd_ref = self::getCmdConf($_infos, $enum, $_type, $_father_property);
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical . '::' . $enum);
