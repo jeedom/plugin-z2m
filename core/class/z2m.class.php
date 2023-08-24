@@ -945,17 +945,22 @@ class z2mCmd extends cmd {
         }
         break;
     }
-    $info = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
-    if ($info[1] == 'true') {
-      $info[1] = true;
-    } else if ($info[1] == 'false') {
-      $info[1] = false;
+    $infos = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
+    foreach($infos as &$info){
+       if ($info == 'true') {
+          $info = true;
+        } else if ($info == 'false') {
+          $info = false;
+        }
     }
-
     if ($this->getSubtype() == 'color' && isset($color)) {
       $datas = array('color' =>  $color);
     } else {
-      $datas = array($info[0] =>  $info[1]);
+      if(count($infos) == 3){
+        $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
+      }else{
+        $datas = array($infos[0] =>  $infos[1]);
+      }
     }
     if(isset($datas['position'])){
       $datas['position'] = round(floatval($datas['position']), 2);
