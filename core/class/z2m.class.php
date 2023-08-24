@@ -961,9 +961,11 @@ class z2mCmd extends cmd {
       $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
+      log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
     }
+    log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
     mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
   }
 
