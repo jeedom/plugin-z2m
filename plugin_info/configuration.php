@@ -46,6 +46,7 @@ if (!isConnect()) {
       <div class="col-md-3">
         <select class="configKey form-control" data-l1key="port">
           <option value="none">{{Aucun}}</option>
+          <option value="auto">{{Auto}}</option>
           <option value="gateway">{{Passerelle distante}}</option>
           <option value="/dev/ttyS2">{{Atlas}}</option>
           <option value="/dev/ttyUSB1">{{Luna}}</option>
