@@ -5,6 +5,9 @@
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte",
         "Possibilité de configurer le port d'écoute de zigbee2mqtt": "Possibilité de configurer le port d'écoute de zigbee2mqtt",
         "Correction d'un soucis sur les commandes de type couleur": "Correction d'un soucis sur les commandes de type couleur",
+        "Correction sur la generation des commandes qui pouvait ne pas marcher dans certain cas": "Correction sur la generation des commandes qui pouvait ne pas marcher dans certain cas",
+        "Amélioration du nommage des commandes": "Amélioration du nommage des commandes",
+        "Possibilité pour les box atlas ou les controlers de type Elelabs de faire la mise à jour du firmware depuis jeedom": "Possibilité pour les box atlas ou les controlers de type Elelabs de faire la mise à jour du firmware depuis jeedom",
         "03\/07\/2023": "03\/07\/2023",
         "Correction d'un soucis lors de l'envoi d'une commande de positionnement (type volet": "Correction d'un soucis lors de l'envoi d'une commande de positionnement (type volet",
         "27\/06\/2023": "27\/06\/2023",
@@ -188,6 +191,13 @@
         "Si vraiment vous la voulez, il faut contacter le support pour qu'il regarde pourquoi vous ne l'avez pas (en général c'est due à un caractere non standard dans le nom du modele du module": "Si vraiment vous la voulez, il faut contacter le support pour qu'il regarde pourquoi vous ne l'avez pas (en général c'est due à un caractere non standard dans le nom du modele du module",
         "Changer le PAN_ID et Network Key": "Changer le PAN_ID et Network Key",
         "Une fois le changement fait dans l'interface de jeedom ou dans zigbee2mqtt il faut arreter le démon, supprimer le fichier coordinator_backup": "Une fois le changement fait dans l'interface de jeedom ou dans zigbee2mqtt il faut arreter le démon, supprimer le fichier coordinator_backup",
-        "json (il est dans `\/var\/www\/html\/plugins\/z2m\/data`), redémarrer le démon": "json (il est dans `\/var\/www\/html\/plugins\/z2m\/data`), redémarrer le démon"
+        "json (il est dans `\/var\/www\/html\/plugins\/z2m\/data`), redémarrer le démon": "json (il est dans `\/var\/www\/html\/plugins\/z2m\/data`), redémarrer le démon",
+        "J'ai l'erreur `Error": "J'ai l'erreur `Error",
+        "Reset error": "Reset error",
+        "Error": "Error",
+        "sequence": "sequence",
+        "1} after 10000ms` et une clef ELELABS ou une box Atlas": "1} after 10000ms` et une clef ELELABS ou une box Atlas",
+        "Il faut mettre a jour le firmware de votre clef zigbee, pour cela dans la configuration du plugin jeezigbee cliquez sur mettre à jour le firmware et remplisez les different champs de la fenetre puis validez": "Il faut mettre a jour le firmware de votre clef zigbee, pour cela dans la configuration du plugin jeezigbee cliquez sur mettre à jour le firmware et remplisez les different champs de la fenetre puis validez",
+        "Attention a ne surtout pas faire ca sur une box luna, cela casse la clef zigbee": "Attention a ne surtout pas faire ca sur une box luna, cela casse la clef zigbee"
     }
 }

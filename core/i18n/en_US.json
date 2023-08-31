@@ -18,10 +18,31 @@
         "EZSP (Atlas\/Luna)": "EZSP (Atlas\/Luna)",
         "Deconz\/Conbee": "Deconz\/Conbee",
         "Zigate (alpha)": "Zigate (alpha)",
+        "Mise à jour du firmware du contrôleur": "Controller Firmware Update",
+        "Cliquer sur le bouton pour mettre à jour le firmware du contrôleur. Le démon Zigbee est stoppé durant le processus": "Click the button to update the controller firmware. The Zigbee daemon is stopped during the process",
+        "L'equipe Jeedom travaille actuellement sur l'installation d'un nouveau firmware pour la Jeedom Luna.": "The Jeedom team is currently working on installing new firmware for the Jeedom Luna",
+        "Mettre à jour le firmware": "Update firmware",
         "Port d'écoute de Zigbee2mqtt": "Zigbee2mqtt listening port",
         "Interface z2m": "Z2m interface",
         "Ici": "Here",
         "Identifiant": "ID"
+    },
+    "plugins\/z2m\/desktop\/modal\/firmware_update.php": {
+        "Backup": "Backup",
+        "IMPORTANT : seul les clefs Elelabs peuvent etre mise à jour par Jeedom actuellement": "IMPORTANT: only Elelabs keys can currently be updated by Jeedom",
+        "IMPORTANT : NE PAS UTILISER SUR LA LUNA au rique de briquer votre controleur Zigbee": "IMPORTANT: DO NOT USE ON THE LUNA as you risk bricking your Zigbee controller",
+        "Type de clef": "Key type",
+        "Aucun": "None",
+        "Elelabs\/Popp": "Elelabs\/Popp",
+        "Port Zigbee": "Zigbee port",
+        "Passerelle distante": "Remote Gateway",
+        "Atlas": "Atlas",
+        "Firmware": "Firmware",
+        "Dernier firmware zigbee officiel": "Latest official zigbee firmware",
+        "Correction bootloader (uniquement Atlas)": "Bootloader correction (Atlas only)",
+        "Lancer la mise à jour": "Start the update",
+        "Lancer": "Throw",
+        "Mise à jour du firmware de la clef": "Updating the key firmware"
     },
     "plugins\/z2m\/desktop\/modal\/device.php": {
         "Equipement introuvable : ": "Equipment not found:",
@@ -235,6 +256,9 @@
         "Aucune méthode correspondante à": "No matching method"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {
+        "Lancement de la mise à jour du firmware pour : ": "Launching the firmware update for:",
+        "Pas de mise à jour possible du firmware pour : ": "No firmware update possible for:",
+        "Fin de la mise à jour du firmware de la clef": "End of key firmware update",
         "Le port n\\'est pas configuré": "Port is not configured",
         "Le plugin MQTT Manager n\\'est pas installé": "MQTT Manager plugin is not installed",
         "Le démon MQTT Manager n\\'est pas démarré": "MQTT Manager daemon is not started",

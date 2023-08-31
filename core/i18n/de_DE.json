@@ -18,10 +18,31 @@
         "EZSP (Atlas\/Luna)": "EZSP (Atlas\/Luna)",
         "Deconz\/Conbee": "Dekonz\/Conbee",
         "Zigate (alpha)": "Zigate (Alpha)",
+        "Mise à jour du firmware du contrôleur": "Controller-Firmware-Update",
+        "Cliquer sur le bouton pour mettre à jour le firmware du contrôleur. Le démon Zigbee est stoppé durant le processus": "Klicken Sie auf die Schaltfläche, um die Controller-Firmware zu aktualisieren. Der Zigbee-Daemon wird während des Vorgangs gestoppt",
+        "L'equipe Jeedom travaille actuellement sur l'installation d'un nouveau firmware pour la Jeedom Luna.": "Das Jeedom-Team arbeitet derzeit an der Installation neuer Firmware für den Jeedom Luna",
+        "Mettre à jour le firmware": "Firmware aktualisieren",
         "Port d'écoute de Zigbee2mqtt": "Zigbee2mqtt-Abhörport",
         "Interface z2m": "Z2m-Schnittstelle",
         "Ici": "Hier",
         "Identifiant": "ICH WÜRDE"
+    },
+    "plugins\/z2m\/desktop\/modal\/firmware_update.php": {
+        "Backup": "Sicherung",
+        "IMPORTANT : seul les clefs Elelabs peuvent etre mise à jour par Jeedom actuellement": "WICHTIG: Derzeit können nur Elelabs-Schlüssel von Jeedom aktualisiert werden",
+        "IMPORTANT : NE PAS UTILISER SUR LA LUNA au rique de briquer votre controleur Zigbee": "WICHTIG: NICHT AUF DER LUNA VERWENDEN, da sonst die Gefahr besteht, dass Ihr Zigbee-Controller beschädigt wird",
+        "Type de clef": "Schlüsselart",
+        "Aucun": "Keiner",
+        "Elelabs\/Popp": "Elelabs\/Popp",
+        "Port Zigbee": "Zigbee-Port",
+        "Passerelle distante": "Remote-Gateway",
+        "Atlas": "Atlas",
+        "Firmware": "Firmware",
+        "Dernier firmware zigbee officiel": "Neueste offizielle Zigbee-Firmware",
+        "Correction bootloader (uniquement Atlas)": "Bootloader-Korrektur (nur Atlas)",
+        "Lancer la mise à jour": "Starten Sie das Update",
+        "Lancer": "Werfen",
+        "Mise à jour du firmware de la clef": "Aktualisieren der Schlüssel-Firmware"
     },
     "plugins\/z2m\/desktop\/modal\/device.php": {
         "Equipement introuvable : ": "Gerät nicht gefunden:",
@@ -235,6 +256,9 @@
         "Aucune méthode correspondante à": "Keine Matching-Methode"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {
+        "Lancement de la mise à jour du firmware pour : ": "Starten des Firmware-Updates für:",
+        "Pas de mise à jour possible du firmware pour : ": "Kein Firmware-Update möglich für:",
+        "Fin de la mise à jour du firmware de la clef": "Ende des wichtigen Firmware-Updates",
         "Le port n\\'est pas configuré": "Port ist nicht konfiguriert",
         "Le plugin MQTT Manager n\\'est pas installé": "Das MQTT Manager-Plugin ist nicht installiert",
         "Le démon MQTT Manager n\\'est pas démarré": "Der MQTT-Manager-Daemon ist nicht gestartet",
