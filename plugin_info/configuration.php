@@ -145,4 +145,10 @@ if (!isConnect()) {
       $('.z2m_controllerType.' + $(this).value()).show();
     }
   })
+
+  $('#bt_UpdateFirmware').off('clic').on('click', function() {
+    $('#md_modal').dialog({
+      title: "{{Mise à jour du firmware du contrôleur}}"
+    }).load('index.php?v=d&plugin=z2m&modal=firmware_update').dialog('open');
+  })
 </script>
