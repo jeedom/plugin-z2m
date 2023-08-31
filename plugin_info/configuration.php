@@ -80,12 +80,30 @@ if (!isConnect()) {
         <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type de contrôleur Zigbee à utiliser}}"></i></sup>
       </label>
       <div class="col-md-3">
-        <select class="configKey form-control" data-l1key="controller">
+        <select class="configKey form-control" data-l1key="controller" id="sel_z2mControllerType">
           <option value="ti">{{ZNP/TI}}</option>
           <option value="ezsp">{{EZSP (Atlas/Luna)}}</option>
           <option value="deconz">{{Deconz/Conbee}}</option>
           <option value="zigate">{{Zigate (alpha)}}</option>
         </select>
+      </div>
+    </div>
+    <div class="form-group z2m_controllerType ezsp">
+      <label class="col-md-4 control-label">{{Mise à jour du firmware du contrôleur}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Cliquer sur le bouton pour mettre à jour le firmware du contrôleur. Le démon Zigbee est stoppé durant le processus}}"></i></sup>
+      </label>
+      <div class="col-md-4">
+        <?php
+        if (jeedom::getHardwareName() == 'Luna') {
+        ?>
+          <span>
+            <p>{{L'equipe Jeedom travaille actuellement sur l'installation d'un nouveau firmware pour la Jeedom Luna.}}</p>
+          </span>
+        <?php
+        } else {
+        ?>
+          <a class="btn btn-warning" id="bt_UpdateFirmware"><i class="fas fa-download"></i> {{Mettre à jour le firmware}}</a>
+        <?php } ?>
       </div>
     </div>
     <div class="form-group z2m_mode local">
@@ -121,4 +139,10 @@ if (!isConnect()) {
       $('.zigbee_portConf.' + $(this).value()).show();
     }
   });
+  $('#sel_z2mControllerType').off('change').on('change', function() {
+    $('.z2m_controllerType').hide();
+    if ($(this).value() != '') {
+      $('.z2m_controllerType.' + $(this).value()).show();
+    }
+  })
 </script>

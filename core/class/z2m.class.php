@@ -30,6 +30,32 @@ class z2m extends eqLogic {
 
   /*     * ***********************Methode static*************************** */
 
+  public static function firmwareUpdate($_options = array()) {
+    config::save('deamonAutoMode', 0, 'z2m');
+    log::clear(__CLASS__ . '_firmware');
+    $log = log::getPathToLog(__CLASS__ . '_firmware');
+    self::deamon_stop();
+    if ($_options['sub_controller'] == 'elelabs') {
+      if ($_options['firmware'] == 'fix_bootloader') {
+        $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/ezsp-fix-bootloader.sh;';
+        $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/ezsp-fix-bootloader.sh ' . $_options['port'];
+      } else {
+        $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/update-firmware-elelabs.sh;';
+        $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/update-firmware-elelabs.sh ' . $_options['port'] . ' ' . $_options['firmware'];
+      }
+      log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
+    } else {
+      log::add(__CLASS__ . '_firmware', 'info', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
+      return;
+    }
+    shell_exec('sudo kill 9 $(lsof -t ' . $_options['port'] . ') >> ' . $log . ' 2>&1');
+    shell_exec($cmd . ' >> ' . $log . ' 2>&1');
+    config::save('deamonAutoMode', 0, 'z2m');
+    self::deamon_start();
+    log::add(__CLASS__ . '_firmware', 'info', __('Fin de la mise à jour du firmware de la clef', __FILE__));
+  }
+
+
   public static function createHtmlControl($_name, $_configuration, $_value = '') {
     $min = '';
     $max = '';
