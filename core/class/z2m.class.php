@@ -30,6 +30,32 @@ class z2m extends eqLogic {
 
   /*     * ***********************Methode static*************************** */
 
+  public static function firmwareUpdate($_options = array()) {
+    config::save('deamonAutoMode', 0, 'z2m');
+    log::clear(__CLASS__ . '_firmware');
+    $log = log::getPathToLog(__CLASS__ . '_firmware');
+    self::deamon_stop();
+    if ($_options['sub_controller'] == 'elelabs') {
+      if ($_options['firmware'] == 'fix_bootloader') {
+        $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/ezsp-fix-bootloader.sh;';
+        $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/ezsp-fix-bootloader.sh ' . $_options['port'];
+      } else {
+        $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/update-firmware-elelabs.sh;';
+        $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/update-firmware-elelabs.sh ' . $_options['port'] . ' ' . $_options['firmware'];
+      }
+      log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
+    } else {
+      log::add(__CLASS__ . '_firmware', 'info', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
+      return;
+    }
+    shell_exec('sudo kill 9 $(lsof -t ' . $_options['port'] . ') >> ' . $log . ' 2>&1');
+    shell_exec($cmd . ' >> ' . $log . ' 2>&1');
+    config::save('deamonAutoMode', 0, 'z2m');
+    self::deamon_start();
+    log::add(__CLASS__ . '_firmware', 'info', __('Fin de la mise à jour du firmware de la clef', __FILE__));
+  }
+
+
   public static function createHtmlControl($_name, $_configuration, $_value = '') {
     $min = '';
     $max = '';
@@ -75,10 +101,16 @@ class z2m extends eqLogic {
   }
 
   public static function cronDaily() {
-    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f --");
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
+    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
   }
 
   public static function isRunning() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return true;
+    }
     if (!empty(system::ps('zigbee2mqtt'))) {
       return true;
     }
@@ -86,6 +118,13 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_info() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      $return = array();
+      $return['log'] = __CLASS__;
+      $return['launchable'] = 'ok';
+      $return['state'] = 'ok';
+      return $return;
+    }
     $return = array();
     $return['log'] = __CLASS__;
     $return['launchable'] = 'ok';
@@ -111,6 +150,9 @@ class z2m extends eqLogic {
   }
 
   public static function configure_z2m_deamon() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     self::postConfig_mqtt_topic();
     $mqtt = mqtt2::getFormatedInfos();
     $data_path = dirname(__FILE__) . '/../../data';
@@ -141,7 +183,7 @@ class z2m extends eqLogic {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
     }
 
-    $configuration['frontend']['port'] = 8080;
+    $configuration['frontend']['port'] = intval(config::byKey('z2m_listen_port', 'z2m','8080'));
     $configuration['frontend']['host'] = '0.0.0.0';
 
     $configuration['advanced']['last_seen'] = 'ISO_8601';
@@ -171,6 +213,9 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_start() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     self::deamon_stop();
     self::configure_z2m_deamon();
     $data_path = dirname(__FILE__) . '/../../data';
@@ -205,6 +250,9 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_stop() {
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+      return;
+    }
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
     $cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
     exec($cmd);
@@ -260,6 +308,26 @@ class z2m extends eqLogic {
     mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__, 'z2m'));
   }
 
+  public function findIeeeAddrRecursive($data) {
+      // MQTT Manager ne transmet que les topics mis à jour donc l'appel à la recursivité n'est pas un problème
+      $ret = null; // Variable pour stocker le résultat
+      foreach ($data as $key => $value) {
+          if (is_array($value)) { // Vérifie si la valeur est un tableau
+              if(isset($value['device'])) { // Vérifie si la clé 'device' existe dans le tableau
+                  log::add('z2m', 'debug', json_encode($data[$key])); // Debug Log
+                  if (isset($value['device']['ieeeAddr'] )) { // Vérifie si la clé 'ieeeAddr' existe dans le sous-tableau 'device'
+                      $ret =  $data[$key]; // Stocke le sous-tableau actuel dans la variable de résultat
+                  }
+              }
+              if($ret === null) { // Si le résultat est on cherche dans plus loin dans le tableau
+                  $ret = self::findIeeeAddrRecursive($value); // Appelle récursivement la fonction avec le sous-tableau actuel pour chercher dedans
+              }
+          }
+      }
+      return $ret; // Renvoie le résultat (peut être null si aucun 'ieeeAddr' n'a été trouvé)
+  }
+  
+
   public static function handleMqttMessage($_datas) {
     log::add('z2m', 'debug', json_encode($_datas));
     if (!isset($_datas['zigbee2mqtt'])) {
@@ -272,6 +340,14 @@ class z2m extends eqLogic {
       }
       if (isset($values['device'])) {
         $key = $values['device']['ieeeAddr'];
+      } else{
+      	// Ajout BeGood 07/08/2023
+      	// On recherche IeeeAddr de l'équipement dans les topics enfants 
+        $dev = self::findIeeeAddrRecursive($values);
+        if ($dev !== null) {
+          $key = $dev['device']['ieeeAddr'];
+          $values = $dev;          
+        }
       }
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
@@ -434,8 +510,9 @@ class z2m extends eqLogic {
         foreach ($device['definition']['exposes'] as &$expose) {
           if (isset($expose['features'])) {
             $type = isset($expose['type']) ? $expose['type'] : null;
+            $property = isset($expose['property']) ? $expose['property'] : null;
             foreach ($expose['features'] as $feature) {
-              $eqLogic->createCmd($feature, $type);
+              $eqLogic->createCmd($feature, $type,$property);
             }
             continue;
           }
@@ -585,7 +662,7 @@ class z2m extends eqLogic {
     return 'plugins/z2m/data/img/' . $model . '.jpg';
   }
 
-  public static function getCmdConf($_infos, $_suffix = null, $_preffix = null) {
+  public static function getCmdConf($_infos, $_suffix = null, $_preffix = null,$_father_property = null) {
     if ($_infos['type'] == 'composite' && $_infos['name'] == 'color_xy') {
       return null;
     }
@@ -595,11 +672,14 @@ class z2m extends eqLogic {
     $cmd_ref = array();
     $suffix = ($_suffix == null) ? '' : '::' . strtolower($_suffix);
     $preffix = ($_preffix == null) ? '' : strtolower($_preffix) . '::';
-    if (isset(self::$_cmd_converter[$preffix . $_infos['name'] . $suffix])) {
+    if ($_father_property != null && isset(self::$_cmd_converter[$_father_property.'::'.$preffix . $_infos['name'] . $suffix])) {
+      $cmd_ref = self::$_cmd_converter[$preffix . $_infos['name'] . $suffix];
+    }else if (isset(self::$_cmd_converter[$preffix . $_infos['name'] . $suffix])) {
       $cmd_ref = self::$_cmd_converter[$preffix . $_infos['name'] . $suffix];
     }
     if (!isset($cmd_ref['name'])) {
       $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
+      $cmd_ref['name'] = ($_father_property == null) ? $_infos['name'] : $_father_property. ' '. $cmd_ref['name'];
     }
     if (isset($_infos['endpoint'])) {
       $cmd_ref['name'] .= ' ' . $_infos['endpoint'];
@@ -636,14 +716,18 @@ class z2m extends eqLogic {
   }
 
   /*     * *********************Methode d'instance************************* */
-  public function createCmd($_infos, $_type = null) {
+   public function createCmd($_infos, $_type = null,$_father_property = null) {
     $link_cmd_id = null;
-    $logical = $_infos['property'];
+    $logical = '';
+    if($_father_property != null){
+      $logical .=  $_father_property . '::';
+    }
+    $logical .= $_infos['property'];
     if (isset($_infos['endpoint']) && strpos(strtolower($logical), strtolower($_infos['endpoint'])) === false) {
       $logical .= '_' . $_infos['endpoint'];
     }
     if ($_infos['access'] != 2 && $_infos['access'] != 4 && $_infos['access'] != 6) {
-      $cmd_ref = self::getCmdConf($_infos, null, $_type);
+      $cmd_ref = self::getCmdConf($_infos, $_father_property, $_type);
       if (is_array($cmd_ref) && count($cmd_ref) > 0) {
         $cmd = $this->getCmd('info', $logical);
         if (!is_object($cmd)) {
@@ -658,7 +742,7 @@ class z2m extends eqLogic {
         try {
           $cmd->save();
         } catch (\Throwable $th) {
-          log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
         }
         $link_cmd_id = $cmd->getId();
       }
@@ -674,7 +758,7 @@ class z2m extends eqLogic {
           } else {
             $logical_id =  $logical . '::' . $_infos[$k];
           }
-          $cmd_ref = self::getCmdConf($_infos, $v, $_type);
+          $cmd_ref = self::getCmdConf($_infos, $v, $_type, $_father_property);
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical_id);
@@ -691,13 +775,13 @@ class z2m extends eqLogic {
           try {
             $cmd->save();
           } catch (\Throwable $th) {
-            log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
           }
         }
       }
 
       if ($_infos['type'] == 'numeric') {
-        $cmd_ref = self::getCmdConf($_infos, 'slider', $_type);
+        $cmd_ref = self::getCmdConf($_infos,'slider', $_type, $_father_property);
         $cmd_ref['type'] = 'action';
         $cmd_ref['subType'] = 'slider';
         $cmd = $this->getCmd('action', $logical . '::#slider#');
@@ -714,13 +798,13 @@ class z2m extends eqLogic {
         try {
           $cmd->save();
         } catch (\Throwable $th) {
-          log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
         }
       }
 
       if ($_infos['type'] == 'enum') {
         foreach ($_infos['values'] as $enum) {
-          $cmd_ref = self::getCmdConf($_infos, $enum, $_type);
+          $cmd_ref = self::getCmdConf($_infos, $enum, $_type, $_father_property);
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical . '::' . $enum);
@@ -737,59 +821,58 @@ class z2m extends eqLogic {
           try {
             $cmd->save();
           } catch (\Throwable $th) {
-            log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
           }
         }
       }
-      if ($_infos['type'] == 'composite') {
-        switch ($_infos['name']) {
-          case 'color_xy':
-            $info_color_id = null;
-            $cmd = $this->getCmd('info', 'color');
-            if (!is_object($cmd)) {
-              $cmd = new z2mCmd();
-              $cmd->setName('Couleur état');
-              if (isset($_infos['endpoint'])) {
-                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-                $cmd->setName('Couleur état ' . $_infos['endpoint']);
-              }
-              $cmd->setLogicalId('color');
+    }
+    if ($_infos['type'] == 'composite') {
+      switch ($_infos['name']) {
+        case 'color_xy':
+          $info_color_id = null;
+          $cmd = $this->getCmd('info', 'color');
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setName('Couleur état');
+            if (isset($_infos['endpoint'])) {
+              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+              $cmd->setName('Couleur état ' . $_infos['endpoint']);
             }
-            $cmd->setType('info');
-            $cmd->setSubType('string');
-            $cmd->setconfiguration('color_mode', 'xy');
-            $cmd->setGeneric_type('LIGHT_COLOR');
-            $cmd->setEqLogic_id($this->getId());
-            try {
-              $cmd->save();
-              $info_color_id = $cmd->getId();
-            } catch (\Throwable $th) {
-              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+            $cmd->setLogicalId('color');
+          }
+          $cmd->setType('info');
+          $cmd->setSubType('string');
+          $cmd->setconfiguration('color_mode', 'xy');
+          $cmd->setGeneric_type('LIGHT_COLOR');
+          $cmd->setEqLogic_id($this->getId());
+          try {
+            $cmd->save();
+            $info_color_id = $cmd->getId();
+          } catch (\Throwable $th) {
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          }
+          $cmd = $this->getCmd('action', $logical);
+          if (!is_object($cmd)) {
+            $cmd = new z2mCmd();
+            $cmd->setName('Couleur');
+            if (isset($_infos['endpoint'])) {
+              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
+              $cmd->setName('Couleur ' . $_infos['endpoint']);
             }
-
-            $cmd = $this->getCmd('action', $logical);
-            if (!is_object($cmd)) {
-              $cmd = new z2mCmd();
-              $cmd->setName('Couleur');
-              if (isset($_infos['endpoint'])) {
-                $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-                $cmd->setName('Couleur ' . $_infos['endpoint']);
-              }
-              $cmd->setLogicalId($logical);
-            }
-            $cmd->setType('action');
-            $cmd->setSubType('color');
-            $cmd->setGeneric_type('LIGHT_SET_COLOR');
-            $cmd->setconfiguration('color_mode', 'xy');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setValue($info_color_id);
-            try {
-              $cmd->save();
-            } catch (\Throwable $th) {
-              log::add('z2m', 'debug', 'Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
-            }
-            break;
-        }
+            $cmd->setLogicalId($logical);
+          }
+          $cmd->setType('action');
+          $cmd->setSubType('color');
+          $cmd->setGeneric_type('LIGHT_SET_COLOR');
+          $cmd->setconfiguration('color_mode', 'xy');
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setValue($info_color_id);
+          try {
+            $cmd->save();
+          } catch (\Throwable $th) {
+            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
+          }
+          break;
       }
     }
   }
@@ -896,25 +979,32 @@ class z2mCmd extends cmd {
         }
         break;
     }
-    $info = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
-    if ($info[1] == 'true') {
-      $info[1] = true;
-    } else if ($info[1] == 'false') {
-      $info[1] = false;
+    $infos = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
+    foreach($infos as &$info){
+       if ($info == 'true') {
+          $info = true;
+        } else if ($info == 'false') {
+          $info = false;
+        }
     }
-
     if ($this->getSubtype() == 'color' && isset($color)) {
       $datas = array('color' =>  $color);
     } else {
-      $datas = array($info[0] =>  $info[1]);
+      if(count($infos) == 3){
+        $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
+      }else{
+        $datas = array($infos[0] =>  $infos[1]);
+      }
     }
     if(isset($datas['position'])){
       $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
+      log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
       mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
     }
+    log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
     mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
   }
 

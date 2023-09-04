@@ -10,7 +10,10 @@
         "name": "Batterie faible"
     },
     "action": {
-        "name": "Button"
+        "name": "Button",
+         "configuration": {
+            "repeatEventManagement": "always"
+        }
     },
     "temperature": {
         "name": "Température",
