@@ -54,7 +54,7 @@ if (!isConnect()) {
             if ($value == "ttyLuna-Zigbee") {
               echo '<option value="/dev/' . $value . '">Luna Zigbee V2</option>';
             } else if ($value == "ttyUSB1") {
-              echo '<option value="/dev/' . $value . '">Luna Zigbee Old</option>';
+              echo '<option value="/dev/' . $value . '">Luna Zigbee Old (/dev/' . $value . ')</option>';
             } else {
               echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
             }
