@@ -115,7 +115,7 @@ if (!isConnect()) {
     <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Interface z2m}}</label>
       <div class="col-md-1">
-        <a target="_blank" href="http://<?php echo network::getNetworkAccess('internal', 'ip').':'.config::byKey('z2m_listen_port', 'z2m', 8080) ?>:8080">{{Ici}}</a>
+        <a target="_blank" href="http://<?php echo network::getNetworkAccess('internal', 'ip').':'.config::byKey('z2m_listen_port', 'z2m', 8080) ?>">{{Ici}}</a>
       </div>
       <label class="col-md-1 control-label">{{Identifiant}}</label>
       <div class="col-md-3">
