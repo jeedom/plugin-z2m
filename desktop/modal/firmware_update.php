@@ -68,7 +68,7 @@ if (!isConnect('admin')) {
     </div>
   </fieldset>
 </form>
-
+<?php include_file('core', 'z2m', 'class.js', 'z2m'); ?>
 <script>
   $('.firmwareAttr[data-l1key="port"]').off('change').on('change', function() {
     $('.zigbee_firmware_portConf').hide();
