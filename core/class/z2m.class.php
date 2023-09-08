@@ -679,7 +679,7 @@ class z2m extends eqLogic {
     }
     if (!isset($cmd_ref['name'])) {
       $cmd_ref['name'] = ($_suffix == null) ? $_infos['name'] : $_infos['name'] . ' ' . $_suffix;
-      $cmd_ref['name'] = ($_father_property == null) ? $_infos['name'] : $_father_property. ' '. $cmd_ref['name'];
+      $cmd_ref['name'] = ($_father_property == null) ? $cmd_ref['name'] : $_father_property. ' '. $cmd_ref['name'];
     }
     if (isset($_infos['endpoint'])) {
       $cmd_ref['name'] .= ' ' . $_infos['endpoint'];
