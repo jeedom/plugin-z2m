@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "04\/09\/2023": "09\/04\/2023",
         "Possibilité de configurer le port d'écoute de zigbee2mqtt": "Capacidade de configurar a porta de escuta do zigbee2mqtt",
         "Correction d'un soucis sur les commandes de type couleur": "Corrigido um problema com comandos de tipo de cor",
         "Correction sur la generation des commandes qui pouvait ne pas marcher dans certain cas": "Correção na geração de comandos que não funcionavam em determinados casos",

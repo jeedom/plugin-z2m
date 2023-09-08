@@ -49,19 +49,18 @@ if (!isConnect()) {
           <option value="auto">{{Auto}}</option>
           <option value="gateway">{{Passerelle distante}}</option>
           <option value="/dev/ttyS2">{{Atlas}}</option>
-          <option value="/dev/ttyUSB1">{{Luna}}</option>
           <?php
-          foreach (jeedom::getUsbMapping() as $name => $value) {
-            echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
-          }
           foreach (ls('/dev/', 'tty*') as $value) {
             if ($value == "ttyLuna-Zigbee") {
               echo '<option value="/dev/' . $value . '">Luna Zigbee V2</option>';
             } else if ($value == "ttyUSB1") {
-              echo '<option value="/dev/' . $value . '">Luna Zigbee Old</option>';
+              echo '<option value="/dev/' . $value . '">Luna Zigbee Old (/dev/' . $value . ')</option>';
             } else {
               echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
             }
+          }
+          foreach (jeedom::getUsbMapping() as $name => $value) {
+            echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
           }
           ?>
         </select>

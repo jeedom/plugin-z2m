@@ -25,10 +25,16 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
     cd ${BASEDIR}/zigbee2mqtt
     echo "Backup configuration"
     cp -R data data-backup
-    echo "Update z2m (git)"
-    git config --global --add safe.directory ${BASEDIR}/zigbee2mqtt
-    git reset --hard HEAD
-    git pull
+    if [ -d "${BASEDIR}/zigbee2mqtt/.git" ]; then
+        echo "Update z2m (git)"
+        git config --global --add safe.directory ${BASEDIR}/zigbee2mqtt
+        git reset --hard HEAD
+        git pull
+    else
+       echo "Not a git folder need to clone z2m"
+       rm -rf ${BASEDIR}/zigbee2mqtt/*
+       git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
+    fi
     npm ci
     npm run build
     echo "Restore configuration"
