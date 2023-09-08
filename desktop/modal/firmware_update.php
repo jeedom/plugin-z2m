@@ -96,7 +96,7 @@ if (!isConnect('admin')) {
       success: function() {
         $('#md_modal2').dialog({
           title: "{{Mise à jour du firmware de la clef}}"
-        }).load('index.php?v=d&modal=log.display&log=zigbee_firmware').dialog('open');
+        }).load('index.php?v=d&modal=log.display&log=z2m_firmware').dialog('open');
       }
     });
   })
