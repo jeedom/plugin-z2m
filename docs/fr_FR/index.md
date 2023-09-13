@@ -142,6 +142,14 @@ Malheureusement cela est dû à la manière dont la fabricant a prévu l'intégr
 
 Pour finir et même si cela peut paraître évident pour certains, nous rappelons que les passerelles Zigbee en Wifi ou distantes sont par définition moins fiables que les passerelles USB. L'équipe Jeedom conseille donc l'utilisation d'une passerelle Zigbee en USB.  
 
+# Convertisseur externe
+
+Zigbee2mqtt vous autorise à ajouter des convertisseurs externe (pour supporté des modules pas officiellement supporté). Pour ajouter un convertisseurs externe il suffit de creer un répertoire `custom` dans `plugins/z2m/core/config/converters`. Ensuite vous avez juste a placer votre converter dans ce dossier et a redemarrer le demon du plugin.
+
+>**IMPORTANT**
+>
+>Jeedom SAS ne couvre pas la partie création/utilisation des convertisseurs externe.
+
 # FAQ
 
 >**J’ai plein de messages d'informations (bleu) en bas a droite et je n'y comprends rien**
