@@ -24,10 +24,10 @@ if (!isConnect()) {
 ?>
 <form class="form-horizontal">
   <fieldset>
-    <?php if (class_exists('jMQTT')) {
-				echo '<div class="alert alert-warning">{{Le plugin jMQTT est installé, veuillez vérifier la configuration du broker dans le plugin jMQTT et la reporter, si nécessaire, dans le plugin MQTT Manager.}}</div>';
-			}
-		?>
+	<?php if (class_exists('jMQTT')) {
+			echo '<div class="alert alert-warning">{{Le plugin jMQTT est installé, veuillez vérifier la configuration du broker dans le plugin jMQTT et la reporter, si nécessaire, dans le plugin MQTT Manager.}}</div>';
+		}
+	?>
     <div class="form-group">
       <label class="col-md-4 control-label">{{Topic racine}}</label>
       <div class="col-md-3">
@@ -123,6 +123,14 @@ if (!isConnect()) {
       <label class="col-md-1 control-label">{{Identifiant}}</label>
       <div class="col-md-3">
         <span class="label label-info"><?php echo config::byKey('z2m_auth_token', 'z2m', '') ?></span>
+      </div>
+    </div>
+    <div class="form-group z2m_mode local">
+      <label class="col-md-4 control-label">{{Converters (réservé aux utilisateurs avancées)}}
+      	<sup><i class="fas fa-question-circle tooltips" title="{{N'oubliez pas de redemarrer le démon après tout changement pour qu'il soit pris en compte}}"></i></sup>
+      </label>
+      <div class="col-md-3">
+        <a class="btn btn-warning" href="index.php?v=d&p=editor&root=plugins/z2m/core/config/converters/custom">{{Editer}}</a>
       </div>
     </div>
     <div class="form-group z2m_mode local">
