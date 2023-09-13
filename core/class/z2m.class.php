@@ -166,7 +166,7 @@ class z2m extends eqLogic {
     $configuration['mqtt']['server'] .= (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
     $configuration['mqtt']['user'] = $mqtt['user'];
     $configuration['mqtt']['password'] = $mqtt['password'];
-    $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__, 'z2m');
+    $configuration['mqtt']['base_topic'] = config::byKey('mqtt::topic', __CLASS__);
     $configuration['mqtt']['include_device_information'] = true;
 
     $port = config::byKey('port', 'z2m');
@@ -305,7 +305,10 @@ class z2m extends eqLogic {
   }
 
   public static function postConfig_mqtt_topic($_value = null) {
-    mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__, 'z2m'));
+    if(method_exists('mqtt2','removePluginTopicByPlugin')){
+       mqtt2::removePluginTopicByPlugin(__CLASS__);
+    }
+    mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__));
   }
 
   public function findIeeeAddrRecursive($data) {
