@@ -148,6 +148,10 @@ Zigbee2mqtt vous autorise à ajouter des convertisseurs externe (pour supporté 
 
 >**IMPORTANT**
 >
+>Pour créer votre dossie et/ou ajouter votre `js` converter vous pouvez le faire depuis l'éditeur de jeedom (configuration -> OS/DB -> Editeur de fichier)
+
+>**IMPORTANT**
+>
 >Jeedom SAS ne couvre pas la partie création/utilisation des convertisseurs externe.
 
 # FAQ
