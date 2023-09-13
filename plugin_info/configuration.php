@@ -126,30 +126,30 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode local">
-				<label class="col-md-4 control-label">{{Version Zigbee2mqtt}}
-					<sup><i class="fas fa-question-circle tooltips" title="{{Version de la librairie Zigbee2mqtt}}"></i></sup>
-				</label>
-				<div class="col-md-7">
-				<?php
-				$file = dirname(__FILE__) . '/../resources/zigbee2mqtt/package.json';
-				$package = array();
-				if (file_exists($file)) {
-					$package = json_decode(file_get_contents($file), true);
-				}
-				if (isset($package['version'])){
-					config::save('zwavejsVersion', $package['version'], 'z2m');
-				}
-				$localVersion = config::byKey('zigbee2mqttVersion', 'z2m', 'N/A');
-				$wantedVersion = config::byKey('wantedVersion', 'z2m', '');
-				if ($localVersion != $wantedVersion) {
-					echo '<span class="label label-warning">' . $localVersion . '</span><br>';
-					echo "<div class='alert alert-danger text-center'>{{Votre version de zigbee2mqtt n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
-				} else {
-					echo '<span class="label label-success">' . $localVersion . '</span><br>';
-				}
-				?>
-				</div>
-			</div>
+		<label class="col-md-4 control-label">{{Version Zigbee2mqtt}}
+			<sup><i class="fas fa-question-circle tooltips" title="{{Version de la librairie Zigbee2mqtt}}"></i></sup>
+		</label>
+		<div class="col-md-7">
+		<?php
+		$file = dirname(__FILE__) . '/../resources/zigbee2mqtt/package.json';
+		$package = array();
+		if (file_exists($file)) {
+			$package = json_decode(file_get_contents($file), true);
+		}
+		if (isset($package['version'])){
+			config::save('zwavejsVersion', $package['version'], 'z2m');
+		}
+		$localVersion = config::byKey('zigbee2mqttVersion', 'z2m', 'N/A');
+		$wantedVersion = config::byKey('wantedVersion', 'z2m', '');
+		if (version_compare($localVersion, $wantedVersion, '<')) {
+			echo '<span class="label label-warning">' . $localVersion . '</span><br>';
+			echo "<div class='alert alert-danger text-center'>{{Votre version de zigbee2mqtt n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
+		} else {
+			echo '<span class="label label-success">' . $localVersion . '</span><br>';
+		}
+		?>
+		</div>
+	</div>
   </fieldset>
 </form>
 
