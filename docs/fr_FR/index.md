@@ -144,15 +144,11 @@ Pour finir et même si cela peut paraître évident pour certains, nous rappelon
 
 # Convertisseur externe
 
-Zigbee2mqtt vous autorise à ajouter des convertisseurs externe (pour supporté des modules pas officiellement supporté). Pour ajouter un convertisseurs externe il suffit de creer un répertoire `custom` dans `plugins/z2m/core/config/converters`. Ensuite vous avez juste a placer votre converter dans ce dossier et a redemarrer le demon du plugin.
+Zigbee2mqtt vous autorise à ajouter des convertisseurs externe (pour supporter des modules pas officiellement supportés). Pour ajouter un convertisseurs externe il suffit dans la configuration du plugin (Plugin -> Gestion de plugins -> Jeezigbee) de cliquer sur le bouton "Editer" au niveau de la ligne converter et de déposer/editer votre converter dans le dossier que jeedom vous montre.
 
 >**IMPORTANT**
 >
->Pour créer votre dossie et/ou ajouter votre `js` converter vous pouvez le faire depuis l'éditeur de jeedom (configuration -> OS/DB -> Editeur de fichier)
-
->**IMPORTANT**
->
->Jeedom SAS ne couvre pas la partie création/utilisation des convertisseurs externe.
+>Le support ne couvre pas la partie création/utilisation des convertisseurs externe.
 
 # FAQ
 
