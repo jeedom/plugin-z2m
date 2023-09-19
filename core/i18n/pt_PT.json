@@ -1,5 +1,6 @@
 {
     "plugins\/z2m\/plugin_info\/configuration.php": {
+        "Le plugin jMQTT est installé, veuillez vérifier la configuration du broker dans le plugin jMQTT et la reporter, si nécessaire, dans le plugin MQTT Manager.": "O plugin jMQTT está instalado, verifique a configuração do broker no plugin jMQTT e informe, se necessário, no plugin MQTT Manager",
         "Topic racine": "Tópico raiz",
         "Mode": "Moda",
         "Distant": "Controlo remoto",
@@ -24,7 +25,15 @@
         "Port d'écoute de Zigbee2mqtt": "Porta de escuta Zigbee2mqtt",
         "Interface z2m": "Interface z2m",
         "Ici": "Aqui",
-        "Identifiant": "EU IRIA"
+        "Identifiant": "EU IRIA",
+        "Converters (réservé aux utilisateurs avancées)": "Conversores (reservados para usuários avançados)",
+        "N'oubliez pas de redemarrer le démon après tout changement pour qu'il soit pris en compte": "Não se esqueça de reiniciar o daemon após quaisquer alterações para que tenham efeito",
+        "Editer": "Editar",
+        "Version Zigbee2mqtt": "Versão Zigbee2mqtt",
+        "Version de la librairie Zigbee2mqtt": "Versão da biblioteca Zigbee2mqtt",
+        "Votre version de zigbee2mqtt n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version ": "Sua versão do zigbee2mqtt não é a recomendada pelo plugin. Você está usando a versão",
+        " Le plugin nécessite la version ": "O plugin requer a versão",
+        "Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.": "Reinicie as dependências para atualizar a biblioteca. Em seguida, reinicie o daemon para ver a nova versão"
     },
     "plugins\/z2m\/desktop\/modal\/firmware_update.php": {
         "Backup": "Cópia de segurança",
