@@ -145,7 +145,7 @@ if (!isConnect()) {
 			$package = json_decode(file_get_contents($file), true);
 		}
 		if (isset($package['version'])){
-			config::save('zwavejsVersion', $package['version'], 'z2m');
+			config::save('zigbee2mqttVersion', $package['version'], 'z2m');
 		}
 		$localVersion = config::byKey('zigbee2mqttVersion', 'z2m', 'N/A');
 		$wantedVersion = config::byKey('wantedVersion', 'z2m', '');
