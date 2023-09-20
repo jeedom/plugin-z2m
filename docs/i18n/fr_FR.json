@@ -178,6 +178,8 @@
         "Pour ajouter un convertisseurs externe il suffit dans la configuration du plugin (Plugin -> Gestion de plugins -> Jeezigbee) de cliquer sur le bouton \"Editer\" au niveau de la ligne converter et de déposer\/editer votre converter dans le dossier que jeedom vous montre": "Pour ajouter un convertisseurs externe il suffit dans la configuration du plugin (Plugin -> Gestion de plugins -> Jeezigbee) de cliquer sur le bouton \"Editer\" au niveau de la ligne converter et de déposer\/editer votre converter dans le dossier que jeedom vous montre",
         "Le support ne couvre pas la partie création\/utilisation des convertisseurs externe": "Le support ne couvre pas la partie création\/utilisation des convertisseurs externe",
         "FAQ": "FAQ",
+        "Lien": "Lien",
+        "vers la FAQ de Zigbee2mqtt": "vers la FAQ de Zigbee2mqtt",
         "J'ai plein de messages d'informations (bleu) en bas a droite et je n'y comprends rien": "J'ai plein de messages d'informations (bleu) en bas a droite et je n'y comprends rien",
         "Nous sommes actuellement en train de trier les messages utiles ou non que renvoi Zigbee2mqtt; mais par défaut nous préferons tout afficher": "Nous sommes actuellement en train de trier les messages utiles ou non que renvoi Zigbee2mqtt; mais par défaut nous préferons tout afficher",
         "J'ai des erreurs bizarres sur des modules sur piles ou des soucis d'inclusion": "J'ai des erreurs bizarres sur des modules sur piles ou des soucis d'inclusion",
