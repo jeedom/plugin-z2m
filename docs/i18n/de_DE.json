@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "20\/09\/2023": "20.09.2023",
+        "Correction d'un bug sur la version de zigbee2mqtt": "Ein Fehler in der zigbee2mqtt-Version wurde behoben",
         "19\/09\/2023": "19.09.2023",
         "Correction d'un bug sur la mise a jour des dépendances (zigbee2mqtt) si vous avez fait une restoration de jeedom": "Ein Fehler beim Aktualisieren von Abhängigkeiten (zigbee2mqtt) wurde behoben, wenn Sie jeedom wiederhergestellt haben",
         "08\/09\/2023": "08.09.2023",
