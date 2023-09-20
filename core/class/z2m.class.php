@@ -188,7 +188,7 @@ class z2m extends eqLogic {
 
     $configuration['advanced']['last_seen'] = 'ISO_8601';
 
-    if(!isset($configuration['advanced']['network_key'])){
+    if(!file_exists($data_path . '/coordinator_backup.json')){
         $configuration['advanced']['network_key'] = 'GENERATE';
     }
 
