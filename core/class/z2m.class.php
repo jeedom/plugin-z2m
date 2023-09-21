@@ -227,6 +227,8 @@ class z2m extends eqLogic {
     if ($deamon_info['launchable'] != 'ok') {
       throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
     }
+    exec(system::getCmdSudo() .' chown www-data -R "/root/.npm"');
+    exec(system::getCmdSudo() .' chmod 777 -R "/root/.npm"');
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
     $cmd = '';
     $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
