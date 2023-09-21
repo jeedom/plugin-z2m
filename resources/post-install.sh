@@ -45,7 +45,6 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
     
     npm ci
     npm run build
-    echo "Restore configuration"
 else
     mkdir ${BASEDIR}/zigbee2mqtt
     git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
