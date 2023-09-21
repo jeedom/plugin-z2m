@@ -40,6 +40,7 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
    if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
         $wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
         if [ ! -z "${wanted_z2m_version}" ];then
+           echo "Need version : "$wanted_z2m_version
            git checkout tags/$wanted_z2m_version
         fi
    fi
@@ -55,6 +56,7 @@ else
     if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
         $wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
         if [ ! -z "${wanted_z2m_version}" ];then
+           echo "Need version : "$wanted_z2m_version
            git checkout tags/$wanted_z2m_version
         fi
     fi
