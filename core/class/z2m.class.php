@@ -181,6 +181,8 @@ class z2m extends eqLogic {
 
     if (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
+    }else{
+      $configuration['serial']['adapter'] = '';
     }
 
     $configuration['frontend']['port'] = intval(config::byKey('z2m_listen_port', 'z2m','8080'));
