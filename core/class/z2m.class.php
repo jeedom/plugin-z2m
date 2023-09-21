@@ -315,6 +315,17 @@ class z2m extends eqLogic {
     mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__));
   }
 
+  public static function postConfig_wanted_z2m_version($_value = null) {
+    if($_value == null || trim($_value) == null){
+      if(file_exist(__DIR__.'/../../data/wanted_z2m_version')){
+        unlink(__DIR__.'/../../data/wanted_z2m_version');
+      }
+    }else{
+      file_put_contents(__DIR__.'/../../data/wanted_z2m_version', $_value);
+    }
+  }
+
+  
   public function findIeeeAddrRecursive($data) {
       // MQTT Manager ne transmet que les topics mis à jour donc l'appel à la recursivité n'est pas un problème
       $ret = null; // Variable pour stocker le résultat
