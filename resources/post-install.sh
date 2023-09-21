@@ -36,6 +36,15 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
        git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
        cd ${BASEDIR}/zigbee2mqtt
     fi
+
+
+   if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
+        $wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
+        if [ ! -z "${wanted_z2m_version}" ];then
+           git checkout tags/$wanted_z2m_version
+        fi
+   fi
+    
     npm ci
     npm run build
     echo "Restore configuration"
