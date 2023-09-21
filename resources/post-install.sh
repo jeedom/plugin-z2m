@@ -21,43 +21,21 @@ echo "Launch post-install of z2m dependancy"
 BASEDIR=$(dirname $(realpath "$0"))
 
 if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
-    cd ${BASEDIR}/zigbee2mqtt
-    if [ -d "${BASEDIR}/zigbee2mqtt/.git" ]; then
-        echo "Update z2m (git)"
-        git config --global --add safe.directory ${BASEDIR}/zigbee2mqtt
-        git reset --hard HEAD
-        git pull
-    else
-       echo "Not a git folder need to clone z2m"
-       cd ..
-       rm -rf ${BASEDIR}/zigbee2mqtt
-       git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
-       cd ${BASEDIR}/zigbee2mqtt
-   fi
-   echo "${BASEDIR}/../data/wanted_z2m_version"
-   if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
-        wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
-        if [ ! -z "${wanted_z2m_version}" ];then
-           echo "Need version : "$wanted_z2m_version
-           git checkout tags/$wanted_z2m_version
-        fi
-   fi
-    
-    npm ci
-    npm run build
-else
-    mkdir ${BASEDIR}/zigbee2mqtt
-    git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
-    cd ${BASEDIR}/zigbee2mqtt
-
-    if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
-        $wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
-        if [ ! -z "${wanted_z2m_version}" ];then
-           git checkout tags/$wanted_z2m_version
-        fi
-    fi
-    
-    npm ci
-    npm run build
+   rm -rf ${BASEDIR}/zigbee2mqtt
 fi
+
+mkdir ${BASEDIR}/zigbee2mqtt
+git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
+cd ${BASEDIR}/zigbee2mqtt
+
+if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
+    wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
+    if [ ! -z "${wanted_z2m_version}" ];then
+       echo "Need version : "$wanted_z2m_version
+       git checkout tags/$wanted_z2m_version
+    fi
+fi
+
+npm ci
+npm run build
 chown www-data:www-data -R ${BASEDIR}/zigbee2mqtt
