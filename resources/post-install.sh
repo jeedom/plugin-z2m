@@ -18,12 +18,10 @@
 #set -x  # make sure each command is printed in the terminal
 set -x
 echo "Launch post-install of z2m dependancy"
-
-BASEDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+BASEDIR=$(dirname $(realpath "$0"))
 
 if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
     cd ${BASEDIR}/zigbee2mqtt
-    echo "Backup configuration"
     if [ -d "${BASEDIR}/zigbee2mqtt/.git" ]; then
         echo "Update z2m (git)"
         git config --global --add safe.directory ${BASEDIR}/zigbee2mqtt
@@ -36,9 +34,9 @@ if [ -d "${BASEDIR}/zigbee2mqtt" ]; then
        git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git ${BASEDIR}/zigbee2mqtt
        cd ${BASEDIR}/zigbee2mqtt
    fi
-
+   echo "${BASEDIR}/../data/wanted_z2m_version"
    if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
-        $wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
+        wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
         if [ ! -z "${wanted_z2m_version}" ];then
            echo "Need version : "$wanted_z2m_version
            git checkout tags/$wanted_z2m_version
@@ -56,7 +54,6 @@ else
     if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
         $wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
         if [ ! -z "${wanted_z2m_version}" ];then
-           echo "Need version : "$wanted_z2m_version
            git checkout tags/$wanted_z2m_version
         fi
     fi
