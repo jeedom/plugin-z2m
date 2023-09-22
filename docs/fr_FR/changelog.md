@@ -4,7 +4,14 @@
 >
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
-- Possibilité de choisr la version de zigbee2mqtt
+
+# 22/09/2023
+
+- Possibilité de choisir la version de zigbee2mqtt
+
+>**IMPORTANT**
+>
+>Pour ceux ayant des soucis de module injoignable suites aux précedente mise à jour il faut restorer un backup jeedom d'avant la mise à jour puis refaire la mise à jour. Je m'excuse sincerement pour ce bug qui se produit chez certain d'entre vous il vient d'un fonction innatendu de zigbee2mqtt que je n'ai pas sur mes differents labo.
 
 # 20/09/2023
 
