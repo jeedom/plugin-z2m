@@ -133,6 +133,17 @@ if (!isConnect()) {
         <a class="btn btn-warning" href="index.php?v=d&p=editor&root=plugins/z2m/core/config/converters/custom">{{Editer}}</a>
       </div>
     </div>
+     <div class="form-group z2m_mode local">
+      <label class="col-md-4 control-label">{{Version voulue (réservé aux utilisateurs avancées)}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Laisser vide pour mettre la derniere disponible}}"></i></sup>
+      </label>
+      <div class="col-md-3">
+        <input class="configKey form-control" data-l1key="wanted_z2m_version" />
+      </div>
+      <div class="col-md-3">
+	<a class="btn btn-info" href="https://github.com/Koenkk/zigbee2mqtt/tags" target="_blank">{{Liste des versions}}</a>
+      </div>
+    </div>
     <div class="form-group z2m_mode local">
 		<label class="col-md-4 control-label">{{Version Zigbee2mqtt}}
 			<sup><i class="fas fa-question-circle tooltips" title="{{Version de la librairie Zigbee2mqtt}}"></i></sup>
@@ -151,7 +162,7 @@ if (!isConnect()) {
 		$wantedVersion = config::byKey('wantedVersion', 'z2m', '');
 		if (version_compare($localVersion, $wantedVersion, '<')) {
 			echo '<span class="label label-warning">' . $localVersion . '</span><br>';
-			echo "<div class='alert alert-danger text-center'>{{Votre version de zigbee2mqtt n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
+			echo "<div class='alert alert-warning text-center'>{{Votre version de zigbee2mqtt n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
 		} else {
 			echo '<span class="label label-success">' . $localVersion . '</span><br>';
 		}

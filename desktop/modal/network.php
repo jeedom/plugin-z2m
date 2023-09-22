@@ -111,7 +111,7 @@ sendVarToJS('z2m_network_map', $map);
                         <p>
                             {{Version :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['version'] ?></span></b>
-                            {{Log :}}
+                            {{Niveau de log :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['log_level'] ?></span></b>
                             <br />
                             {{Coordinateur :}}

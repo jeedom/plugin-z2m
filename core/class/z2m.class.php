@@ -181,6 +181,8 @@ class z2m extends eqLogic {
 
     if (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
+    }else{
+      $configuration['serial']['adapter'] = 'zstack';
     }
 
     $configuration['frontend']['port'] = intval(config::byKey('z2m_listen_port', 'z2m','8080'));
@@ -188,8 +190,8 @@ class z2m extends eqLogic {
 
     $configuration['advanced']['last_seen'] = 'ISO_8601';
 
-    if(!file_exists($data_path . '/coordinator_backup.json') && !isset($configuration['advanced']['network_key'])){
-        $configuration['advanced']['network_key'] = 'GENERATE';
+    if(!file_exists($data_path . '/coordinator_backup.json') && !isset($configuration['advanced']['network_key']) && (!isset($configuration['devices']) || count($configuration['devices']) == 0) && !file_exists($data_path . '/database.db') && !file_exists($data_path . '/state.json')){
+       $configuration['advanced']['network_key'] = 'GENERATE';
     }
 
     if (config::byKey('z2m_auth_token', 'z2m', '') == '') {
@@ -227,6 +229,8 @@ class z2m extends eqLogic {
     if ($deamon_info['launchable'] != 'ok') {
       throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
     }
+    exec(system::getCmdSudo() .' chown www-data -R "/root/.npm"');
+    exec(system::getCmdSudo() .' chmod 777 -R "/root/.npm"');
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
     $cmd = '';
     $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
@@ -315,6 +319,17 @@ class z2m extends eqLogic {
     mqtt2::addPluginTopic(__CLASS__, config::byKey('mqtt::topic', __CLASS__));
   }
 
+  public static function postConfig_wanted_z2m_version($_value = null) {
+    if($_value == null || trim($_value) == null){
+      if(file_exist(__DIR__.'/../../data/wanted_z2m_version')){
+        unlink(__DIR__.'/../../data/wanted_z2m_version');
+      }
+    }else{
+      file_put_contents(__DIR__.'/../../data/wanted_z2m_version', $_value);
+    }
+  }
+
+  
   public function findIeeeAddrRecursive($data) {
       // MQTT Manager ne transmet que les topics mis à jour donc l'appel à la recursivité n'est pas un problème
       $ret = null; // Variable pour stocker le résultat
