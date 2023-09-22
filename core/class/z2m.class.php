@@ -321,7 +321,7 @@ class z2m extends eqLogic {
 
   public static function postConfig_wanted_z2m_version($_value = null) {
     if($_value == null || trim($_value) == null){
-      if(file_exist(__DIR__.'/../../data/wanted_z2m_version')){
+      if(file_exists(__DIR__.'/../../data/wanted_z2m_version')){
         unlink(__DIR__.'/../../data/wanted_z2m_version');
       }
     }else{
