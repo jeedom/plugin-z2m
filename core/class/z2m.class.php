@@ -190,8 +190,8 @@ class z2m extends eqLogic {
 
     $configuration['advanced']['last_seen'] = 'ISO_8601';
 
-    if(!file_exists($data_path . '/coordinator_backup.json') && !isset($configuration['advanced']['network_key'])){
-       // $configuration['advanced']['network_key'] = 'GENERATE';
+    if(!file_exists($data_path . '/coordinator_backup.json') && !isset($configuration['advanced']['network_key']) && (!isset($configuration['devices']) || count($configuration['devices']) == 0)){
+       $configuration['advanced']['network_key'] = 'GENERATE';
     }
 
     if (config::byKey('z2m_auth_token', 'z2m', '') == '') {
