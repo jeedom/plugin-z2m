@@ -135,15 +135,15 @@ class z2m extends eqLogic {
     $port = config::byKey('port', __CLASS__);
     if ($port == 'none') {
       $return['launchable'] = 'nok';
-      $return['launchable_message'] = __('Le port n\'est pas configuré', __FILE__);
+      $return['launchable_message'] = __("Le port n'est pas configuré", __FILE__);
     }
     if (!class_exists('mqtt2')) {
       $return['launchable'] = 'nok';
-      $return['launchable_message'] = __('Le plugin MQTT Manager n\'est pas installé', __FILE__);
+      $return['launchable_message'] = __("Le plugin MQTT Manager n'est pas installé", __FILE__);
     } else {
       if (mqtt2::deamon_info()['state'] != 'ok') {
         $return['launchable'] = 'nok';
-        $return['launchable_message'] = __('Le démon MQTT Manager n\'est pas démarré', __FILE__);
+        $return['launchable_message'] = __("Le démon MQTT Manager n'est pas démarré", __FILE__);
       }
     }
     return $return;
