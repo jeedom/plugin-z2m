@@ -6,6 +6,8 @@ cd /tmp
 unzip -o elelabs.zip
 rm elelabs.zip
 cd /tmp/elelabs-zigbee-ezsp-utility-master/
+pip3 install setuptools
+pip3 install wheel
 pip3 install -r requirements.txt
 python3 Elelabs_EzspFwUtility.py probe -p ${DEVICE}
 if [ $? -ne 0 ]; then
