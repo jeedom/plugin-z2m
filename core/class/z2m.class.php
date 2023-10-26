@@ -913,6 +913,9 @@ class z2m extends eqLogic {
         'id' => $this->getConfiguration('group_id'),
         'force' => true
       );
+      if (!class_exists('mqtt2')) {
+        throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
+      }
       mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/group/remove', json_encode($datas));
     }
   }
