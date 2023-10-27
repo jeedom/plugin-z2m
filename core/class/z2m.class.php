@@ -586,7 +586,12 @@ class z2m extends eqLogic {
           $cmd->setEqLogic_id($eqLogic->getId());
           $cmd->setType('action');
           $cmd->setSubType('other');
-          $cmd->save();
+           try {
+            $cmd->save();
+          } catch (Exception $e) {
+            $cmd->setName($cmd->getName().' '.config::genKey(4));
+            $cmd->save();
+          }
         }
         file_put_contents(__DIR__ . '/../../data/devices/group_' . $group['id'] . '.json', json_encode($group));
         if ($new !== null) {
