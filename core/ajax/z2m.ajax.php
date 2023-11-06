@@ -38,6 +38,8 @@ try {
   if (init('action') == 'sync') {
     $devices = json_decode(file_get_contents(__DIR__ . '/../../data/devices/devices' . init('instance', 1) . '.json'), true);
     z2m::handle_bridge(array('devices' => $devices));
+    $groups = json_decode(file_get_contents(__DIR__ . '/../../data/devices/groups' . init('instance', 1) . '.json'), true);
+    z2m::handle_bridge(array('groups' => $groups));
     ajax::success();
   }
 

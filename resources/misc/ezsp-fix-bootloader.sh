@@ -5,6 +5,10 @@ echo 'Download source...'
 wget https://github.com/Elelabs/elelabs-zigbee-ezsp-utility/archive/master.zip -O /tmp/elelabs.zip
 echo 'Unzip file...'
 cd /tmp;unzip -o elelabs.zip
+cd /tmp/elelabs-zigbee-ezsp-utility-master
+pip3 install setuptools
+pip3 install wheel
+pip3 install -r requirements.txt
 echo 'Flash device...'
 cd /tmp/elelabs-zigbee-ezsp-utility-master;python3 Elelabs_EzspFwUtility.py flash -p ${DEVICE} -f /tmp/elelabs-zigbee-ezsp-utility-master/data/EFR32MG13/ELE_MG13_zb_ncp_115200_610_211112.gbl
 echo 'Probe device...'

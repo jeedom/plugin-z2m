@@ -135,15 +135,15 @@ class z2m extends eqLogic {
     $port = config::byKey('port', __CLASS__);
     if ($port == 'none') {
       $return['launchable'] = 'nok';
-      $return['launchable_message'] = __('Le port n\'est pas configuré', __FILE__);
+      $return['launchable_message'] = __("Le port n'est pas configuré", __FILE__);
     }
     if (!class_exists('mqtt2')) {
       $return['launchable'] = 'nok';
-      $return['launchable_message'] = __('Le plugin MQTT Manager n\'est pas installé', __FILE__);
+      $return['launchable_message'] = __("Le plugin MQTT Manager n'est pas installé", __FILE__);
     } else {
       if (mqtt2::deamon_info()['state'] != 'ok') {
         $return['launchable'] = 'nok';
-        $return['launchable_message'] = __('Le démon MQTT Manager n\'est pas démarré', __FILE__);
+        $return['launchable_message'] = __("Le démon MQTT Manager n'est pas démarré", __FILE__);
       }
     }
     return $return;
@@ -152,6 +152,9 @@ class z2m extends eqLogic {
   public static function configure_z2m_deamon() {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
       return;
+    }
+    if (!class_exists('mqtt2')) {
+      throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
     }
     self::postConfig_mqtt_topic();
     $mqtt = mqtt2::getFormatedInfos();
@@ -192,6 +195,8 @@ class z2m extends eqLogic {
 
     if(!file_exists($data_path . '/coordinator_backup.json') && !isset($configuration['advanced']['network_key']) && (!isset($configuration['devices']) || count($configuration['devices']) == 0) && !file_exists($data_path . '/database.db') && !file_exists($data_path . '/state.json')){
        $configuration['advanced']['network_key'] = 'GENERATE';
+       $configuration['advanced']['pan_id'] = 'GENERATE';
+       $configuration['advanced']['ext_pan_id'] = 'GENERATE';
     }
 
     if (config::byKey('z2m_auth_token', 'z2m', '') == '') {
@@ -313,6 +318,9 @@ class z2m extends eqLogic {
   }
 
   public static function postConfig_mqtt_topic($_value = null) {
+    if (!class_exists('mqtt2')) {
+      throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
+    }
     if(method_exists('mqtt2','removePluginTopicByPlugin')){
        mqtt2::removePluginTopicByPlugin(__CLASS__);
     }
@@ -578,7 +586,12 @@ class z2m extends eqLogic {
           $cmd->setEqLogic_id($eqLogic->getId());
           $cmd->setType('action');
           $cmd->setSubType('other');
-          $cmd->save();
+           try {
+            $cmd->save();
+          } catch (Exception $e) {
+            $cmd->setName($cmd->getName().' '.config::genKey(4));
+            $cmd->save();
+          }
         }
         file_put_contents(__DIR__ . '/../../data/devices/group_' . $group['id'] . '.json', json_encode($group));
         if ($new !== null) {
@@ -905,6 +918,9 @@ class z2m extends eqLogic {
         'id' => $this->getConfiguration('group_id'),
         'force' => true
       );
+      if (!class_exists('mqtt2')) {
+        throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
+      }
       mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/group/remove', json_encode($datas));
     }
   }
