@@ -2,6 +2,10 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "06\/11\/2023": "11.06.2023",
+        "Correction d'un bug sur la gestion des groupes": "Ein Fehler in der Gruppenverwaltung wurde behoben",
+        "Optimisation du code": "Codeoptimierung",
+        "Correction de bugs lors de l'installation du plugin (erreur 500": "Fehler während der Plugin-Installation behoben (Fehler 500",
         "22\/09\/2023": "22.09.2023",
         "Possibilité de choisir la version de zigbee2mqtt": "Möglichkeit, die Version von zigbee2mqtt auszuwählen",
         "Pour ceux ayant des soucis de module injoignable suites aux précedente mise à jour il faut restorer un backup jeedom d'avant la mise à jour puis refaire la mise à jour": "Wenn Sie nach dem vorherigen Update Probleme mit einem nicht erreichbaren Modul haben, müssen Sie ein Jeedom-Backup von vor dem Update wiederherstellen und dann das Update wiederholen",
