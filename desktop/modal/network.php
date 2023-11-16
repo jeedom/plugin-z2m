@@ -483,6 +483,7 @@ sendVarToJS('z2m_network_map', $map);
         let tr = $(this).closest('tr')
         jeedom.z2m.device.remove({
             instance: 1,
+            force: true,
             id: tr.attr('data-ieee'),
             error: function(error) {
                 $('#div_alert').showAlert({
