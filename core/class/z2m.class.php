@@ -392,7 +392,7 @@ class z2m extends eqLogic {
           if ($logical_id == 'last_seen') {
             $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
-          if ($logical_id == 'color') {
+          if ($logical_id == 'color' || $logical_id == 'action_color') {
             $bri = (isset($values['brightness'])) ? $values['brightness'] : 255;
             $color = z2mCmd::convertXYToRGB($value['x'], $value['y'], $bri);
             $value = sprintf("#%02x%02x%02x", $color['red'], $color['green'], $color['blue']);
