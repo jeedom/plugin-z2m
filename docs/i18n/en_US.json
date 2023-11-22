@@ -205,6 +205,7 @@
         "1} after 10000ms` et une clef ELELABS ou une box Atlas": "1} after 10000ms` and an ELELABS key or an Atlas box",
         "Il faut mettre a jour le firmware de votre clef zigbee, pour cela dans la configuration du plugin jeezigbee cliquez sur mettre à jour le firmware et remplisez les different champs de la fenetre puis validez": "You must update the firmware of your zigbee key, to do this in the configuration of the jeezigbee plugin click on update firmware and fill in the different fields in the window then validate",
         "Attention a ne surtout pas faire ca sur une box luna, cela casse la clef zigbee": "Be careful not to do this on a luna box, it breaks the zigbee key",
+        "Si la mise à jour ne marche pas il faut alors tester de faire une \"Correction bootloader": "If the update does not work, you should then try to do a \"Bootloader Correction",
         "Mon équipement n'est pas reconnu": "My equipment is not recognized",
         "Prise en charge de nouveaux appareils": "Support for new devices",
         "Prend en charge les nouveaux appareils TuYa": "Supports new TuYa devices",

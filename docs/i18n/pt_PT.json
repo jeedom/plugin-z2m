@@ -205,6 +205,7 @@
         "1} after 10000ms` et une clef ELELABS ou une box Atlas": "1} após 10000ms` e uma chave ELELABS ou uma caixa Atlas",
         "Il faut mettre a jour le firmware de votre clef zigbee, pour cela dans la configuration du plugin jeezigbee cliquez sur mettre à jour le firmware et remplisez les different champs de la fenetre puis validez": "Você deve atualizar o firmware da sua chave zigbee, para fazer isso na configuração do plugin jeezigbee clique em atualizar firmware e preencha os diferentes campos da janela e valide",
         "Attention a ne surtout pas faire ca sur une box luna, cela casse la clef zigbee": "Tenha cuidado para não fazer isso em uma caixa luna, pois quebra a chave zigbee",
+        "Si la mise à jour ne marche pas il faut alors tester de faire une \"Correction bootloader": "Se a atualização não funcionar, você deve tentar fazer uma “Correção do Bootloader",
         "Mon équipement n'est pas reconnu": "Meu equipamento não é reconhecido",
         "Prise en charge de nouveaux appareils": "Suporte para novos dispositivos",
         "Prend en charge les nouveaux appareils TuYa": "Suporta novos dispositivos TuYa",
