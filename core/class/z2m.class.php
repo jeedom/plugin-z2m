@@ -998,6 +998,10 @@ class z2mCmd extends cmd {
 
   /*     * *********************Methode d'instance************************* */
 
+  public function preSave(){
+    $this>setConfiguration('logicalId',$this->getLogicalId());
+  }
+
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
@@ -1022,7 +1026,8 @@ class z2mCmd extends cmd {
         }
         break;
     }
-    $infos = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
+    $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+    $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
     foreach($infos as &$info){
        if ($info == 'true') {
           $info = true;
