@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
+        "Support de la mise à jour du firmware zigbee sur Luna": "Soporte de actualización de firmware Zigbee en Luna",
         "06\/11\/2023": "11\/06\/2023",
         "Correction d'un bug sur la gestion des groupes": "Se corrigió un error en la gestión de grupos",
         "Optimisation du code": "Optimización de código",

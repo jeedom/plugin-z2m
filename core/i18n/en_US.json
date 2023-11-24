@@ -20,7 +20,6 @@
         "Zigate (alpha)": "Zigate (alpha)",
         "Mise à jour du firmware du contrôleur": "Controller Firmware Update",
         "Cliquer sur le bouton pour mettre à jour le firmware du contrôleur. Le démon Zigbee est stoppé durant le processus": "Click the button to update the controller firmware. The Zigbee daemon is stopped during the process",
-        "L'equipe Jeedom travaille actuellement sur l'installation d'un nouveau firmware pour la Jeedom Luna.": "The Jeedom team is currently working on installing new firmware for the Jeedom Luna",
         "Mettre à jour le firmware": "Update firmware",
         "Port d'écoute de Zigbee2mqtt": "Zigbee2mqtt listening port",
         "Interface z2m": "Z2m interface",
