@@ -46,11 +46,13 @@ class z2m extends eqLogic {
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
     } else if ($_options['sub_controller'] == 'luna') {
       $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
-      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p /dev/ttyLuna-Zigbee -b115200 -F ' . $_options['firmware'];
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p /dev/ttyLuna-Zigbee -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'];
+      $_options['port'] = '/dev/ttyLuna-Zigbee';
     }else{
       log::add(__CLASS__ . '_firmware', 'info', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
       return;
     }
+    log::add(__CLASS__ . '_firmware', 'info', $cmd);
     shell_exec('sudo kill 9 $(lsof -t ' . $_options['port'] . ') >> ' . $log . ' 2>&1');
     shell_exec($cmd . ' >> ' . $log . ' 2>&1');
     config::save('deamonAutoMode', 0, 'z2m');
