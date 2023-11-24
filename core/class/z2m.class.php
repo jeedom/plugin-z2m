@@ -44,7 +44,10 @@ class z2m extends eqLogic {
         $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/update-firmware-elelabs.sh ' . $_options['port'] . ' ' . $_options['firmware'];
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
-    } else {
+    } else if ($_options['sub_controller'] == 'luna') {
+      $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p /dev/ttyLuna-Zigbee -b115200 -F ' . $_options['firmware'];
+    }else{
       log::add(__CLASS__ . '_firmware', 'info', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
       return;
     }
