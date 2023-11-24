@@ -83,7 +83,7 @@ if (!isConnect('admin')) {
   $('.firmwareAttr[data-l1key="sub_controller"]').off('change').on('change', function() {
     $('.zigbee_firmware_sub_controller').hide();
     $('.zigbee_firmware_sub_controller.' + $(this).value()).show();
-    if($(this)value() == 'luna'){
+    if($(this).value() == 'luna'){
       $('.firmwareAttr[data-l1key="port"]').hide();
     }else{
       $('.firmwareAttr[data-l1key="port"]').show();
@@ -95,7 +95,7 @@ if (!isConnect('admin')) {
       port: $('.firmwareAttr[data-l1key=port]').value(),
       sub_controller: $('.firmwareAttr[data-l1key=sub_controller]').value(),
       gateway: $('.firmwareAttr[data-l1key=gateway]').value(),
-      firmware: $('.firmwareAttr[data-l1key=firmware]').value(),
+      firmware: $('.firmwareAttr[data-l1key=firmware]:visible').value(),
       error: function(error) {
         $('#div_alertFirmwareUpdate').showAlert({
           message: error.message,
