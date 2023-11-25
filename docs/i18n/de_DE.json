@@ -236,6 +236,7 @@
         "Il faut desactiver le démon du plugin (Plugin -> Gestion de plugin -> Jeezigbee puis Gestion automatique -> désactiver), redemarrer la luna (Réglage -> Systeme -> Redemarrer": "Sie müssen den Plugin-Daemon deaktivieren (Plugin -> Plugin-Verwaltung -> Jeezigbee, dann Automatische Verwaltung -> Deaktivieren) und Luna neu starten (Einstellungen -> System -> Neu starten)",
         "Une fois la box redemarrer il faut relancer la mise à jour du firmware": "Sobald die Box neu gestartet ist, müssen Sie das Firmware-Update erneut starten",
         "Attention cela peut prendre jusqu'a 10min": "Bitte beachten Sie, dass dies bis zu 10 Minuten dauern kann",
+        "N'oubliez pas une fois la mise à jour faire de réactiver la gestion automatique du démon": "Vergessen Sie nicht, die automatische Daemon-Verwaltung nach Abschluss des Updates wieder zu aktivieren",
         " IMPORTANT.": " WICHTIG.",
         " IMPORTANT?": " WICHTIG?",
         "IMPORTANT ": "WICHTIG ",

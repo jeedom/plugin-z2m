@@ -236,6 +236,7 @@
         "Il faut desactiver le démon du plugin (Plugin -> Gestion de plugin -> Jeezigbee puis Gestion automatique -> désactiver), redemarrer la luna (Réglage -> Systeme -> Redemarrer": "You must deactivate the plugin daemon (Plugin -> Plugin management -> Jeezigbee then Automatic management -> deactivate), restart the luna (Settings -> System -> Restart",
         "Une fois la box redemarrer il faut relancer la mise à jour du firmware": "Once the box restarts, you must restart the firmware update",
         "Attention cela peut prendre jusqu'a 10min": "Please note this may take up to 10 minutes",
+        "N'oubliez pas une fois la mise à jour faire de réactiver la gestion automatique du démon": "Don't forget to reactivate automatic daemon management once you have completed the update",
         " IMPORTANT.": " IMPORTANT.",
         " IMPORTANT?": " IMPORTANT?",
         "IMPORTANT ": "IMPORTANT ",

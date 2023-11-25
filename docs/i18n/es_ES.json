@@ -236,6 +236,7 @@
         "Il faut desactiver le démon du plugin (Plugin -> Gestion de plugin -> Jeezigbee puis Gestion automatique -> désactiver), redemarrer la luna (Réglage -> Systeme -> Redemarrer": "Debe desactivar el demonio del complemento (Complemento -> Administración de complementos -> Jeezigbee luego Administración automática -> desactivar), reiniciar la luna (Configuración -> Sistema -> Reiniciar",
         "Une fois la box redemarrer il faut relancer la mise à jour du firmware": "Una vez que la caja se reinicie, debes reiniciar la actualización del firmware",
         "Attention cela peut prendre jusqu'a 10min": "Tenga en cuenta que esto puede tardar hasta 10 minutos",
+        "N'oubliez pas une fois la mise à jour faire de réactiver la gestion automatique du démon": "No olvide reactivar la gestión automática de demonios una vez que haya completado la actualización",
         " IMPORTANT.": " IMPORTANTE.",
         " IMPORTANT?": " IMPORTANTE?",
         "IMPORTANT ": "IMPORTANTE ",
