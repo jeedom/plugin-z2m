@@ -369,6 +369,9 @@ class z2m extends eqLogic {
       return;
     }
     foreach ($_datas['zigbee2mqtt'] as $key => $values) {
+      if(isset($values['last_seen']) && (strtotime($values['last_seen'])+3600) < strtotime('now')){
+          continue;
+      }
       if ($key == 'bridge') {
         self::handle_bridge($values);
         continue;
