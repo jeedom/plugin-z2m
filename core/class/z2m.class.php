@@ -933,6 +933,14 @@ class z2m extends eqLogic {
     }
   }
 
+  public function refresh(){
+      foreach($this->getCmd('info'){
+          log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
+          mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
+
+      }
+  }
+
   /*     * **********************Getteur Setteur*************************** */
 }
 
@@ -1008,6 +1016,10 @@ class z2mCmd extends cmd {
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
+    if($this->getLogicalId() == 'refresh'){
+      $eqLogic->refresh();
+      return;
+    }
     $replace = array();
     switch ($this->getSubType()) {
       case 'slider':
