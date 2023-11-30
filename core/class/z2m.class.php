@@ -935,10 +935,13 @@ class z2m extends eqLogic {
 
   public function refresh(){
       foreach($this->getCmd('info') as $cmd){
-          $logicalIds = explode($cmd->getLogicalId());
-          $datas = array($logicalIds[0] => '');
-          log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/get => '.json_encode($datas));
-          mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/get', json_encode($datas));
+          $logicalId =explode('::',$cmd->getLogicalId())[0];
+          if(in_array($logicalId,array('linkquality','last_seen'))){
+            	continue; 
+          }
+          $datas = array($logicalId => '');
+          log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get => '.json_encode($datas));
+          mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get', json_encode($datas));
       }
   }
 
