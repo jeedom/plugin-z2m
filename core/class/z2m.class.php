@@ -112,6 +112,22 @@ class z2m extends eqLogic {
     shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
   }
 
+  public static function cron() {
+    foreach (eqLogic::byType('z2m', true) as $eqLogic) {
+      $autorefresh = $eqLogic->getConfiguration('autorefresh');
+      if ($autorefresh != '') {
+        try {
+          $c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
+          if ($c->isDue()) {
+            $eqLogic->refreshValue();
+          }
+        } catch (Exception $exc) {
+          log::add('z2m', 'error', __('Expression cron non valide pour ', __FILE__) . $eqLogic->getHumanName() . ' : ' . $autorefresh);
+        }
+      }
+    }
+  }
+
   public static function isRunning() {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
       return true;
@@ -936,7 +952,7 @@ class z2m extends eqLogic {
     }
   }
 
-  public function refresh(){
+  public function refreshValue(){
       foreach($this->getCmd('info') as $cmd){
           $logicalId =explode('::',$cmd->getLogicalId())[0];
           if(in_array($logicalId,array('linkquality','last_seen'))){
@@ -1024,7 +1040,7 @@ class z2mCmd extends cmd {
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
     if($this->getLogicalId() == 'refresh'){
-      $eqLogic->refresh();
+      $eqLogic->refreshValue();
       return;
     }
     $replace = array();
