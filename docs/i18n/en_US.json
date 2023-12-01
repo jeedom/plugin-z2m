@@ -3,6 +3,8 @@
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "If there is no information on the update, it means that it concerns only the update of documentation, translation or text",
         "Support de la mise à jour du firmware zigbee sur Luna": "Zigbee firmware update support on Luna",
+        "Support de logicalId long sur les commandes": "Support for long logicalId on commands",
+        "POssibilité de créer une commande refresh (il faut ajouter une commande puis type action\/defaut et dans le champs logical id mettre refresh": "Possibility of creating a refresh command (you must add a command then type action\/default and in the logical id field put refresh",
         "06\/11\/2023": "06\/11\/2023",
         "Correction d'un bug sur la gestion des groupes": "Fixed a bug in group management",
         "Optimisation du code": "Code Optimization",
