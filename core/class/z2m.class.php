@@ -1071,6 +1071,8 @@ class z2mCmd extends cmd {
           $info = true;
         } else if ($info == 'false') {
           $info = false;
+        }elseif(is_numeric($info)){
+          $info = floatval($info);
         }
     }
     if ($this->getSubtype() == 'color' && isset($color)) {
