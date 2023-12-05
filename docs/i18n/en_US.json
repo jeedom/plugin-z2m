@@ -2,10 +2,12 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "If there is no information on the update, it means that it concerns only the update of documentation, translation or text",
-        "Support de la mise à jour du firmware zigbee sur Luna": "Zigbee firmware update support on Luna",
+        "05\/12\/2023": "05\/12\/2023",
+        "Support de la mise à jour du firmware zigbee sur Luna (beta": "Support for zigbee firmware update on Luna (beta",
         "Support de logicalId long sur les commandes": "Support for long logicalId on commands",
         "Possibilité de créer une commande refresh (il faut ajouter une commande puis type action\/defaut et dans le champs logical id mettre refresh": "Possibility of creating a refresh command (you must add a command then type action\/default and in the logical id field put refresh",
         "Possibilité d'ajouter un cron qui demande l'actualisation des valeurs (attention rien ne garantie que le module va vraiment les mettres à jour il faut qu'il le supporte": "Possibility of adding a cron which requests the updating of the values (be careful, nothing guarantees that the module will really update them, it must support it",
+        "Correction d'un bug avec la derniere version de zigbee2mqtt": "Fixed a bug with the latest version of zigbee2mqtt",
         "06\/11\/2023": "06\/11\/2023",
         "Correction d'un bug sur la gestion des groupes": "Fixed a bug in group management",
         "Optimisation du code": "Code Optimization",
