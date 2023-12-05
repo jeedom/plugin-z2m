@@ -10,6 +10,7 @@
 - Support de logicalId long sur les commandes
 - Possibilité de créer une commande refresh (il faut ajouter une commande puis type action/defaut et dans le champs logical id mettre refresh)
 - Possibilité d'ajouter un cron qui demande l'actualisation des valeurs (attention rien ne garantie que le module va vraiment les mettres à jour il faut qu'il le supporte)
+- Correction d'un bug avec la derniere version de zigbee2mqtt
 
 
 # 06/11/2023
