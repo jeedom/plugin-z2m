@@ -204,6 +204,17 @@ sendVarToJS('devices_attr', $deviceAttr);
 									</select>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Auto-actualisation (cron)}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Nous recommandons de ne jamais rien mettre ici de vous meme, une erreur et c'est tout votre réseaux zigbee qui est cassé !!!!}}"></i></sup>
+								</label>
+								<div class="col-sm-2">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="autorefresh" placeholder="{{Auto-actualisation (cron)}}" />
+								</div>
+								<div class="col-sm-1">
+									<i class="fas fa-question-circle cursor floatright" id="bt_cronGenerator"></i>
+								</div>
+							</div>
 						</div>
 
 						<!-- Partie droite de l'onglet "Équipement" -->

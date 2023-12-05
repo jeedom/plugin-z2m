@@ -30,6 +30,7 @@ if (!isConnect('admin')) {
         <select class="firmwareAttr form-control" data-l1key="sub_controller">
           <option value="">{{Aucun}}</option>
           <option value="elelabs">{{Elelabs/Popp}}</option>
+          <option value="luna">{{Luna}}</option>
         </select>
       </div>
     </div>
@@ -58,6 +59,9 @@ if (!isConnect('admin')) {
           <option value="zigbee">{{Dernier firmware zigbee officiel}}</option>
           <option value="fix_bootloader">{{Correction bootloader (uniquement Atlas)}}</option>
         </select>
+        <select class="firmwareAttr form-control zigbee_firmware_sub_controller luna" data-l1key="firmware" style="display:none;">
+          <option value="6.10.3.ota">{{6.10.3}}</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
@@ -79,6 +83,11 @@ if (!isConnect('admin')) {
   $('.firmwareAttr[data-l1key="sub_controller"]').off('change').on('change', function() {
     $('.zigbee_firmware_sub_controller').hide();
     $('.zigbee_firmware_sub_controller.' + $(this).value()).show();
+    if($(this).value() == 'luna'){
+      $('.firmwareAttr[data-l1key="port"]').hide();
+    }else{
+      $('.firmwareAttr[data-l1key="port"]').show();
+    }
   });
 
   $('#bt_launchFirmwareUpdate').off('click').on('click', function() {
@@ -86,7 +95,7 @@ if (!isConnect('admin')) {
       port: $('.firmwareAttr[data-l1key=port]').value(),
       sub_controller: $('.firmwareAttr[data-l1key=sub_controller]').value(),
       gateway: $('.firmwareAttr[data-l1key=gateway]').value(),
-      firmware: $('.firmwareAttr[data-l1key=firmware]').value(),
+      firmware: $('.firmwareAttr[data-l1key=firmware]:visible').value(),
       error: function(error) {
         $('#div_alertFirmwareUpdate').showAlert({
           message: error.message,

@@ -96,17 +96,7 @@ if (!isConnect()) {
         <sup><i class="fas fa-question-circle tooltips" title="{{Cliquer sur le bouton pour mettre à jour le firmware du contrôleur. Le démon Zigbee est stoppé durant le processus}}"></i></sup>
       </label>
       <div class="col-md-4">
-        <?php
-        if (jeedom::getHardwareName() == 'Luna') {
-        ?>
-          <span>
-            <p>{{L'equipe Jeedom travaille actuellement sur l'installation d'un nouveau firmware pour la Jeedom Luna.}}</p>
-          </span>
-        <?php
-        } else {
-        ?>
           <a class="btn btn-warning" id="bt_UpdateFirmware"><i class="fas fa-download"></i> {{Mettre à jour le firmware}}</a>
-        <?php } ?>
       </div>
     </div>
     <div class="form-group z2m_mode local">

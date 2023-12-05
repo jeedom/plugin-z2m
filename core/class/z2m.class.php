@@ -44,10 +44,15 @@ class z2m extends eqLogic {
         $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/update-firmware-elelabs.sh ' . $_options['port'] . ' ' . $_options['firmware'];
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
-    } else {
+    } else if ($_options['sub_controller'] == 'luna') {
+      $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p /dev/ttyLuna-Zigbee -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'];
+      $_options['port'] = '/dev/ttyLuna-Zigbee';
+    }else{
       log::add(__CLASS__ . '_firmware', 'info', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
       return;
     }
+    log::add(__CLASS__ . '_firmware', 'info', $cmd);
     shell_exec('sudo kill 9 $(lsof -t ' . $_options['port'] . ') >> ' . $log . ' 2>&1');
     shell_exec($cmd . ' >> ' . $log . ' 2>&1');
     config::save('deamonAutoMode', 0, 'z2m');
@@ -105,6 +110,22 @@ class z2m extends eqLogic {
       return;
     }
     shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
+  }
+
+  public static function cron() {
+    foreach (eqLogic::byType('z2m', true) as $eqLogic) {
+      $autorefresh = $eqLogic->getConfiguration('autorefresh');
+      if ($autorefresh != '') {
+        try {
+          $c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
+          if ($c->isDue()) {
+            $eqLogic->refreshValue();
+          }
+        } catch (Exception $exc) {
+          log::add('z2m', 'error', __('Expression cron non valide pour ', __FILE__) . $eqLogic->getHumanName() . ' : ' . $autorefresh);
+        }
+      }
+    }
   }
 
   public static function isRunning() {
@@ -364,6 +385,9 @@ class z2m extends eqLogic {
       return;
     }
     foreach ($_datas['zigbee2mqtt'] as $key => $values) {
+      if(isset($values['last_seen']) && (strtotime($values['last_seen'])+3600) < strtotime('now')){
+          continue;
+      }
       if ($key == 'bridge') {
         self::handle_bridge($values);
         continue;
@@ -392,7 +416,7 @@ class z2m extends eqLogic {
           if ($logical_id == 'last_seen') {
             $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
-          if ($logical_id == 'color') {
+          if ($logical_id == 'color' || $logical_id == 'action_color') {
             $bri = (isset($values['brightness'])) ? $values['brightness'] : 255;
             $color = z2mCmd::convertXYToRGB($value['x'], $value['y'], $bri);
             $value = sprintf("#%02x%02x%02x", $color['red'], $color['green'], $color['blue']);
@@ -688,7 +712,10 @@ class z2m extends eqLogic {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     $filename = __DIR__ . '/../../data/img/' . $model . '.jpg';
-    if (!file_exists($filename)) {
+    if (!file_exists($filename) || filesize($filename) == 0) {
+      if (file_exists($filename)) {
+        unlink($filename);
+      }
       file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.jpg'));
     }
     if (!file_exists($filename)) {
@@ -925,6 +952,18 @@ class z2m extends eqLogic {
     }
   }
 
+  public function refreshValue(){
+      foreach($this->getCmd('info') as $cmd){
+          $logicalId =explode('::',$cmd->getLogicalId())[0];
+          if(in_array($logicalId,array('linkquality','last_seen'))){
+            	continue; 
+          }
+          $datas = array($logicalId => '');
+          log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get => '.json_encode($datas));
+          mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get', json_encode($datas));
+      }
+  }
+
   /*     * **********************Getteur Setteur*************************** */
 }
 
@@ -993,9 +1032,17 @@ class z2mCmd extends cmd {
 
   /*     * *********************Methode d'instance************************* */
 
+  public function preSave(){
+    $this->setConfiguration('logicalId',$this->getLogicalId());
+  }
+
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
+    if($this->getLogicalId() == 'refresh'){
+      $eqLogic->refreshValue();
+      return;
+    }
     $replace = array();
     switch ($this->getSubType()) {
       case 'slider':
@@ -1017,12 +1064,15 @@ class z2mCmd extends cmd {
         }
         break;
     }
-    $infos = explode('::', str_replace(array_keys($replace), $replace, $this->getLogicalId()));
+    $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+    $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
     foreach($infos as &$info){
        if ($info == 'true') {
           $info = true;
         } else if ($info == 'false') {
           $info = false;
+        }elseif(is_numeric($info)){
+          $info = floatval($info);
         }
     }
     if ($this->getSubtype() == 'color' && isset($color)) {
@@ -1038,12 +1088,12 @@ class z2mCmd extends cmd {
       $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
-      log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
-      mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
+      log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
+      mqtt2::publish(z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
     }
-    log::add('z2m','debug','[execute] '.z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
-    mqtt2::publish(z2m::getInstanceTopic(init('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
+    log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
+    mqtt2::publish(z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
   }
 
   /*     * **********************Getteur Setteur*************************** */
