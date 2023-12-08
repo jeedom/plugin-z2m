@@ -221,6 +221,7 @@
         "Sélectionner le contrôleur en communication avec ce module": "Sélectionner le contrôleur en communication avec ce module",
         "Auto-actualisation (cron)": "Auto-actualisation (cron)",
         "Nous recommandons de ne jamais rien mettre ici de vous meme, une erreur et c'est tout votre réseaux zigbee qui est cassé !!!!": "Nous recommandons de ne jamais rien mettre ici de vous meme, une erreur et c'est tout votre réseaux zigbee qui est cassé !!!!",
+        "Ne pas autorisé les message si l'équipement n'a pas été vue depuis plus de (s)": "Ne pas autorisé les message si l'équipement n'a pas été vue depuis plus de (s)",
         "Informations": "Informations",
         "Model": "Model",
         "Configuration du module": "Configuration du module",
