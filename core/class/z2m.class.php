@@ -385,9 +385,6 @@ class z2m extends eqLogic {
       return;
     }
     foreach ($_datas['zigbee2mqtt'] as $key => $values) {
-      if(isset($values['last_seen']) && (strtotime($values['last_seen'])+3600) < strtotime('now')){
-          continue;
-      }
       if ($key == 'bridge') {
         self::handle_bridge($values);
         continue;
@@ -405,6 +402,9 @@ class z2m extends eqLogic {
       }
       $eqLogic = eqLogic::byLogicalId(self::convert_to_addr($key), 'z2m');
       if (is_object($eqLogic)) {
+        if(isset($values['last_seen']) && $eqLogic->getConfiguration('maxLastSeen',0) > 0 && (strtotime($values['last_seen'])+$eqLogic->getConfiguration('maxLastSeen',0)) < strtotime('now')){
+          continue;
+        }
         foreach ($values as $logical_id => &$value) {
           if ($value === null) {
             continue;
