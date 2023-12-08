@@ -1033,7 +1033,11 @@ class z2mCmd extends cmd {
   /*     * *********************Methode d'instance************************* */
 
   public function preSave(){
-    $this->setConfiguration('logicalId',$this->getLogicalId());
+    if(strlen($this->getLogicalId()) > 255){
+      $this->setConfiguration('logicalId',$this->getLogicalId());
+    }else{
+      $this->setConfiguration('logicalId',null);
+    }
   }
 
   // Exécution d'une commande
