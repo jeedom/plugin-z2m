@@ -1034,7 +1034,11 @@ class z2mCmd extends cmd {
 
   public function preSave(){
     if(strlen($this->getLogicalId()) > 255){
-      $this->setConfiguration('logicalId',$this->getLogicalId());
+      $logicalId = $this->getLogicalId();
+      if(strpos($logicalId,'%') !== false){
+        $this->setConfiguration('logicalId',$logicalId);
+        $this->setLogicalId(substr($logicalId,0,254).'%');
+      }
     }else{
       $this->setConfiguration('logicalId',null);
     }
