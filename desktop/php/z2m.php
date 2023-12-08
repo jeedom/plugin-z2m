@@ -215,6 +215,12 @@ sendVarToJS('devices_attr', $deviceAttr);
 									<i class="fas fa-question-circle cursor floatright" id="bt_cronGenerator"></i>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Ne pas autorisé les message si l'équipement n'a pas été vue depuis plus de (s)}}</label>
+								<div class="col-sm-2">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maxLastSeen" />
+								</div>
+							</div>
 						</div>
 
 						<!-- Partie droite de l'onglet "Équipement" -->
