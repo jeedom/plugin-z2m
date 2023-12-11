@@ -43,6 +43,10 @@ if (!isConnect()) {
         </select>
       </div>
     </div>
+    <div class="form-group z2m_mode distant">
+	<div class='alert alert-warning text-center'>{{Cette configuration suppose que vous avez installé vous meme zigbee2mqtt sur une machine deporté (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local}}</div>
+    </div>
+		  
     <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Port du contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le port du contrôleur Zigbee. Le mode Auto ne fonctionne qu'avec les clés Deconz}}"></i></sup>
