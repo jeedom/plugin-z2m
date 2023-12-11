@@ -16,52 +16,43 @@
 
 
 $('#bt_includeDeviceByCode').off('click').on('click',function(){
-    jeedom.z2m.utils.promptInstance("{{Ajouter un équipement par code sur ?}}}",function (instance_result) {
-      bootbox.prompt("{{Code ?}}", function(code){
-        jeedom.z2m.bridge.addByCode({
-          instance:instance_result,
-          code : code,
-          error: function (error) {
-            $('#div_alert').showAlert({message: error.message, level: 'danger'});
-          },
-          success: function () {
-            $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succes}}', level: 'success'});
-          }
-        });
+    bootbox.prompt("{{Code ?}}", function(code){
+      jeedom.z2m.bridge.addByCode({
+        code : code,
+        error: function (error) {
+          $('#div_alert').showAlert({message: error.message, level: 'danger'});
+        },
+        success: function () {
+          $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succes}}', level: 'success'});
+        }
       });
     });
 });
 
 $('#bt_syncEqLogicZ2m').off('click').on('click',function(){
-  jeedom.z2m.utils.promptInstance("{{Synchroniser sur ?}}",function (instance_result) {
-      jeedom.z2m.bridge.sync({
-        instance:instance_result,
-        error: function (error) {
-          $('#div_alert').showAlert({message: error.message, level: 'danger'});
-        },
-        success: function () {
-          $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succes}}', level: 'success'});
-        }
-      });
+    jeedom.z2m.bridge.sync({
+      error: function (error) {
+        $('#div_alert').showAlert({message: error.message, level: 'danger'});
+      },
+      success: function () {
+        $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succes}}', level: 'success'});
+      }
     });
 });
 
 $('#bt_addGroup').off('click').on('click',function(){
-    jeedom.z2m.utils.promptInstance("{{Ajouter un groupe sur ?}}",function (instance_result) {
-      bootbox.prompt("{{Nom du groupe ?}}", function(group){
-        if(group == null){
-          return;
+    bootbox.prompt("{{Nom du groupe ?}}", function(group){
+      if(group == null){
+        return;
+      }
+      jeedom.z2m.group.add({
+        name : group,
+        error: function (error) {
+          $('#div_alert').showAlert({message: error.message, level: 'danger'});
+        },
+        success: function () {
+          $('#div_alert').showAlert({message: '{{Demande du groupe envoyée avec succes}}', level: 'success'});
         }
-        jeedom.z2m.group.add({
-          instance:instance_result,
-          name : group,
-          error: function (error) {
-            $('#div_alert').showAlert({message: error.message, level: 'danger'});
-          },
-          success: function () {
-            $('#div_alert').showAlert({message: '{{Demande du groupe envoyée avec succes}}', level: 'success'});
-          }
-        });
       });
     });
 });
@@ -105,14 +96,14 @@ function printEqLogic(_eqLogic) {
 }
 
 $('.changeIncludeState').off('click').on('click', function () {
-  jeedom.z2m.utils.promptInstance("{{Passage en inclusion sur}} ?",function (instance_result) {
+  jeedom.z2m.utils.promptRouter("{{Passage en inclusion sur}} ?",function (id) {
       jeedom.z2m.bridge.include({
-        instance:instance_result,
+        id:id,
         error: function (error) {
           $('#div_alert').showAlert({message: error.message, level: 'danger'});
         },
         success: function () {
-          $('#div_alert').showAlert({message: '{{Lancement du mode inclusion sur }} '+z2m_instances[instance_result].name, level: 'success'});
+          $('#div_alert').showAlert({message: '{{Lancement du mode inclusion}}', level: 'success'});
         }
       });
     });

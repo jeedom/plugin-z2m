@@ -26,19 +26,26 @@ try {
   ajax::init();
 
   if (init('action') == 'include') {
-    mqtt2::publish(z2m::getInstanceTopic(init('instance', 1)) . '/bridge/request/permit_join', '{"value": true, "time": 180}');
+    $data = array(
+      'value' => true,
+      'time' => 180
+    );
+    if(init('id') != 'coordinator'){
+      $data['device'] = init('id');
+    }
+    mqtt2::publish(z2m::getRootTopic() . '/bridge/request/permit_join', json_encode($data));
     ajax::success();
   }
 
   if (init('action') == 'publish') {
-    mqtt2::publish(z2m::getInstanceTopic(init('instance', 1)) . init('topic'), init('message', ''));
+    mqtt2::publish(z2m::getRootTopic() . init('topic'), init('message', ''));
     ajax::success();
   }
 
   if (init('action') == 'sync') {
-    $devices = json_decode(file_get_contents(__DIR__ . '/../../data/devices/devices' . init('instance', 1) . '.json'), true);
+    $devices = json_decode(file_get_contents(__DIR__ . '/../../data/devices/devices' .  . '.json'), true);
     z2m::handle_bridge(array('devices' => $devices));
-    $groups = json_decode(file_get_contents(__DIR__ . '/../../data/devices/groups' . init('instance', 1) . '.json'), true);
+    $groups = json_decode(file_get_contents(__DIR__ . '/../../data/devices/groups' .  . '.json'), true);
     z2m::handle_bridge(array('groups' => $groups));
     ajax::success();
   }

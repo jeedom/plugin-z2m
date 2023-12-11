@@ -77,16 +77,6 @@ sendVarToJS('z2m_network_map', $map);
         fill: var(--txt-color) !important;
     }
 </style>
-<select class="pull-right form-control" id="sel_networkZigbeeInstance" style="width:250px;">
-    <?php
-    foreach (z2m::getDeamonInstanceDef() as $zigbee_instance) {
-        if ($zigbee_instance['enable'] != 1) {
-            continue;
-        }
-        echo '<option value="' . $zigbee_instance['id'] . '">' . $zigbee_instance['name'] . '</option>';
-    }
-    ?>
-</select>
 <ul id="tabs_network" class="nav nav-tabs" data-tabs="tabs">
     <li class="active"><a href="#application_network" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Application}}</a></li>
     <li><a href="#action_configuration" data-toggle="tab"><i class="fas fa-cogs"></i></i> {{Configuration}}</a></li>
@@ -418,7 +408,6 @@ sendVarToJS('z2m_network_map', $map);
             options[tr.attr('data-type')][input.attr('data-name')] = parseInt(options[tr.attr('data-type')][input.attr('data-name')]);
         }
         jeedom.z2m.bridge.options({
-            instance: 1,
             options: options,
             error: function(error) {
                 $('#div_alert').showAlert({
@@ -444,7 +433,6 @@ sendVarToJS('z2m_network_map', $map);
 
     $('#bt_z2mNetworkBackup').off('click').on('click', function() {
         jeedom.z2m.bridge.backup({
-            instance: 1,
             error: function(error) {
                 $('#div_alert').showAlert({
                     message: error.message,
@@ -462,7 +450,6 @@ sendVarToJS('z2m_network_map', $map);
 
     $('#bt_z2mNetworkRestart').off('click').on('click', function() {
         jeedom.z2m.bridge.restart({
-            instance: 1,
             error: function(error) {
                 $('#div_alert').showAlert({
                     message: error.message,
@@ -482,7 +469,6 @@ sendVarToJS('z2m_network_map', $map);
     $('.bt_z2mRemoveNode').off('click').on('click', function() {
         let tr = $(this).closest('tr')
         jeedom.z2m.device.remove({
-            instance: 1,
             force: true,
             id: tr.attr('data-ieee'),
             error: function(error) {
@@ -502,7 +488,6 @@ sendVarToJS('z2m_network_map', $map);
 
     $('#bt_networkMapUpdate').off('click').on('click', function() {
         jeedom.z2m.bridge.updateNetworkMap({
-            instance: 1,
             error: function(error) {
                 $('#div_alert').showAlert({
                     message: error.message,

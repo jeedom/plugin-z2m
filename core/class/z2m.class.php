@@ -326,7 +326,7 @@ class z2m extends eqLogic {
     }
   }
 
-  public static function getInstanceTopic($_instanceNumber = 1) {
+  public static function getRootTopic() {
     return config::byKey('mqtt::topic', __CLASS__, 'z2m');
   }
 
@@ -445,7 +445,7 @@ class z2m extends eqLogic {
     }
   }
 
-  public static function handle_bridge($_datas, $_instanceNumber = 1) {
+  public static function handle_bridge($_datas) {
     if (isset($_datas['event'])) {
       switch ($_datas['event']['type']) {
         case 'device_announce':
@@ -497,17 +497,17 @@ class z2m extends eqLogic {
     }
     if (isset($_datas['response']['networkmap']) && $_datas['response']['networkmap']['status'] == 'ok') {
       if ($_datas['response']['networkmap']['data']['type'] == 'raw') {
-        file_put_contents(__DIR__ . '/../../data/devices/networkMap' . $_instanceNumber . '.json', json_encode($_datas['response']['networkmap']['data']['value']));
+        file_put_contents(__DIR__ . '/../../data/devices/networkMap1.json', json_encode($_datas['response']['networkmap']['data']['value']));
       }
     }
     if (isset($_datas['response']['backup']) && $_datas['response']['backup']['status'] == 'ok') {
       file_put_contents(__DIR__ . '/../../data/backup/' . date('Y-m-d H:i:s') . '.zip', base64_decode($_datas['response']['backup']['data']['zip']));
     }
     if (isset($_datas['info'])) {
-      file_put_contents(__DIR__ . '/../../data/devices/bridge' . $_instanceNumber . '.json', json_encode($_datas['info']));
+      file_put_contents(__DIR__ . '/../../data/devices/bridge1.json', json_encode($_datas['info']));
     }
     if (isset($_datas['devices'])) {
-      file_put_contents(__DIR__ . '/../../data/devices/devices' . $_instanceNumber . '.json', json_encode($_datas['devices']));
+      file_put_contents(__DIR__ . '/../../data/devices/devices1.json', json_encode($_datas['devices']));
       foreach ($_datas['devices'] as &$device) {
         if ((!isset($device['model_id']) || $device['model_id'] == '') && isset($device['definition']['model']) &&  isset($device['definition']['vendor'])) {
           $device['model_id'] = $device['definition']['vendor'].' '.$device['definition']['model'];
@@ -528,10 +528,10 @@ class z2m extends eqLogic {
         }
         $eqLogic->setConfiguration('manufacturer', $device['manufacturer']);
         $eqLogic->setConfiguration('device', $device['model_id']);
+        $eqLogic->setConfiguration('device_type', $device['type']);
         if (isset($device['definition']['model'])) {
           $eqLogic->setConfiguration('model', $device['definition']['model']);
         }
-        $eqLogic->setConfiguration('instance', $_instanceNumber);
         $hasCmdEndpoints = 0;
         foreach ($device['definition']['exposes'] as &$expose) {
           if (isset($expose['features'])) {
@@ -582,7 +582,7 @@ class z2m extends eqLogic {
       }
     }
     if (isset($_datas['groups'])) {
-      file_put_contents(__DIR__ . '/../../data/devices/groups' . $_instanceNumber . '.json', json_encode($_datas['groups']));
+      file_put_contents(__DIR__ . '/../../data/devices/groups1.json', json_encode($_datas['groups']));
       foreach ($_datas['groups'] as $group) {
         $new = null;
         $eqLogic = eqLogic::byLogicalId('group_' . $group['id'], 'z2m');
@@ -598,7 +598,6 @@ class z2m extends eqLogic {
         }
         $eqLogic->setConfiguration('friendly_name', $group['friendly_name']);
         $eqLogic->setConfiguration('group_id', $group['id']);
-        $eqLogic->setConfiguration('instance', $_instanceNumber);
         $eqLogic->save();
         foreach ($group['scenes'] as $scene) {
           $cmd = $eqLogic->getCmd('action', 'scene_recall::' . $scene['id']);
@@ -631,19 +630,6 @@ class z2m extends eqLogic {
       return array();
     }
     return json_decode(file_get_contents($file), true);
-  }
-
-
-  public static function getDeamonInstanceDef() {
-    $return = array();
-    for ($i = 1; $i <= config::byKey('max_instance_number', 'z2m', 1); $i++) {
-      $return[$i] = array(
-        'id' => $i,
-        'enable' => config::byKey('enable_deamon_' . $i, 'z2m', 1),
-        'name' => config::byKey('name_deamon_' . $i, 'z2m', __('Démon', __FILE__) . ' ' . $i)
-      );
-    }
-    return $return;
   }
 
   public static function ciGlob($pat) {
@@ -948,7 +934,7 @@ class z2m extends eqLogic {
       if (!class_exists('mqtt2')) {
         throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
       }
-      mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/bridge/request/group/remove', json_encode($datas));
+      mqtt2::publish(z2m::getRootTopic() . '/bridge/request/group/remove', json_encode($datas));
     }
   }
 
@@ -959,8 +945,8 @@ class z2m extends eqLogic {
             	continue; 
           }
           $datas = array($logicalId => '');
-          log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get => '.json_encode($datas));
-          mqtt2::publish(z2m::getInstanceTopic($this->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get', json_encode($datas));
+          log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get => '.json_encode($datas));
+          mqtt2::publish(z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get', json_encode($datas));
       }
   }
 
@@ -1096,12 +1082,12 @@ class z2mCmd extends cmd {
       $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
-      log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
-      mqtt2::publish(z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
+      log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
+      mqtt2::publish(z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
       return;
     }
-    log::add('z2m','debug','[execute] '.z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
-    mqtt2::publish(z2m::getInstanceTopic($eqLogic->getConfiguration('instance')) . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
+    log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
+    mqtt2::publish(z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
   }
 
   /*     * **********************Getteur Setteur*************************** */

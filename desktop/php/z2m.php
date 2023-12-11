@@ -2,24 +2,26 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
-$z2m_instances = z2m::getDeamonInstanceDef();
-sendVarToJS('z2m_instances', $z2m_instances);
 // Déclaration des variables obligatoires
 $plugin = plugin::byId('z2m');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 
 foreach ($eqLogics as $eqLogic) {
-	$eqLogicArray = array();
-	$eqLogicArray['HumanNameFull'] = $eqLogic->getHumanName(true);
-	$eqLogicArray['HumanName'] = $eqLogic->getHumanName();
-	$eqLogicArray['id'] = $eqLogic->getId();
-	$eqLogicArray['instance'] = $eqLogic->getConfiguration('instance', 1);
-	$eqLogicArray['img'] = $eqLogic->getImgFilePath();
-	$devices[$eqLogic->getLogicalId()] = $eqLogicArray;
-	$deviceAttr[$eqLogic->getId()] = array('isgroup' => $eqLogic->getConfiguration('isgroup', 0));
-	$deviceAttr[$eqLogic->getId()]['multipleEndpoints'] = $eqLogic->getConfiguration('multipleEndpoints', 0);
-	$deviceAttr[$eqLogic->getId()]['isChild'] = $eqLogic->getConfiguration('isChild', 0);
+	$devices[$eqLogic->getLogicalId()] = array(
+		'HumanNameFull' => $eqLogic->getHumanName(true),
+		'HumanName' => $eqLogic->getHumanName()
+		'id' => $eqLogic->getId()
+		'img' => $eqLogic->getImgFilePath(),
+		'device_type' =>  $eqLogic->getConfiguration('device_type','EndDevice'),
+		'isgroup' => $eqLogic->getConfiguration('isgroup', 0),
+		'isChild' => $eqLogic->getConfiguration('isChild', 0)
+	);
+	$deviceAttr[$eqLogic->getId()] = array(
+		'isgroup' => $eqLogic->getConfiguration('isgroup', 0),
+		'multipleEndpoints' => $eqLogic->getConfiguration('multipleEndpoints', 0),
+		'isChild' => $eqLogic->getConfiguration('isChild', 0)
+	);
 }
 $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
 sendVarToJS('z2m_devices', $devices);
@@ -95,9 +97,7 @@ sendVarToJS('devices_attr', $deviceAttr);
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
 					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-
 					echo '<img src="' . $plugin->getPathImgIcon() . '" />' . $child;
-
 					echo "<br/>";
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 					echo '</div>';
@@ -185,23 +185,6 @@ sendVarToJS('devices_attr', $deviceAttr);
 								</label>
 								<div class="col-sm-7">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Logical ID" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Contrôleur z2m}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le contrôleur en communication avec ce module}}"></i></sup>
-								</label>
-								<div class="col-sm-7">
-									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="instance">
-										<?php
-										foreach ($z2m_instances as $z2m_instance) {
-											if ($z2m_instance['enable'] != 1) {
-												continue;
-											}
-											echo '<option value="' . $z2m_instance['id'] . '">' . $z2m_instance['name'] . '</option>';
-										}
-										?>
-									</select>
 								</div>
 							</div>
 							<div class="form-group">
