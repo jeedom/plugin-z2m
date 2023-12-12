@@ -30,7 +30,7 @@ try {
       'value' => true,
       'time' => 180
     );
-    if(init('id') != 'coordinator'){
+    if(init('id') != 'all'){
       $data['device'] = init('id');
     }
     mqtt2::publish(z2m::getRootTopic() . '/bridge/request/permit_join', json_encode($data));
