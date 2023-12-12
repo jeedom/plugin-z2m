@@ -10,8 +10,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 foreach ($eqLogics as $eqLogic) {
 	$devices[$eqLogic->getLogicalId()] = array(
 		'HumanNameFull' => $eqLogic->getHumanName(true),
-		'HumanName' => $eqLogic->getHumanName()
-		'id' => $eqLogic->getId()
+		'HumanName' => $eqLogic->getHumanName(),
+		'id' => $eqLogic->getId(),
 		'img' => $eqLogic->getImgFilePath(),
 		'device_type' =>  $eqLogic->getConfiguration('device_type','EndDevice'),
 		'isgroup' => $eqLogic->getConfiguration('isgroup', 0),
