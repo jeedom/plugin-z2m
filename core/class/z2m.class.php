@@ -529,7 +529,7 @@ class z2m extends eqLogic {
           $eqLogic->setEqType_name('z2m');
           $new = true;
         }
-        $eqLogic->setConfiguration('manufacturer', $device['manufacturer']);
+        $eqLogic->setConfiguration('manufacturer', isset($device['manufacturer']) ? $device['manufacturer'] : '');
         $eqLogic->setConfiguration('device', $device['model_id']);
         $eqLogic->setConfiguration('device_type', $device['type']);
         if (isset($device['definition']['model'])) {
