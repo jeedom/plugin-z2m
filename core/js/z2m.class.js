@@ -24,6 +24,7 @@ jeedom.z2m.group = function() {};
 jeedom.z2m.utils.promptRouter = function(_text,_callback){
   var inputOptions = [];
   inputOptions.push({value : 'all',text : 'Tout'});
+  inputOptions.push({value : 'Coordinator',text : 'Coordinateur'});
   for(var i in z2m_devices){
     if(z2m_devices[i].isgroup == 1 || z2m_devices[i].isChild == 1 || z2m_devices[i].device_type != 'Router'){
       continue;
