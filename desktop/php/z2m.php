@@ -15,7 +15,8 @@ foreach ($eqLogics as $eqLogic) {
 		'img' => $eqLogic->getImgFilePath(),
 		'device_type' =>  $eqLogic->getConfiguration('device_type','EndDevice'),
 		'isgroup' => $eqLogic->getConfiguration('isgroup', 0),
-		'isChild' => $eqLogic->getConfiguration('isChild', 0)
+		'isChild' => $eqLogic->getConfiguration('isChild', 0),
+		'ieee' => z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0])
 	);
 	$deviceAttr[$eqLogic->getId()] = array(
 		'isgroup' => $eqLogic->getConfiguration('isgroup', 0),

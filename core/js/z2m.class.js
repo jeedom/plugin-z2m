@@ -23,12 +23,12 @@ jeedom.z2m.group = function() {};
 
 jeedom.z2m.utils.promptRouter = function(_text,_callback){
   var inputOptions = [];
-  inputOptions.push({value : 'all',text : 'Tous'});
+  inputOptions.push({value : 'coordinator',text : 'Coordinateur'});
   for(var i in z2m_devices){
-    if(z2m_devices[i].isgroup == 1 || z2m_devices[i].isChild == 1 || z2m_devices[i].device_type != 'router'){
+    if(z2m_devices[i].isgroup == 1 || z2m_devices[i].isChild == 1 || z2m_devices[i].device_type != 'Router'){
       continue;
     }
-    inputOptions.push({value : i,text : z2m_devices[i].HumanNameFull});
+    inputOptions.push({value : z2m_devices[i].ieee,text : z2m_devices[i].HumanName});
   }
   bootbox.prompt({
     title: _text,
