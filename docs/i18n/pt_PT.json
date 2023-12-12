@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "Suppression de la notion d'instance": "Remoção da noção de instância",
+        "Possibilité de lancer une inclusion directement sur un module routeur": "Possibilidade de lançar uma inclusão diretamente em um módulo roteador",
         "08\/12\/2023": "12\/08\/2023",
         "Ajout d'une option \"Ne pas autorisé les message si l'équipement n'a pas été vue depuis plus de (s)\" (Réservé aux utilisateurs avancés": "Adicionada opção \"Não permitir mensagens se o equipamento não for visto há mais de (s)\" (Reservado para usuários avançados",
         "05\/12\/2023": "12\/05\/2023",

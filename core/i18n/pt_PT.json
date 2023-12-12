@@ -5,6 +5,7 @@
         "Mode": "Moda",
         "Distant": "Controlo remoto",
         "Local": "Local",
+        "Cette configuration suppose que vous avez installé vous meme zigbee2mqtt sur une machine deporté (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local": "Esta configuração pressupõe que você mesmo instalou o zigbee2mqtt em uma máquina remota (portanto, não no jeedom). Esta configuração é bastante rara se você tiver uma caixa jeedom você deve escolher o modo local",
         "Port du contrôleur": "Porta do controlador",
         "Sélectionner le port du contrôleur Zigbee. Le mode Auto ne fonctionne qu'avec les clés Deconz": "Selecione a porta do controlador Zigbee. O modo automático só funciona com teclas Deconz",
         "Aucun": "Nenhum",
@@ -217,8 +218,6 @@
         "Paramètres spécifiques": "Parâmetros específicos",
         "Identification": "Identificação",
         "Identifiant du module": "Identificador do módulo",
-        "Contrôleur z2m": "Controlador z2m",
-        "Sélectionner le contrôleur en communication avec ce module": "Selecione o controlador em comunicação com este módulo",
         "Auto-actualisation (cron)": "Autoatualização (cron)",
         "Nous recommandons de ne jamais rien mettre ici de vous meme, une erreur et c'est tout votre réseaux zigbee qui est cassé !!!!": "Recomendamos nunca colocar nada aqui, um erro e toda a sua rede zigbee estará quebrada!!!!",
         "Ne pas autorisé les message si l'équipement n'a pas été vue depuis plus de (s)": "Não permitir mensagens se o equipamento não for visto há mais de (s)",
@@ -234,12 +233,9 @@
         "Action": "Ações"
     },
     "plugins\/z2m\/desktop\/js\/z2m.js": {
-        "Ajouter un équipement par code sur ?": "Adicionar equipamento por código em?",
         "Code ?": "Codificado?",
         "Demande d\\'ajout de l\\'équipement par code envoyée avec succes": "Pedido para adicionar equipamento por código enviado com sucesso",
-        "Synchroniser sur ?": "Sincronizar com?",
         "Synchronisation lancée avec succes": "Sincronização iniciada com sucesso",
-        "Ajouter un groupe sur ?": "Adicionar um grupo a?",
         "Nom du groupe ?": "Nome do grupo?",
         "Demande du groupe envoyée avec succes": "Solicitação de grupo enviada com sucesso",
         "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Um dispositivo acaba de ser incluído\/excluído. Por favor, atualize a página",
@@ -247,7 +243,7 @@
         "Configuration du groupe": "Configuração do grupo",
         "Configuration du réseaux": "Configuração de rede",
         "Passage en inclusion sur": "Transferência para inclusão em",
-        "Lancement du mode inclusion sur ": "Lançamento do modo de inclusão em",
+        "Lancement du mode inclusion": "Lançamento do modo de inclusão",
         "Commande": "Encomendado",
         "Valeur retour d\\'état": "Valor de retorno de status",
         "Durée avant retour d\\'état (min)": "Duração antes do retorno do status (min)",
@@ -288,7 +284,6 @@
         "Mode inclusion actif": "Modo de inclusão ativo",
         "Mode inclusion inactif": "Modo de inclusão inativo",
         "Dernière communication": "Última comunicação",
-        "Démon": "Diabo",
         "Le message et le sujet ne peuvent pas être vide": "A mensagem e o assunto não podem ficar vazios"
     },
     "info.json": {
