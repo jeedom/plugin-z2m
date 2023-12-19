@@ -16,7 +16,7 @@
         "Type de contrôleur": "Controller-Typ",
         "Sélectionner le type de contrôleur Zigbee à utiliser": "Wählen Sie den Typ des zu verwendenden Zigbee-Controllers aus",
         "ZNP\/TI": "ZNP\/IT",
-        "EZSP (Atlas\/Luna)": "EZSP (Atlas\/Luna)",
+        "EZSP (Atlas\/Luna\/Smart)": "EZSP (Atlas\/Luna\/Smart)",
         "Deconz\/Conbee": "Dekonz\/Conbee",
         "Zigate (alpha)": "Zigate (Alpha)",
         "Mise à jour du firmware du contrôleur": "Controller-Firmware-Update",
