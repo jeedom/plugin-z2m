@@ -203,7 +203,13 @@ class z2m extends eqLogic {
 
     $configuration['serial']['port'] = $port;
 
-    if (config::byKey('controller', 'z2m') != 'ti') {
+    if(config::byKey('controller', 'z2m') == 'conbee_3'){
+      $configuration['serial']['adapter'] = 'deconz';
+      $configuration['serial']['baudrate'] = 115200;
+    }elseif(config::byKey('controller', 'z2m') == 'raspbee_2'){
+      $configuration['serial']['adapter'] = 'deconz';
+      $configuration['serial']['baudrate'] = 38400;
+    }elseif (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
     }else{
       $configuration['serial']['adapter'] = 'zstack';
