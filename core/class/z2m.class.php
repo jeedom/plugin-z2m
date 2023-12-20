@@ -199,6 +199,8 @@ class z2m extends eqLogic {
     } else if ($port != 'auto') {
       $port = jeedom::getUsbMapping($port);
       exec(system::getCmdSudo() . ' chmod 777 ' . $port . ' 2>&1');
+    }else{
+      $port = null;
     }
 
     $configuration['serial']['port'] = $port;
