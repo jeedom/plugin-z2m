@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "21\/12\/2023": "21\/12\/2023",
         "Suppression de la notion d'instance": "Remoção da noção de instância",
         "Possibilité de lancer une inclusion directement sur un module routeur": "Possibilidade de lançar uma inclusão diretamente em um módulo roteador",
         "Ajout du support de la conbee 3": "Adicionado suporte para conbee 3",
