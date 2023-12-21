@@ -26,9 +26,8 @@ if ($eqLogic->getConfiguration('isChild',0) == 1){
 }
 $devices = eqLogic::byType('z2m');
 $infos = z2m::getDeviceInfo($eqLogic->getLogicalId());
-$bridge_info = z2m::getDeviceInfo('bridge' . $eqLogic->getConfiguration('instance', 1));
+$bridge_info = z2m::getDeviceInfo('bridge1');
 sendVarToJS('z2m_device_id', $eqLogic->getId());
-sendVarToJS('z2m_device_instance', $eqLogic->getConfiguration('instance'));
 sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
 ?>
 <ul class="nav nav-tabs" role="tablist">
@@ -417,7 +416,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
             return;
         }
         jeedom.z2m.device.bind({
-            instance: z2m_device_instance,
             options: {
                 from: jeedom.z2m.utils.convert_from_addr(z2m_device_ieee) + '/' + $('#sel_bindingSourceEndpoint').value(),
                 to: $('#sel_bindingTarget').value(),
@@ -448,7 +446,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
     $('.bt_removeBinding').off('click').on('click', function() {
         let tr = $(this).closest('tr');
         jeedom.z2m.device.unbind({
-            instance: z2m_device_instance,
             options: {
                 from: tr.attr('data-from'),
                 to: tr.attr('data-to'),
@@ -471,7 +468,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
 
     $('#bt_checkOta').off('click').on('click', function() {
         jeedom.z2m.device.ota_check({
-            instance: z2m_device_instance,
             id: jeedom.z2m.utils.convert_from_addr(z2m_device_ieee),
             error: function(error) {
                 $('#div_alert').showAlert({
@@ -502,7 +498,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
             options[input.attr('data-name')] = parseInt(options[input.attr('data-name')]);
         }
         jeedom.z2m.device.setOptions({
-            instance: z2m_device_instance,
             options: {
                 id: jeedom.z2m.utils.convert_from_addr(z2m_device_ieee),
                 options: options
@@ -533,7 +528,6 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
             reportable_change: tr.find('.reportable_change').value()
         }
         jeedom.z2m.device.configure_reporting({
-            instance: z2m_device_instance,
             options: options,
             error: function(error) {
                 $('#div_alert').showAlert({

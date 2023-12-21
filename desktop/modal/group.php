@@ -120,7 +120,6 @@ sendVarToJS('z2m_group_list_member', $list_members);
                     return;
                 }
                 jeedom.z2m.group.addMember({
-                    instance: 1,
                     group: z2m_group_name,
                     device: member,
                     error: function(error) {
@@ -149,7 +148,6 @@ sendVarToJS('z2m_group_list_member', $list_members);
     $('.bt_removeGroupMember').off('click').on('click', function() {
         let tr = $(this).closest('tr')
         jeedom.z2m.group.removeMember({
-            instance: 1,
             group: z2m_group_name,
             device: tr.attr('data-device'),
             error: function(error) {
