@@ -204,7 +204,9 @@ class z2m extends eqLogic {
     }
 
     $configuration['serial']['port'] = $port;
-
+    if(isset($configuration['serial']['baudrate'])){
+      unset($configuration['serial']['baudrate']);
+    }
     if(config::byKey('controller', 'z2m') == 'conbee_3'){
       $configuration['serial']['adapter'] = 'deconz';
       $configuration['serial']['baudrate'] = 115200;
