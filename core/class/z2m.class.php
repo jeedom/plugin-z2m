@@ -45,19 +45,19 @@ class z2m extends eqLogic {
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
     } else if ($_options['sub_controller'] == 'luna') {
-      $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
-      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p /dev/ttyLuna-Zigbee -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'];
       $_options['port'] = '/dev/ttyLuna-Zigbee';
+      $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p '.$_options['port'].' -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'];
     }else{
-      log::add(__CLASS__ . '_firmware', 'info', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
+      log::add(__CLASS__ . '_firmware', 'alert', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
       return;
     }
-    log::add(__CLASS__ . '_firmware', 'info', $cmd);
+    log::add(__CLASS__ . '_firmware', 'alert', $cmd);
     shell_exec('sudo kill 9 $(lsof -t ' . $_options['port'] . ') >> ' . $log . ' 2>&1');
     shell_exec($cmd . ' >> ' . $log . ' 2>&1');
     config::save('deamonAutoMode', 0, 'z2m');
     self::deamon_start();
-    log::add(__CLASS__ . '_firmware', 'info', __('Fin de la mise à jour du firmware de la clef', __FILE__));
+    log::add(__CLASS__ . '_firmware', 'alert', __('Fin de la mise à jour du firmware de la clef', __FILE__));
   }
 
 
@@ -204,7 +204,9 @@ class z2m extends eqLogic {
     }
 
     $configuration['serial']['port'] = $port;
-
+    if(isset($configuration['serial']['baudrate'])){
+      unset($configuration['serial']['baudrate']);
+    }
     if(config::byKey('controller', 'z2m') == 'conbee_3'){
       $configuration['serial']['adapter'] = 'deconz';
       $configuration['serial']['baudrate'] = 115200;
@@ -296,7 +298,8 @@ class z2m extends eqLogic {
       return;
     }
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
-    $cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
+    //$cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
+    $cmd = system::getCmdSudo() . " lsof -t -i:" . config::byKey('z2m_listen_port','z2m','8080') . " | head -n 1 | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
     exec($cmd);
     $i = 0;
     while ($i < 5) {
