@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "26\/12\/2023": "26.12.2023",
+        "Amélioration de l'arret du démon zigbee2mqtt": "Verbessertes Herunterfahren des zigbee2mqtt-Daemons",
+        "Corrections de bug": "Fehlerbehebung",
         "21\/12\/2023": "21.12.2023",
         "Suppression de la notion d'instance": "Streichung des Instanzbegriffs",
         "Possibilité de lancer une inclusion directement sur un module routeur": "Möglichkeit, eine Einbindung direkt auf einem Router-Modul zu starten",

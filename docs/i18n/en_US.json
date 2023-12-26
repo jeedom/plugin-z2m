@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "If there is no information on the update, it means that it concerns only the update of documentation, translation or text",
+        "26\/12\/2023": "12\/26\/2023",
+        "Amélioration de l'arret du démon zigbee2mqtt": "Improved zigbee2mqtt daemon shutdown",
+        "Corrections de bug": "Bug fixes",
         "21\/12\/2023": "12\/21\/2023",
         "Suppression de la notion d'instance": "Removal of the notion of instance",
         "Possibilité de lancer une inclusion directement sur un module routeur": "Possibility of launching an inclusion directly on a router module",
