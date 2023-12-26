@@ -296,7 +296,8 @@ class z2m extends eqLogic {
       return;
     }
     log::add(__CLASS__, 'info', __('Arrêt du démon z2m', __FILE__));
-    $cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
+    //$cmd = "(ps ax || ps w) | grep -ie 'zigbee2mqtt' | grep -v grep | awk '{print $1}' | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
+    $cmd = system::getCmdSudo() . " lsof -t -i:" . config::byKey('z2m_listen_port','z2m','8080') . " | head -n 1 | xargs " . system::getCmdSudo() . " kill -15 > /dev/null 2>&1";
     exec($cmd);
     $i = 0;
     while ($i < 5) {
