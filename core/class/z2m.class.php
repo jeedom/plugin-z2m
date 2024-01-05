@@ -201,14 +201,17 @@ class z2m extends eqLogic {
     if ($port == 'gateway') {
       $port = 'tcp://' . config::byKey('gateway', 'z2m');
     } else if ($port != 'auto') {
-      $port = jeedom::getUsbMapping($port);
+      if(jeedom::getUsbMapping($port) != null){
+        $port = jeedom::getUsbMapping($port);
+      }
+      if($port == '/dev/ttyLuna-Zigbee' && !file_exists('/dev/ttyLuna-Zigbee')){
+        $port = '/dev/ttyUSB1';
+      }
       exec(system::getCmdSudo() . ' chmod 777 ' . $port . ' 2>&1');
     }else{
       $port = null;
     }
-    if( $port == '/dev/ttyLuna-Zigbee' && !file_exists('/dev/ttyLuna-Zigbee')){
-          $port = '/dev/ttyUSB1';
-    }
+   
     $configuration['serial']['port'] = $port;
     if(isset($configuration['serial']['baudrate'])){
       unset($configuration['serial']['baudrate']);
