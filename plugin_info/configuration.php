@@ -60,9 +60,7 @@ if (!isConnect()) {
           <?php
           foreach (ls('/dev/', 'tty*') as $value) {
             if ($value == "ttyLuna-Zigbee") {
-              echo '<option value="/dev/' . $value . '">Luna Zigbee V2</option>';
-            } else if ($value == "ttyUSB1") {
-              echo '<option value="/dev/' . $value . '">Luna Zigbee Old (/dev/' . $value . ')</option>';
+              echo '<option value="/dev/' . $value . '">Luna Zigbee</option>';
             } else {
               echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
             }
