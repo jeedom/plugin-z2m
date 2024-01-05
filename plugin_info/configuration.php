@@ -59,18 +59,6 @@ if (!isConnect()) {
           <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>
           <option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>
           <?php
-	  	  $findPort = [];
-          /*foreach (ls('/dev/', 'tty*') as $value) {
-            if($value == 'tty' || preg_match('/tty\d/', $value) || preg_match('/ttyS\d/', $value) || preg_match('/ttyFIQ\d/', $value)){
-             	continue; 
-            }
-	        $findPort['/dev/' . $value] = '/dev/' . $value;  
-            if ($value == "ttyLuna-Zigbee") {
-              echo '<option value="/dev/' . $value . '">Luna Zigbee</option>';
-            } else {
-              echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
-            }
-          }*/
           foreach (jeedom::getUsbMapping() as $name => $value) {
             if(isset($findPort[$value])){
                 continue;
