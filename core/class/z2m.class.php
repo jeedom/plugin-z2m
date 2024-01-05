@@ -206,7 +206,9 @@ class z2m extends eqLogic {
     }else{
       $port = null;
     }
-
+    if( $port == '/dev/ttyLuna-Zigbee' && !file_exists('/dev/ttyLuna-Zigbee')){
+          $port = '/dev/ttyUSB1';
+    }
     $configuration['serial']['port'] = $port;
     if(isset($configuration['serial']['baudrate'])){
       unset($configuration['serial']['baudrate']);
