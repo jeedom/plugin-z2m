@@ -45,7 +45,11 @@ class z2m extends eqLogic {
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
     } else if ($_options['sub_controller'] == 'luna') {
-      $_options['port'] = '/dev/ttyLuna-Zigbee';
+      if(file_exists('/dev/ttyLuna-Zigbee')){
+          $_options['port'] = '/dev/ttyLuna-Zigbee';
+      }else{
+          $_options['port'] = '/dev/ttyUSB1';
+      }
       $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
       $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -p '.$_options['port'].' -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'];
     }else{
