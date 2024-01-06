@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Amélioration de la mise à jour du firmware sur Luna": "Verbessertes Firmware-Update auf Luna",
+        "Meilleure gestion du port sur Luna": "Bessere Hafenverwaltung auf Luna",
+        "Simplification de la liste des ports": "Vereinfachung der Portliste",
         "26\/12\/2023": "26.12.2023",
         "Amélioration de l'arrêt du démon Zigbee2MQTT": "Verbessertes Herunterfahren des zigbee2mqtt-Daemons",
         "Correction de bugs": "Bug-Fix",
