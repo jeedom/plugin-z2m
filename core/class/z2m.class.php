@@ -1082,6 +1082,11 @@ class z2mCmd extends cmd {
         break;
     }
     $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+    $subTopic = '';
+    if(strpos($logicalId,'/') !== false){
+      $subTopic = '/'.explode('/', $logicalId)[0];
+      $logicalId = explode('/', $logicalId)[1];
+    }
     $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
     foreach($infos as &$info){
        if ($info == 'true') {
@@ -1105,12 +1110,12 @@ class z2mCmd extends cmd {
       $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
-      log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set => '.json_encode($datas));
-      mqtt2::publish(z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set', json_encode($datas));
+      log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set'.$subTopic.' => '.json_encode($datas));
+      mqtt2::publish(z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set'.$subTopic, json_encode($datas));
       return;
     }
-    log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set => '.json_encode($datas));
-    mqtt2::publish(z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set', json_encode($datas));
+    log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set'.$subTopic.' => '.json_encode($datas));
+    mqtt2::publish(z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $eqLogic->getLogicalId())[0]) . '/set'.$subTopic, json_encode($datas));
   }
 
   /*     * **********************Getteur Setteur*************************** */
