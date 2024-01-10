@@ -136,5 +136,57 @@
             "dashboard": "presence",
             "mobile": "presence"
         }
+    },
+    "window_detection": {
+        "name": "Détection fenêtre ouverte",
+        "isVisible" : false
+    },
+    "window_detection::on": {
+        "name": "Activer détection ouverture fênetre",
+        "isVisible" : false
+    },
+    "window_detection::off": {
+        "name": "Desactiver détection ouverture fênetre",
+        "isVisible" : false
+    },
+    "valve_detection": {
+        "name": "Détection valve",
+        "isVisible" : false
+    },
+    "valve_detection::on": {
+        "name": "Activer détection valve",
+        "isVisible" : false
+    },
+    "valve_detection::off": {
+        "name": "Desactiver détection valve",
+        "isVisible" : false
+    },
+    "valve_detection::toggle": {
+        "name": "Toggle détection valve",
+        "isVisible" : false
+    },
+    "auto_lock": {
+        "name": "Auto lock",
+        "isVisible" : false
+    },
+    "auto_lock::manual": {
+        "name": "Auto lock manuel",
+        "isVisible" : false
+    },
+    "auto_lock::auto": {
+        "name": "Auto lock auto",
+        "isVisible" : false
+    },
+    "away_mode": {
+        "name": "Absent",
+        "isVisible" : false
+    },
+    "away_mode::on": {
+        "name": "Absent on",
+        "isVisible" : false
+    },
+    "away_mode::off": {
+        "name": "Absent off",
+        "isVisible" : false
     }
 }
