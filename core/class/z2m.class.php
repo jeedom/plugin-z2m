@@ -793,6 +793,9 @@ class z2m extends eqLogic {
           $cmd_ref['subType'] = $_infos['type'];
           break;
       }
+      if($cmd_ref['type'] == 'info' && $cmd_ref['subType'] == 'list'){
+        $cmd_ref['subType'] = 'string';
+      }
     }
     return $cmd_ref;
   }
