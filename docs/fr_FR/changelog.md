@@ -9,6 +9,7 @@
 - Simplification de la liste des ports
 - Possibilité d'envoyer un message sur un sous topic de la commande set : arm_mode/mode::arming_stay
 - Correction de bugs
+- Gestion du retour d'état sur les groupes
 
 # 26/12/2023
 
