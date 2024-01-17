@@ -162,13 +162,22 @@ Zigbee2MQTT vous autorise à ajouter des convertisseurs externe (pour supporter 
 >**IMPORTANT**
 >
 >Le support ne couvre pas la partie création/utilisation des convertisseurs externes.
->
 
 # Commande spécifiques
 
 ## Commande IR
 
 Le cas des modules envoyant des codes IR est un peu spécifique car il n'y a pas de liste predefini des codes IR il faut donc trouver vous meme la commande IR puis dans jeedom ajouter une commande avec en logical ID : `ir_code_to_send::VOTRE CODE IR`
+
+## Commande personalisée
+
+Cette partie est plutot pour les utilisateurs avancée qui voudraient ajouter des commandes spécifique. Tout se passe dans le logical id de la commande :
+- action : `temperature::25` pour envoyer `{"température":25}` sur le topic `set` de l'équipement ou `arm_mode/mode::arming_stay` pour envoyer  `{"arm_mode":"arming_stay"}` sur le topic `set/arm_mode` de l'équipement
+- info : `temperature` pour récupere le champs `temperature` du json de l'équipement ou `temperature::min` pour recuperer le sous champs `min` du tableau `temperature` de l'équipement
+
+>**NOTE**
+>
+> Pour les commandes de type action vous pouvez utiliser des les tags `#slider#`, `#message#`, `#title#` ou `#select#` en fonction du sous type de la commande pour passer un parametre
 
 # FAQ
 
