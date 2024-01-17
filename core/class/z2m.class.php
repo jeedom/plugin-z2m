@@ -424,6 +424,17 @@ class z2m extends eqLogic {
       if(!is_object($eqLogic)){
         $eqLogic = eqLogic::byLogicalId('group_' . $key, 'z2m');
       }
+      if(!is_object($eqLogic)){
+        foreach (self::byType('z2m') as $findEqLogic) {
+          if($findEqLogic->getConfiguration('isgroup',0) == 0){
+            continue;
+          }
+          if($findEqLogic->getConfiguration('friendly_name','') == $key){
+            $eqLogic = $findEqLogic;
+            break;
+          }
+        }
+      }
       if (is_object($eqLogic)) {
         if(isset($values['last_seen']) && $eqLogic->getConfiguration('maxLastSeen',0) > 0 && (strtotime($values['last_seen'])+$eqLogic->getConfiguration('maxLastSeen',0)) < strtotime('now')){
           continue;
