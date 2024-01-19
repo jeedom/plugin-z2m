@@ -1177,12 +1177,12 @@ class z2mCmd extends cmd {
       }else{
         $datas = array($infos[0] =>  $infos[1]);
       }
+      if(isset($datas['position'])){
+        $datas['position'] = round(floatval($datas['position']), 2);
+      }
     }
     if ($this->getSubtype() == 'color' && isset($color)) {
       $datas = array('color' =>  $color);
-    }
-    if(isset($datas['position'])){
-      $datas['position'] = round(floatval($datas['position']), 2);
     }
     if ($eqLogic->getConfiguration('isgroup', 0) == 1) {
       log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . $eqLogic->getConfiguration('friendly_name') . '/set'.$subTopic.' => '.json_encode($datas));
