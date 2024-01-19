@@ -841,6 +841,12 @@ class z2m extends eqLogic {
     if ($_infos['access'] == 7 || $_infos['access'] == 3 || $_infos['access'] == 2 || $_infos['access'] == 6) {
       foreach (self::$_action_cmd as $k => $v) {
         if (isset($_infos[$k])) {
+          if($_father_property != null){
+            $payload = array($_father_property => array($_infos['property'] => $_infos[$k]));
+          }else{
+            $payload = array($_infos['property'] => $_infos[$k]);
+          }
+          $payload = 'json::'.json_encode($payload);
           if ($_infos[$k] === false) {
             $logical_id =  $logical . '::false';
           } else  if ($_infos[$k] === true) {
@@ -852,22 +858,24 @@ class z2m extends eqLogic {
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical_id);
-
+          if (!is_object($cmd)) {
+            $cmd = $this->getCmd('action', $payload);
+          }
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             if (isset($_infos['endpoint'])) {
               $cmd->setConfiguration('endpoint', $_infos['endpoint']);
             }
-            $cmd->setLogicalId($logical_id);
             utils::a2o($cmd, $cmd_ref);
           }
+          $cmd->setLogicalId($payload);
           $cmd->setEqLogic_id($this->getId());
           $cmd->setValue($link_cmd_id);
           try {
             $cmd->save();
           } catch (\Throwable $th) {
             try {
-              $cmd->setName('Action '.$logical);
+              $cmd->setName('Action '.$logical_id);
               $cmd->save();
             } catch (\Throwable $th) {
               log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
@@ -877,18 +885,27 @@ class z2m extends eqLogic {
       }
 
       if ($_infos['type'] == 'numeric') {
+        if($_father_property != null){
+          $payload = array($_father_property => array($_infos['property'] => '#slider#'));
+        }else{
+          $payload = array($_infos['property'] => '#slider#');
+        }
+        $payload = 'json::'.json_encode($payload);
         $cmd_ref = self::getCmdConf($_infos,'slider', $_type, $_father_property);
         $cmd_ref['type'] = 'action';
         $cmd_ref['subType'] = 'slider';
         $cmd = $this->getCmd('action', $logical . '::#slider#');
         if (!is_object($cmd)) {
+          $cmd = $this->getCmd('action', $payload);
+        }
+        if (!is_object($cmd)) {
           $cmd = new z2mCmd();
           if (isset($_infos['endpoint'])) {
             $cmd->setConfiguration('endpoint', $_infos['endpoint']);
           }
-          $cmd->setLogicalId($logical  . '::#slider#');
           utils::a2o($cmd, $cmd_ref);
         }
+        $cmd->setLogicalId($logical  . '::#slider#');
         $cmd->setEqLogic_id($this->getId());
         $cmd->setValue($link_cmd_id);
         try {
@@ -905,18 +922,27 @@ class z2m extends eqLogic {
 
       if ($_infos['type'] == 'enum') {
         foreach ($_infos['values'] as $enum) {
+          if($_father_property != null){
+            $payload = array($_father_property => array($_infos['property'] => $enum));
+          }else{
+            $payload = array($_infos['property'] => $enum);
+          }
+          $payload = 'json::'.json_encode($payload);
           $cmd_ref = self::getCmdConf($_infos, $enum, $_type, $_father_property);
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical . '::' . $enum);
           if (!is_object($cmd)) {
+            $cmd = $this->getCmd('action', $payload);
+          }
+          if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             if (isset($_infos['endpoint'])) {
               $cmd->setConfiguration('endpoint', $_infos['endpoint']);
             }
-            $cmd->setLogicalId($logical . '::' . $enum);
             utils::a2o($cmd, $cmd_ref);
           }
+          $cmd->setLogicalId($payload);
           $cmd->setEqLogic_id($this->getId());
           $cmd->setValue($link_cmd_id);
           try {
@@ -965,8 +991,8 @@ class z2m extends eqLogic {
               $cmd->setConfiguration('endpoint', $_infos['endpoint']);
               $cmd->setName('Couleur ' . $_infos['endpoint']);
             }
-            $cmd->setLogicalId($logical);
           }
+          $cmd->setLogicalId($logical);
           $cmd->setType('action');
           $cmd->setSubType('color');
           $cmd->setGeneric_type('LIGHT_SET_COLOR');
@@ -1131,7 +1157,7 @@ class z2mCmd extends cmd {
    
     $subTopic = $this->getConfiguration('subPayload');
     if(strpos($logicalId,'json::') === 0){
-      $infos = json_decode(str_replace('json::','',$logicalId));
+      $datas = json_decode(str_replace('json::','',$logicalId),true);
     }else{
       $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
       foreach($infos as &$info){
