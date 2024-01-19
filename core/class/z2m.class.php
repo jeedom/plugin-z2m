@@ -1150,7 +1150,7 @@ class z2mCmd extends cmd {
         break;
     }
     if(version_compare(jeedom::version(), '4.4.2') < 0){
-      $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+      $logicalId = $this->getConfiguration('logicalId',str_replace(array_keys($replace), $replace, $this->getLogicalId()));
     }else{
       $logicalId = $this->getLogicalId();
     }
