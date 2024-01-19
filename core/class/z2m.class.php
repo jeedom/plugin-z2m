@@ -905,7 +905,7 @@ class z2m extends eqLogic {
           }
           utils::a2o($cmd, $cmd_ref);
         }
-        $cmd->setLogicalId($logical  . '::#slider#');
+        $cmd->setLogicalId($payload);
         $cmd->setEqLogic_id($this->getId());
         $cmd->setValue($link_cmd_id);
         try {
