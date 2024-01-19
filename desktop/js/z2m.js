@@ -154,7 +154,7 @@ function addCmdToTable(_cmd) {
   tr += '</td>';
   tr += '<td>';
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="logicalId" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
-  tr += '<input class="cmdAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="subPayload" style="width : 70%; display : inline-block;" placeholder="{{Sous topic}}">';
+  tr += '<input class="cmdAttr form-control input-sm cmdActionOnly" data-l1key="configuration" data-l2key="subPayload" style="width : 70%; display : inline-block;" placeholder="{{Sous topic}}">';
   tr += '</td>';
   
   tr += '<td>';
@@ -197,6 +197,13 @@ function addCmdToTable(_cmd) {
       tr.find('.cmdAttr[data-l1key=value]').append(result);
       tr.setValues(_cmd, '.cmdAttr');
       jeedom.cmd.changeType(tr, init(_cmd.subType));
+      tr.find('.cmdAttr[data-l1key=type]').on('change',function(){
+        if($(this).value() == 'action'){
+          tr.find('.cmdActionOnly').show();
+        }else{
+          tr.find('.cmdActionOnly').hide();
+        }
+      });
     }
   });
 }
