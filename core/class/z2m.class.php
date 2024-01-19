@@ -1108,6 +1108,31 @@ class z2mCmd extends cmd {
   /*     * *********************Methode d'instance************************* */
 
   public function preSave(){
+    if(this->getYype() == 'action'){
+      if(version_compare(jeedom::version(), '4.4.2') < 0){
+        $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+      }else{
+        $logicalId = $this->getLogicalId();
+      }
+      if(strpos($logicalId,'json::') !== 0){
+        $infos = explode('::', $logicalId);
+        foreach($infos as &$info){
+          if ($info == 'true') {
+              $info = true;
+            } else if ($info == 'false') {
+              $info = false;
+            }elseif(is_numeric($info)){
+              $info = floatval($info);
+            }
+        }
+        if(count($infos) == 3){
+          $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
+        }else{
+          $datas = array($infos[0] =>  $infos[1]);
+        }
+        $this->setLogicalId('json::'.json_encode($datas));
+      }
+    }
     if(version_compare(jeedom::version(), '4.4.2') < 0){
       $logicalId = $this->getLogicalId();
       if(strlen($logicalId) > 254){
@@ -1119,6 +1144,7 @@ class z2mCmd extends cmd {
         $this->setConfiguration('logicalId',null);
       }
     }
+   
   }
 
   // Exécution d'une commande
