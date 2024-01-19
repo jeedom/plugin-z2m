@@ -34,6 +34,10 @@ function z2m_update() {
     $plugin->dependancy_changeAutoMode(0);
     $plugin->deamon_info(0);
   }
+  $devices = json_decode(file_get_contents(__DIR__ . '/../data/devices/devices1.json'), true);
+  z2m::handle_bridge(array('devices' => $devices));
+  $groups = json_decode(file_get_contents(__DIR__ . '/../data/devices/groups1.json'), true);
+  z2m::handle_bridge(array('groups' => $groups));
 }
 
 
