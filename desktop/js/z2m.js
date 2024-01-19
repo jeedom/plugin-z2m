@@ -152,7 +152,9 @@ function addCmdToTable(_cmd) {
   tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
   tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
   tr += '</td>';
-  tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="logicalId" value="0" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
+  tr += '<td>';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="logicalId" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
+  tr += '<input class="cmdAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="subPayload" style="width : 70%; display : inline-block;" placeholder="{{Sous topic}}">';
   tr += '</td>';
   
   tr += '<td>';

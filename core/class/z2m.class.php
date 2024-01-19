@@ -1121,11 +1121,7 @@ class z2mCmd extends cmd {
         break;
     }
     $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
-    $subTopic = '';
-    if(strpos($logicalId,'/') !== false){
-      $subTopic = '/'.explode('/', $logicalId)[0];
-      $logicalId = explode('/', $logicalId)[1];
-    }
+    $subTopic = $this->getConfiguration('subPayload');
     $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
     foreach($infos as &$info){
        if ($info == 'true') {
