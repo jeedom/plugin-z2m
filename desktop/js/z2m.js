@@ -16,237 +16,238 @@
 
 
 $('#bt_includeDeviceByCode').off('click').on('click',function(){
-    bootbox.prompt("{{Code ?}}", function(code){
-      jeedom.z2m.bridge.addByCode({
-        code : code,
-        error: function (error) {
-          $('#div_alert').showAlert({message: error.message, level: 'danger'});
-        },
-        success: function () {
-          $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succes}}', level: 'success'});
-        }
-      });
-    });
-});
-
-$('#bt_syncEqLogicZ2m').off('click').on('click',function(){
-    jeedom.z2m.bridge.sync({
+  bootbox.prompt("{{Code ?}}", function(code){
+    jeedom.z2m.bridge.addByCode({
+      code : code,
       error: function (error) {
         $('#div_alert').showAlert({message: error.message, level: 'danger'});
       },
       success: function () {
-        $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succes}}', level: 'success'});
+        $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succes}}', level: 'success'});
       }
     });
+  });
+});
+
+$('#bt_syncEqLogicZ2m').off('click').on('click',function(){
+  jeedom.z2m.bridge.sync({
+    error: function (error) {
+      $('#div_alert').showAlert({message: error.message, level: 'danger'});
+    },
+    success: function () {
+      $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succes}}', level: 'success'});
+    }
+  });
 });
 
 $('#bt_addGroup').off('click').on('click',function(){
-    bootbox.prompt("{{Nom du groupe ?}}", function(group){
-      if(group == null){
-        return;
+  bootbox.prompt("{{Nom du groupe ?}}", function(group){
+    if(group == null){
+      return;
+    }
+    jeedom.z2m.group.add({
+      name : group,
+      error: function (error) {
+        $('#div_alert').showAlert({message: error.message, level: 'danger'});
+      },
+      success: function () {
+        $('#div_alert').showAlert({message: '{{Demande du groupe envoyée avec succes}}', level: 'success'});
       }
-      jeedom.z2m.group.add({
-        name : group,
-        error: function (error) {
-          $('#div_alert').showAlert({message: error.message, level: 'danger'});
-        },
-        success: function () {
-          $('#div_alert').showAlert({message: '{{Demande du groupe envoyée avec succes}}', level: 'success'});
-        }
-      });
     });
+  });
 });
 
 $('body').off('z2m::includeDevice').on('z2m::includeDevice', function (_event, _options) {
-  if (modifyWithoutSave) {
-    $('#div_alert').showAlert({
-      message: '{{Un périphérique vient d\'être inclu/exclu. Veuillez réactualiser la page}}',
-      level: 'warning'
-    });
-  } else if (_options != '') {
-      window.location.href = 'index.php?v=d&p=z2m&m=z2m&id=' + _options;
-  }
+if (modifyWithoutSave) {
+  $('#div_alert').showAlert({
+    message: '{{Un périphérique vient d\'être inclu/exclu. Veuillez réactualiser la page}}',
+    level: 'warning'
+  });
+} else if (_options != '') {
+    window.location.href = 'index.php?v=d&p=z2m&m=z2m&id=' + _options;
+}
 });
 
 $('#bt_showZ2mDevice').off('click').on('click', function () {
-  if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr) {
-    if (devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['isgroup']==0) {
-      $('#md_modal').dialog({title: "{{Configuration du noeud}}"}).load('index.php?v=d&plugin=z2m&modal=device&id='+$('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
-    } else {
-      $('#md_modal').dialog({title: "{{Configuration du groupe}}"}).load('index.php?v=d&plugin=z2m&modal=group&id='+$('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
-    }
+if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr) {
+  if (devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['isgroup']==0) {
+    $('#md_modal').dialog({title: "{{Configuration du noeud}}"}).load('index.php?v=d&plugin=z2m&modal=device&id='+$('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
+  } else {
+    $('#md_modal').dialog({title: "{{Configuration du groupe}}"}).load('index.php?v=d&plugin=z2m&modal=group&id='+$('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
   }
+}
 });
 
 $('#bt_z2mNetwork').off('click').on('click', function () {
-  $('#md_modal').dialog({title: "{{Configuration du réseaux}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
+$('#md_modal').dialog({title: "{{Configuration du réseaux}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
 });
 
 function printEqLogic(_eqLogic) {
-  $('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
-  if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr){
-	console.log(devices_attr[$('.eqLogicAttr[data-l1key=id]').value()])
-    if ('multipleEndpoints' in devices_attr[$('.eqLogicAttr[data-l1key=id]').value()] && devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['multipleEndpoints']==1){
-       $('.childCreate').show();
-    } else {
-       $('.childCreate').hide();
-    }
+$('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
+if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr){
+console.log(devices_attr[$('.eqLogicAttr[data-l1key=id]').value()])
+  if ('multipleEndpoints' in devices_attr[$('.eqLogicAttr[data-l1key=id]').value()] && devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['multipleEndpoints']==1){
+     $('.childCreate').show();
+  } else {
+     $('.childCreate').hide();
   }
-  return _eqLogic;
+}
+return _eqLogic;
 }
 
 $('.changeIncludeState').off('click').on('click', function () {
-  jeedom.z2m.utils.promptRouter("{{Passage en inclusion sur}} ?",function (id) {
-      jeedom.z2m.bridge.include({
-        id:id,
-        error: function (error) {
-          $('#div_alert').showAlert({message: error.message, level: 'danger'});
-        },
-        success: function () {
-          $('#div_alert').showAlert({message: '{{Lancement du mode inclusion}}', level: 'success'});
-        }
-      });
+jeedom.z2m.utils.promptRouter("{{Passage en inclusion sur}} ?",function (id) {
+    jeedom.z2m.bridge.include({
+      id:id,
+      error: function (error) {
+        $('#div_alert').showAlert({message: error.message, level: 'danger'});
+      },
+      success: function () {
+        $('#div_alert').showAlert({message: '{{Lancement du mode inclusion}}', level: 'success'});
+      }
     });
+  });
 });
 
 
 $('#bt_syncEqLogic').off('click').on('click', function () {
-  sync();
+sync();
 });
 
 /* Permet la réorganisation des commandes dans l'équipement */
 $("#table_cmd").sortable({
-  axis: "y",
-  cursor: "move",
-  items: ".cmd",
-  placeholder: "ui-state-highlight",
-  tolerance: "intersect",
-  forcePlaceholderSize: true
+axis: "y",
+cursor: "move",
+items: ".cmd",
+placeholder: "ui-state-highlight",
+tolerance: "intersect",
+forcePlaceholderSize: true
 })
 
 /* Fonction permettant l'affichage des commandes dans l'équipement */
 function addCmdToTable(_cmd) {
-  if (!isset(_cmd)) {
-    var _cmd = {configuration: {}};
+if (!isset(_cmd)) {
+  var _cmd = {configuration: {}};
+}
+if (!isset(_cmd.configuration)) {
+  _cmd.configuration = {};
+}
+var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+tr += '<td>';
+tr += '<div class="row">';
+tr += '<div class="col-sm-6">';
+tr += '<a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fa fa-flag"></i> Icône</a>';
+tr += '<span class="cmdAttr" data-l1key="display" data-l2key="icon" style="margin-left : 10px;"></span>';
+tr += '</div>';
+tr += '<div class="col-sm-6">';
+tr += '<input class="cmdAttr form-control input-sm" data-l1key="name">';
+tr += '</div>';
+tr += '</div>';
+tr += '<select class="cmdAttr form-control input-sm" data-l1key="value" style="display : none;margin-top : 5px;" title="La valeur de la commande vaut par défaut la commande">';
+tr += '<option value="">Aucune</option>';
+tr += '</select>';
+tr += '</td>';
+tr += '<td>';
+tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
+tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
+tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
+tr += '</td>';
+tr += '<td>';
+tr += '<input class="cmdAttr form-control input-sm" data-l1key="logicalId" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
+tr += '<input class="cmdAttr form-control input-sm cmdActionOnly" data-l1key="configuration" data-l2key="subPayload" style="width : 70%; display : inline-block;" placeholder="{{Sous topic}}">';
+tr += '</td>';
+
+tr += '<td>';
+
+tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateValue" placeholder="{{Valeur retour d\'état}}" style="width:48%;display:inline-block;">';
+tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateTime" placeholder="{{Durée avant retour d\'état (min)}}" style="width:48%;display:inline-block;margin-left:2px;">';
+tr += '<select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" style="display : none;" title="Commande d\'information à mettre à jour">';
+tr += '<option value="">Aucune</option>';
+tr += '</select>';
+tr += '</td>';
+tr += '<td>';
+tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:30%;display:inline-block;">';
+tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:30%;display:inline-block;">';
+tr += '<input class="cmdAttr form-control input-sm" data-l1key="unite" placeholder="Unité" title="{{Unité}}" style="width:30%;display:inline-block;margin-left:2px;">';
+tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="listValue" placeholder="{{Liste de valeur|texte séparé par ;}}" title="{{Liste}}">';
+tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
+tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
+tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label></span> ';
+tr += '</td>';
+tr += '<td>';
+tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
+tr += '</td>';
+tr += '<td>';
+if (is_numeric(_cmd.id)) {
+  tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+  tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
+}
+tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
+tr += '</td>';
+tr += '</tr>';
+$('#table_cmd tbody').append(tr);
+var tr = $('#table_cmd tbody tr').last();
+tr.find('.cmdAttr[data-l1key=type]').on('change',function(){
+  if($(this).value() == 'action'){
+    tr.find('.cmdActionOnly').show();
+  }else{
+    tr.find('.cmdActionOnly').hide();
   }
-  if (!isset(_cmd.configuration)) {
-    _cmd.configuration = {};
+});
+jeedom.eqLogic.buildSelectCmd({
+  id: $('.eqLogicAttr[data-l1key=id]').value(),
+  filter: {type: 'info'},
+  error: function (error) {
+    $('#div_alert').showAlert({message: error.message, level: 'danger'});
+  },
+  success: function (result) {
+    tr.find('.cmdAttr[data-l1key=value]').append(result);
+    tr.setValues(_cmd, '.cmdAttr');
+    jeedom.cmd.changeType(tr, init(_cmd.subType));
+    
   }
-  var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
-  tr += '<td>';
-  tr += '<div class="row">';
-  tr += '<div class="col-sm-6">';
-  tr += '<a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fa fa-flag"></i> Icône</a>';
-  tr += '<span class="cmdAttr" data-l1key="display" data-l2key="icon" style="margin-left : 10px;"></span>';
-  tr += '</div>';
-  tr += '<div class="col-sm-6">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="name">';
-  tr += '</div>';
-  tr += '</div>';
-  tr += '<select class="cmdAttr form-control input-sm" data-l1key="value" style="display : none;margin-top : 5px;" title="La valeur de la commande vaut par défaut la commande">';
-  tr += '<option value="">Aucune</option>';
-  tr += '</select>';
-  tr += '</td>';
-  tr += '<td>';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
-  tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
-  tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
-  tr += '</td>';
-  tr += '<td>';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="logicalId" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
-  tr += '<input class="cmdAttr form-control input-sm cmdActionOnly" data-l1key="configuration" data-l2key="subPayload" style="width : 70%; display : inline-block;" placeholder="{{Sous topic}}">';
-  tr += '</td>';
-  
-  tr += '<td>';
-  
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateValue" placeholder="{{Valeur retour d\'état}}" style="width:48%;display:inline-block;">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateTime" placeholder="{{Durée avant retour d\'état (min)}}" style="width:48%;display:inline-block;margin-left:2px;">';
-  tr += '<select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" style="display : none;" title="Commande d\'information à mettre à jour">';
-  tr += '<option value="">Aucune</option>';
-  tr += '</select>';
-  tr += '</td>';
-  tr += '<td>';
-  tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:30%;display:inline-block;">';
-  tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:30%;display:inline-block;">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="unite" placeholder="Unité" title="{{Unité}}" style="width:30%;display:inline-block;margin-left:2px;">';
-  tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="listValue" placeholder="{{Liste de valeur|texte séparé par ;}}" title="{{Liste}}">';
-  tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
-  tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
-  tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label></span> ';
-  tr += '</td>';
-  tr += '<td>';
-  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
-  tr += '</td>';
-  tr += '<td>';
-  if (is_numeric(_cmd.id)) {
-    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
-    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
-  }
-  tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
-  tr += '</td>';
-  tr += '</tr>';
-  $('#table_cmd tbody').append(tr);
-  var tr = $('#table_cmd tbody tr').last();
-  jeedom.eqLogic.buildSelectCmd({
-    id: $('.eqLogicAttr[data-l1key=id]').value(),
-    filter: {type: 'info'},
-    error: function (error) {
-      $('#div_alert').showAlert({message: error.message, level: 'danger'});
-    },
-    success: function (result) {
-      tr.find('.cmdAttr[data-l1key=value]').append(result);
-      tr.setValues(_cmd, '.cmdAttr');
-      jeedom.cmd.changeType(tr, init(_cmd.subType));
-      tr.find('.cmdAttr[data-l1key=type]').on('change',function(){
-        if($(this).value() == 'action'){
-          tr.find('.cmdActionOnly').show();
-        }else{
-          tr.find('.cmdActionOnly').hide();
-        }
-      });
-    }
-  });
+});
 }
 
 $('#bt_childCreate').off('click').on('click', function () {
-  bootbox.prompt("{{Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père). Si l'enfant existe il sera mis à jour avec les commandes manquantes.}}", function(endpoint){
-    if (endpoint) {
-      jeedom.z2m.device.childCreate({
-        id : $('.eqLogicAttr[data-l1key=id]').value(),
-        endpoint : endpoint,
-        error: function (error) {
-          $('#div_alert').showAlert({message: error.message, level: 'danger'});
-        },
-        success: function () {
-          $('#div_alert').showAlert({message: '{{Enfant créé avec succès}}', level: 'success'});
-          window.location.href = 'index.php?v=d&p=z2m&m=z2m';
-        }
-      });
-    }
-  });
+bootbox.prompt("{{Vous voulez créer un enfant sur quel endpoint ? (attention il ne faut jamais supprimer le device père). Si l'enfant existe il sera mis à jour avec les commandes manquantes.}}", function(endpoint){
+  if (endpoint) {
+    jeedom.z2m.device.childCreate({
+      id : $('.eqLogicAttr[data-l1key=id]').value(),
+      endpoint : endpoint,
+      error: function (error) {
+        $('#div_alert').showAlert({message: error.message, level: 'danger'});
+      },
+      success: function () {
+        $('#div_alert').showAlert({message: '{{Enfant créé avec succès}}', level: 'success'});
+        window.location.href = 'index.php?v=d&p=z2m&m=z2m';
+      }
+    });
+  }
+});
 });
 
 
 function sync(){
-  $('#div_alert').showAlert({message: '{{Synchronisation en cours}}', level: 'warning'});
-  $.ajax({
-    type: "POST",
-    url: "plugins/z2m/core/ajax/z2m.ajax.php",
-    data: {
-      action: "sync",
-    },
-    dataType: 'json',
-    global: false,
-    error: function (request, status, error) {
-      handleAjaxError(request, status, error);
-    },
-    success: function (data) {
-      if (data.state != 'ok') {
-        $('#div_alert').showAlert({message: data.result, level: 'danger'});
-        return;
-      }
-      $('#div_alert').showAlert({message: '{{Operation realisee avec succes}}', level: 'success'});
-      window.location.reload();
+$('#div_alert').showAlert({message: '{{Synchronisation en cours}}', level: 'warning'});
+$.ajax({
+  type: "POST",
+  url: "plugins/z2m/core/ajax/z2m.ajax.php",
+  data: {
+    action: "sync",
+  },
+  dataType: 'json',
+  global: false,
+  error: function (request, status, error) {
+    handleAjaxError(request, status, error);
+  },
+  success: function (data) {
+    if (data.state != 'ok') {
+      $('#div_alert').showAlert({message: data.result, level: 'danger'});
+      return;
     }
-  });
+    $('#div_alert').showAlert({message: '{{Operation realisee avec succes}}', level: 'success'});
+    window.location.reload();
+  }
+});
 }
