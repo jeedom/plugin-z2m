@@ -1121,16 +1121,22 @@ class z2mCmd extends cmd {
         break;
     }
     $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+   
     $subTopic = $this->getConfiguration('subPayload');
-    $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
-    foreach($infos as &$info){
-       if ($info == 'true') {
-          $info = true;
-        } else if ($info == 'false') {
-          $info = false;
-        }elseif(is_numeric($info)){
-          $info = floatval($info);
-        }
+    if(strpos($logicalId,'json::') === 0){
+      $logicalId = str_replace('json::','',$logicalId);
+      $infos = json_decode($logicalId);
+    }else{
+      $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
+      foreach($infos as &$info){
+        if ($info == 'true') {
+            $info = true;
+          } else if ($info == 'false') {
+            $info = false;
+          }elseif(is_numeric($info)){
+            $info = floatval($info);
+          }
+      }
     }
     if ($this->getSubtype() == 'color' && isset($color)) {
       $datas = array('color' =>  $color);
