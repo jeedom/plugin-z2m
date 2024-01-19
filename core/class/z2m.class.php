@@ -1112,7 +1112,12 @@ class z2mCmd extends cmd {
       if(version_compare(jeedom::version(), '4.4.2') < 0){
         $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
       }else{
-        $logicalId = $this->getLogicalId();
+        if($this->getConfiguration('logicalId',null) !== null){
+          $logicalId =  $this->getConfiguration('logicalId',null);
+          $this->setConfiguration('logicalId',null);
+        }else{
+          $logicalId = $this->getLogicalId();
+        }
       }
       if(strpos($logicalId,'json::') !== 0){
         $infos = explode('::', $logicalId);
@@ -1144,7 +1149,6 @@ class z2mCmd extends cmd {
         $this->setConfiguration('logicalId',null);
       }
     }
-   
   }
 
   // Exécution d'une commande
