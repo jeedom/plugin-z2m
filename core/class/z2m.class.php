@@ -1169,17 +1169,14 @@ class z2mCmd extends cmd {
             $info = floatval($info);
           }
       }
+      if(count($infos) == 3){
+        $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
+      }else{
+        $datas = array($infos[0] =>  $infos[1]);
+      }
     }
     if ($this->getSubtype() == 'color' && isset($color)) {
       $datas = array('color' =>  $color);
-    } else {
-      if(strpos($logicalId,'json::') !== 0){
-        if(count($infos) == 3){
-          $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
-        }else{
-          $datas = array($infos[0] =>  $infos[1]);
-        }
-      }
     }
     if(isset($datas['position'])){
       $datas['position'] = round(floatval($datas['position']), 2);
