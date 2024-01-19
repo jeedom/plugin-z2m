@@ -218,7 +218,7 @@
         "Cette partie est plutot pour les utilisateurs avancée qui voudraient ajouter des commandes spécifique": "Dieser Teil ist eher für fortgeschrittene Benutzer gedacht, die bestimmte Befehle hinzufügen möchten",
         "Tout se passe dans le logical id de la commande": "Alles geschieht in der logischen ID des Befehls",
         "25}` pour envoyer `{\"température": "25}` zum Senden von „{\"temperatur",
-        "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `arm_mode` dans sous topic et `json": "25}` auf dem „set“-Thema des Geräts, um einen Befehl zu einem Unterthema zu senden, müssen Sie nur „arm_mode“ in das Unterthema und „json“ zum Beispiel einfügen",
+        "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `\/arm_mode` dans sous topic et `json": "25}` auf dem „set“-Thema des Geräts, um einen Befehl zu einem Unterthema zu senden, müssen Sie einfach „\/arm_mode“ in das Unterthema und „json“ zum Beispiel einfügen",
         "arming_stay\"}` dans logical id pour envoyer `{\"mode": "arming_stay\"}` in der logischen ID zum Senden von `{\"mode",
         "arming_stay\"}` sur `set\/arm_mode`": "arming_stay\"}` auf `set\/arm_mode`",
         "`temperature` pour récupere le champs `temperature` du json de l'équipement ou `temperature": "„temperature“, um das Feld „temperature“ aus dem Geräte-JSON oder „temperature“ abzurufen",

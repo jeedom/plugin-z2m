@@ -240,7 +240,7 @@
         "`json": "`json",
         "temperature": "temperature",
         "25}` pour envoyer `{\"température": "25}` pour envoyer `{\"température",
-        "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `arm_mode` dans sous topic et `json": "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `arm_mode` dans sous topic et `json",
+        "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `\/arm_mode` dans sous topic et `json": "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `\/arm_mode` dans sous topic et `json",
         "mode": "mode",
         "arming_stay\"}` dans logical id pour envoyer `{\"mode": "arming_stay\"}` dans logical id pour envoyer `{\"mode",
         "arming_stay\"}` sur `set\/arm_mode`": "arming_stay\"}` sur `set\/arm_mode`",

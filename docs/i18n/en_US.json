@@ -218,7 +218,7 @@
         "Cette partie est plutot pour les utilisateurs avancée qui voudraient ajouter des commandes spécifique": "This part is more for advanced users who would like to add specific commands",
         "Tout se passe dans le logical id de la commande": "Everything happens in the logical id of the command",
         "25}` pour envoyer `{\"température": "25}` to send `{\"temperature",
-        "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `arm_mode` dans sous topic et `json": "25}` on the `set` topic of the equipment, to send a command on a subtopic you just need to put `arm_mode` in subtopic and `json for example",
+        "25}` sur le topic `set` de l'équipement, pour envoyer une commande sur un sous topic il suffit par exemple de mettre `\/arm_mode` dans sous topic et `json": "25}` on the `set` topic of the equipment, to send a command on a subtopic you just have to put `\/arm_mode` in subtopic and `json for example",
         "arming_stay\"}` dans logical id pour envoyer `{\"mode": "arming_stay\"}` in logical id to send `{\"mode",
         "arming_stay\"}` sur `set\/arm_mode`": "arming_stay\"}` on `set\/arm_mode`",
         "`temperature` pour récupere le champs `temperature` du json de l'équipement ou `temperature": "`temperature` to retrieve the `temperature` field from the equipment json or `temperature`",
