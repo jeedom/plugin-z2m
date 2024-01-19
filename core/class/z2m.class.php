@@ -1157,7 +1157,9 @@ class z2mCmd extends cmd {
    
     $subTopic = $this->getConfiguration('subPayload');
     if(strpos($logicalId,'json::') === 0){
-      $logicalId = preg_replace( "/\"(\d+)\"/", '$1', str_replace(array_keys($replace), $replace, $logicalId));
+      $logicalId = str_replace(array_keys($replace), $replace, $logicalId);
+      $logicalId = preg_replace( "/\"(\d+)\"/", '$1', $logicalId);
+      $logicalId = preg_replace( "/\"(\d+\.\d+)\"/", '$1', $logicalId);
       $datas = json_decode(str_replace('json::','',$logicalId),true);
     }else{
       $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
