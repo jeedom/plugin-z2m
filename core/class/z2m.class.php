@@ -852,6 +852,7 @@ class z2m extends eqLogic {
           $cmd_ref['type'] = 'action';
           $cmd_ref['subType'] = 'other';
           $cmd = $this->getCmd('action', $logical_id);
+
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             if (isset($_infos['endpoint'])) {
@@ -1130,8 +1131,7 @@ class z2mCmd extends cmd {
    
     $subTopic = $this->getConfiguration('subPayload');
     if(strpos($logicalId,'json::') === 0){
-      $logicalId = str_replace('json::','',$logicalId);
-      $infos = json_decode($logicalId);
+      $infos = json_decode(str_replace('json::','',$logicalId));
     }else{
       $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
       foreach($infos as &$info){
@@ -1147,10 +1147,12 @@ class z2mCmd extends cmd {
     if ($this->getSubtype() == 'color' && isset($color)) {
       $datas = array('color' =>  $color);
     } else {
-      if(count($infos) == 3){
-        $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
-      }else{
-        $datas = array($infos[0] =>  $infos[1]);
+      if(strpos($logicalId,'json::') !== 0){
+        if(count($infos) == 3){
+          $datas = array($infos[0] => array($infos[1] =>  $infos[2]));
+        }else{
+          $datas = array($infos[0] =>  $infos[1]);
+        }
       }
     }
     if(isset($datas['position'])){
