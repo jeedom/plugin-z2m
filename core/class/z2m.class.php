@@ -1108,7 +1108,7 @@ class z2mCmd extends cmd {
   /*     * *********************Methode d'instance************************* */
 
   public function preSave(){
-    if(this->getType() == 'action'){
+    if($this->getType() == 'action'){
       if(version_compare(jeedom::version(), '4.4.2') < 0){
         $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
       }else{
