@@ -1081,14 +1081,16 @@ class z2mCmd extends cmd {
   /*     * *********************Methode d'instance************************* */
 
   public function preSave(){
-    $logicalId = $this->getLogicalId();
-    if(strlen($logicalId) > 254){
-      if(strpos($logicalId,'%') === false){
-        $this->setConfiguration('logicalId',$logicalId);
-        $this->setLogicalId(substr($logicalId,0,254).'%');
+    if(version_compare(jeedom::version(), '4.4.2') < 0){
+      $logicalId = $this->getLogicalId();
+      if(strlen($logicalId) > 254){
+        if(strpos($logicalId,'%') === false){
+          $this->setConfiguration('logicalId',$logicalId);
+          $this->setLogicalId(substr($logicalId,0,254).'%');
+        }
+      }else{
+        $this->setConfiguration('logicalId',null);
       }
-    }else{
-      $this->setConfiguration('logicalId',null);
     }
   }
 
@@ -1120,7 +1122,11 @@ class z2mCmd extends cmd {
         }
         break;
     }
-    $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+    if(version_compare(jeedom::version(), '4.4.2') < 0){
+      $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
+    }else{
+      $logicalId = $this->getLogicalId();
+    }
    
     $subTopic = $this->getConfiguration('subPayload');
     if(strpos($logicalId,'json::') === 0){
