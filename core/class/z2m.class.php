@@ -1150,13 +1150,14 @@ class z2mCmd extends cmd {
         break;
     }
     if(version_compare(jeedom::version(), '4.4.2') < 0){
-      $logicalId = $this->getConfiguration('logicalId',str_replace(array_keys($replace), $replace, $this->getLogicalId()));
+      $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
     }else{
       $logicalId = $this->getLogicalId();
     }
    
     $subTopic = $this->getConfiguration('subPayload');
     if(strpos($logicalId,'json::') === 0){
+      $logicalId = preg_replace( "/\"(\d+)\"/", '$1', str_replace(array_keys($replace), $replace, $logicalId));
       $datas = json_decode(str_replace('json::','',$logicalId),true);
     }else{
       $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
