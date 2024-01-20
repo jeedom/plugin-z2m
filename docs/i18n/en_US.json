@@ -3,6 +3,8 @@
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "If there is no information on the update, it means that it concerns only the update of documentation, translation or text",
         "Modification sur le sous-topic (c'est maintenant un champs de configuration propre à la commande), attention a bien mettre a jour vos commandes si vous vous en etes servi": "Modification on the subtopic (it is now a configuration field specific to the command), be careful to update your commands if you have used them",
+        "Modification de la syntaxe du champs logicalId pour les actions (passage en mode json": "Modification of the syntax of the logicalId field for actions (change to json mode",
+        "Pour connaitre la nouvelle merci de consulter la documentation du plugin": "To find out the news, please consult the plugin documentation",
         "17\/01\/2024": "01\/17\/2024",
         "Amélioration de la mise à jour du firmware sur Luna": "Improved firmware update on Luna",
         "Meilleure gestion du port sur Luna": "Better port management on Luna",
