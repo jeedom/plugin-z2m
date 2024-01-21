@@ -44,7 +44,7 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode distant">
-	<div class='alert alert-warning text-center'>{{Cette configuration suppose que vous avez installé vous meme zigbee2mqtt sur une machine deporté (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local}}</div>
+	<div class='alert alert-warning text-center'>{{Cette configuration suppose que vous avez installé vous même zigbee2mqtt sur une machine déportée (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local}}</div>
     </div>
 		  
     <div class="form-group z2m_mode local">
@@ -117,16 +117,16 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode local">
-      <label class="col-md-4 control-label">{{Converters (réservé aux utilisateurs avancées)}}
-      	<sup><i class="fas fa-question-circle tooltips" title="{{N'oubliez pas de redemarrer le démon après tout changement pour qu'il soit pris en compte}}"></i></sup>
+      <label class="col-md-4 control-label">{{Converters (réservé aux utilisateurs avancés)}}
+      	<sup><i class="fas fa-question-circle tooltips" title="{{N'oubliez pas de redémarrer le démon après tout changement pour qu'il soit pris en compte}}"></i></sup>
       </label>
       <div class="col-md-3">
         <a class="btn btn-warning" href="index.php?v=d&p=editor&root=plugins/z2m/core/config/converters/custom">{{Editer}}</a>
       </div>
     </div>
      <div class="form-group z2m_mode local">
-      <label class="col-md-4 control-label">{{Version voulue (réservé aux utilisateurs avancées)}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Laisser vide pour mettre la derniere disponible}}"></i></sup>
+      <label class="col-md-4 control-label">{{Version voulue (réservé aux utilisateurs avancés)}}
+        <sup><i class="fas fa-question-circle tooltips" title="{{Laisser vide pour mettre la dernière version disponible}}"></i></sup>
       </label>
       <div class="col-md-3">
         <input class="configKey form-control" data-l1key="wanted_z2m_version" />
