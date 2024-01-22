@@ -875,7 +875,7 @@ class z2m extends eqLogic {
             $cmd->save();
           } catch (\Throwable $th) {
             try {
-              $cmd->setName('Action '.$logical_id);
+              $cmd->setName('Action ' . $logical_id . ' '. $_infos[$k]);
               $cmd->save();
             } catch (\Throwable $th) {
               log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
@@ -912,7 +912,7 @@ class z2m extends eqLogic {
           $cmd->save();
         } catch (\Throwable $th) {
           try {
-            $cmd->setName('Action '.$logical);
+            $cmd->setName('Action ' . $logical);
             $cmd->save();
           } catch (\Throwable $th) {
             log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
@@ -949,7 +949,7 @@ class z2m extends eqLogic {
             $cmd->save();
           } catch (\Throwable $th) {
             try {
-              $cmd->setName('Action '.$logical);
+              $cmd->setName('Action '. $logical . ' ' . $enum);
               $cmd->save();
             } catch (\Throwable $th) {
               log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
