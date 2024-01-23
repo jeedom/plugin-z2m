@@ -65,6 +65,9 @@ if (!isConnect()) {
             }
             echo '<option value="' . $value . '">' . $name . ' (' . $value . ')</option>';
           }
+	  if(file_exists('/dev/ttyAMA0')){
+		echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
+	  }
           ?>
         </select>
       </div>
