@@ -181,9 +181,7 @@ class z2m extends eqLogic {
     if (!class_exists('mqtt2')) {
       $plugin = plugin::byId('z2m');
       $plugin->dependancy_install();
-    }
-    if (!class_exists('mqtt2')) {
-      throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
+      throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, dépendance en cours pour corriger. Veuillez refaire la configuration dans quelques minutes", __FILE__));
     }
     self::postConfig_mqtt_topic();
     $mqtt = mqtt2::getFormatedInfos();
