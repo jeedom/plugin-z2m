@@ -1,4 +1,7 @@
 {
+  "plugin" : {
+    "mqtt2" : {}
+  },
   "pre-install" : {
     "script" : "plugins/z2m/resources/pre-install.sh"
   },
