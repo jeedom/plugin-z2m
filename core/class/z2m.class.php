@@ -360,7 +360,7 @@ class z2m extends eqLogic {
 
   public static function postConfig_mqtt_topic($_value = null) {
     if (!class_exists('mqtt2')) {
-      throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
+      return;
     }
     if(method_exists('mqtt2','removePluginTopicByPlugin')){
        mqtt2::removePluginTopicByPlugin(__CLASS__);
