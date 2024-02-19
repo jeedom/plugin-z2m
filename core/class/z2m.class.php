@@ -179,6 +179,10 @@ class z2m extends eqLogic {
       return;
     }
     if (!class_exists('mqtt2')) {
+      $plugin = plugin::byId('z2m');
+      $plugin->dependancy_install();
+    }
+    if (!class_exists('mqtt2')) {
       throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer", __FILE__));
     }
     self::postConfig_mqtt_topic();
