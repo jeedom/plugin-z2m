@@ -28,7 +28,7 @@ $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleu
 sendVarToJS('z2m_devices', $devices);
 sendVarToJS('devices_attr', $deviceAttr);
 $bridge_infos = z2m::getDeviceInfo('bridge1');
-if($bridge_infos['permit_join']){
+if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 	event::add('jeedom::alert', array(
           'level' => 'success',
           'page' => 'z2m',
