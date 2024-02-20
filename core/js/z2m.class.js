@@ -90,6 +90,7 @@ jeedom.z2m.bridge.include = function(_params){
   paramsAJAX.data = {
     action: 'include',
     id : _params.id,
+    mode : _params.mode,
   };
   $.ajax(paramsAJAX);
 }
