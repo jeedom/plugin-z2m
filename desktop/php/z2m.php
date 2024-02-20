@@ -29,9 +29,12 @@ sendVarToJS('z2m_devices', $devices);
 sendVarToJS('devices_attr', $deviceAttr);
 $bridge_infos = z2m::getDeviceInfo('bridge1');
 if($bridge_infos['permit_join']){
-	sendVarToJS('z2m_permit_join_timeout', $bridge_infos['permit_join_timeout']);
-}else{
-	sendVarToJS('z2m_permit_join_timeout',-1);
+	event::add('jeedom::alert', array(
+          'level' => 'success',
+          'page' => 'z2m',
+          'message' => __('Mode inclusion actif', __FILE__),
+          'ttl' => $bridge_infos['permit_join_timeout'] * 1000
+        ));
 }
 ?>
 
