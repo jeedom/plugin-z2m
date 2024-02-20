@@ -17,6 +17,9 @@
 
 $('#bt_includeDeviceByCode').off('click').on('click',function(){
   bootbox.prompt("{{Code ?}}", function(code){
+    if(code == null){
+      return;
+    }
     jeedom.z2m.bridge.addByCode({
       code : code,
       error: function (error) {
