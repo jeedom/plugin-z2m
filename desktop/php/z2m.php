@@ -44,10 +44,15 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 		<!-- Boutons de gestion du plugin -->
 		<div class="eqLogicThumbnailContainer">
-			<div class="cursor changeIncludeState include card logoPrimary" data-mode="1" data-state="1">
+			<div class="cursor changeIncludeStateEnable card logoPrimary">
 				<i class="fas fa-sign-in-alt fa-rotate-90"></i>
 				<br />
-				<span>{{Mode inclusion}}</span>
+				<span>{{Activer inclusion}}</span>
+			</div>
+			<div class="cursor changeIncludeStateDisable card">
+				<i class="fas fa-sign-out-alt fa-rotate-270"></i>
+				<br />
+				<span>{{Désactiver inclusion}}</span>
 			</div>
 			<div class="cursor logoSecondary" id="bt_includeDeviceByCode">
 				<i class="fas fa-sign-in-alt fa-rotate-90"></i>

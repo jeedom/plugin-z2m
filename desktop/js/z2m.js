@@ -98,10 +98,11 @@ console.log(devices_attr[$('.eqLogicAttr[data-l1key=id]').value()])
 return _eqLogic;
 }
 
-$('.changeIncludeState').off('click').on('click', function () {
+$('.changeIncludeStateEnable').off('click').on('click', function () {
 jeedom.z2m.utils.promptRouter("{{Passage en inclusion sur}} ?",function (id) {
     jeedom.z2m.bridge.include({
       id:id,
+      mode : 1,
       error: function (error) {
         $('#div_alert').showAlert({message: error.message, level: 'danger'});
       },
@@ -111,6 +112,21 @@ jeedom.z2m.utils.promptRouter("{{Passage en inclusion sur}} ?",function (id) {
     });
   });
 });
+
+$('.changeIncludeStateDisable').off('click').on('click', function () {
+  jeedom.z2m.utils.promptRouter("{{Désactiver l'inclusion sur}} ?",function (id) {
+      jeedom.z2m.bridge.include({
+        id:id,
+        mode : 0,
+        error: function (error) {
+          $('#div_alert').showAlert({message: error.message, level: 'danger'});
+        },
+        success: function () {
+          $('#div_alert').showAlert({message: '{{Lancement du mode inclusion}}', level: 'success'});
+        }
+      });
+    });
+  });
 
 
 $('#bt_syncEqLogic').off('click').on('click', function () {
