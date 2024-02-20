@@ -27,6 +27,12 @@ foreach ($eqLogics as $eqLogic) {
 $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
 sendVarToJS('z2m_devices', $devices);
 sendVarToJS('devices_attr', $deviceAttr);
+$bridge_infos = z2m::getDeviceInfo('bridge1');
+if($bridge_infos['permit_join']){
+	sendVarToJS('z2m_permit_join_timeout', $bridge_infos['permit_join_timeout']);
+}else{
+	sendVarToJS('z2m_permit_join_timeout',-1);
+}
 ?>
 
 <div class="row row-overflow">
