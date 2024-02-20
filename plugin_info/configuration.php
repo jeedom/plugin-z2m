@@ -179,6 +179,9 @@ if (!isConnect()) {
     if ($(this).value() == 'pizigate' || $(this).value() == 'wifizigate' || $(this).value() == 'gateway') {
       $('.zigbee_portConf.' + $(this).value()).show();
     }
+    if ($(this).value() == '/dev/ttyS2' || $(this).value() == '/dev/ttyLuna-Zigbee'){
+	$('#sel_z2mControllerType').value('ezsp');
+    }
   });
   $('#sel_z2mControllerType').off('change').on('change', function() {
     $('.z2m_controllerType').hide();
