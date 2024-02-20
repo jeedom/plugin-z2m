@@ -280,7 +280,7 @@
         "Le port n'est pas configuré": "Le port n'est pas configuré",
         "Le plugin MQTT Manager n'est pas installé": "Le plugin MQTT Manager n'est pas installé",
         "Le démon MQTT Manager n'est pas démarré": "Le démon MQTT Manager n'est pas démarré",
-        "Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer": "Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer",
+        "Plugin Mqtt Manager (mqtt2) non installé, dépendance en cours pour corriger. Veuillez refaire la configuration dans quelques minutes": "Plugin Mqtt Manager (mqtt2) non installé, dépendance en cours pour corriger. Veuillez refaire la configuration dans quelques minutes",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration",
         "Démarrage du démon Z2M": "Démarrage du démon Z2M",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs",
@@ -290,6 +290,7 @@
         "Mode inclusion actif": "Mode inclusion actif",
         "Mode inclusion inactif": "Mode inclusion inactif",
         "Dernière communication": "Dernière communication",
+        "Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer": "Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer",
         "Le message et le sujet ne peuvent pas être vide": "Le message et le sujet ne peuvent pas être vide"
     },
     "info.json": {
