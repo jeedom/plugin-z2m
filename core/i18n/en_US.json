@@ -290,7 +290,7 @@
         "Arrêt du démon z2m": "Stopping the z2m daemon",
         "Péripherique en cours d\\'inclusion : ": "Device being included:",
         "Z2M à renvoyé une erreur : ": "Z2M returned an error:",
-        "Mode inclusion actif": "Active inclusion mode",
+        "Mode inclusion actif": "Include mode active",
         "Mode inclusion inactif": "Inclusion mode inactive",
         "Dernière communication": "Last message",
         "Plugin Mqtt Manager (mqtt2) non installé, veuillez l'installer avant de pouvoir continuer": "Mqtt Manager plugin (mqtt2) not installed, please install it before you can continue",
