@@ -31,10 +31,10 @@ class z2m extends eqLogic {
   /*     * ***********************Methode static*************************** */
 
   public static function dependancy_end() {
-      if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
         return;
-      }
-     self::deamon_start();
+    }
+    self::deamon_start();
   }
 
   public static function firmwareUpdate($_options = array()) {
