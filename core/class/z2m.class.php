@@ -30,6 +30,13 @@ class z2m extends eqLogic {
 
   /*     * ***********************Methode static*************************** */
 
+  public static function dependancy_end() {
+      if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+        return;
+      }
+     self::deamon_start();
+  }
+
   public static function firmwareUpdate($_options = array()) {
     config::save('deamonAutoMode', 0, 'z2m');
     log::clear(__CLASS__ . '_firmware');
@@ -179,8 +186,6 @@ class z2m extends eqLogic {
       return;
     }
     if (!class_exists('mqtt2')) {
-      $plugin = plugin::byId('z2m');
-      $plugin->dependancy_install();
       throw new Exception(__("Plugin Mqtt Manager (mqtt2) non installé, dépendance en cours pour corriger. Veuillez refaire la configuration dans quelques minutes", __FILE__));
     }
     self::postConfig_mqtt_topic();
