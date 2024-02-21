@@ -347,6 +347,13 @@ class z2m extends eqLogic {
     if ($_value == 'local') {
       $plugin->dependancy_changeAutoMode(1);
       $plugin->deamon_info(1);
+      $dependancy_info = $plugin->dependancy_info(true);
+      if ($dependancy_info['state'] == 'nok' && config::byKey('dependancyAutoMode', $plugin->getId(), 1) == 1) {
+        try {
+          $plugin->dependancy_install();
+        } catch (Exception $e) {
+        }
+      }
     } else {
       $plugin->dependancy_changeAutoMode(0);
       $plugin->deamon_info(0);
