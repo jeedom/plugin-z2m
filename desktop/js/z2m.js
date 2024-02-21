@@ -122,7 +122,10 @@ $('.changeIncludeStateDisable').off('click').on('click', function () {
           $('#div_alert').showAlert({message: error.message, level: 'danger'});
         },
         success: function () {
-          $('#div_alert').showAlert({message: '{{Lancement du mode inclusion}}', level: 'success'});
+          $('#div_alert').showAlert({message: '{{Désactivation du mode inclusion}}', level: 'success'});
+          setTimeout(function() {
+            location.reload();
+          }, 500);
         }
       });
     });
