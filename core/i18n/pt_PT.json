@@ -194,9 +194,11 @@
         "Demande de suppression envoyée avec succes.": "Solicitação de exclusão enviada com sucesso"
     },
     "plugins\/z2m\/desktop\/php\/z2m.php": {
+        "Mode inclusion actif": "Modo de inclusão ativo",
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
         "Gestion": "Gestão",
-        "Mode inclusion": "Modo de inclusão",
+        "Activer inclusion": "Habilitar inclusão",
+        "Désactiver inclusion": "Desativar inclusão",
         "Inclusion par code": "Incluir por código",
         "Réseaux Zigbee": "Redes Zigbee",
         "Synchronisation": "Sincronização",
@@ -249,6 +251,7 @@
         "Configuration du réseaux": "Configuração de rede",
         "Passage en inclusion sur": "Transferência para inclusão em",
         "Lancement du mode inclusion": "Lançamento do modo de inclusão",
+        "Désactiver l'inclusion sur": "Desativar inclusão em",
         "Commande": "Encomendado",
         "Sous topic": "Sub tópico",
         "Valeur retour d\\'état": "Valor de retorno de status",
