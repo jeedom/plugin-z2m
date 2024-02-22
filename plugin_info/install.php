@@ -20,8 +20,13 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function z2m_install() {
   $plugin = plugin::byId('z2m');
-  $plugin->dependancy_changeAutoMode(0);
-  $plugin->deamon_info(0);
+  if (config::byKey('z2m::mode', 'z2m', 'local') == 'local') {
+    $plugin->dependancy_changeAutoMode(1);
+    $plugin->deamon_info(1);
+  } else {
+    $plugin->dependancy_changeAutoMode(0);
+    $plugin->deamon_info(0);
+  }
 }
 
 
