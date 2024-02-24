@@ -454,7 +454,7 @@ class z2m extends eqLogic {
           continue;
         }
         foreach ($values as $logical_id => &$value) {
-          if ($value === null) {
+          if ($value === null || $value === '') {
             continue;
           }
           if ($logical_id == 'device') {
