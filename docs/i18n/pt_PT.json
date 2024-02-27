@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "26\/02\/2024": "26\/02\/2024",
         "Correction d'un soucis sur l'installation de mqtt": "Corrigido um problema com a instalação do mqtt",
         "Modification sur le sous-topic (c'est maintenant un champs de configuration propre à la commande), attention a bien mettre a jour vos commandes si vous vous en etes servi": "Modificação no subtópico (agora é um campo de configuração específico do comando), tome cuidado para atualizar seus comandos caso você os tenha utilizado",
         "Modification de la syntaxe du champs logicalId pour les actions (passage en mode json": "Modificação da sintaxe do campo logicId para ações (mudança para modo json",
@@ -10,6 +11,7 @@
         "Correction de bug": "Correção de bug",
         "Ajout d'un bouton pour désactiver le mode inclusion": "Adicionado um botão para desativar o modo de inclusão",
         "Amélioration de la detection du mode inclusion": "Detecção aprimorada do modo de inclusão",
+        "Correction de bug (le plugin ignore maintenant les valeurs vide pour les commandes": "Correção de bug (plugin agora ignora valores vazios para comandos",
         "17\/01\/2024": "17\/01\/2024",
         "Amélioration de la mise à jour du firmware sur Luna": "Atualização de firmware aprimorada no Luna",
         "Meilleure gestion du port sur Luna": "Melhor gerenciamento portuário em Luna",
