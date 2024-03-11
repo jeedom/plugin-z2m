@@ -44,12 +44,11 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode distant">
-	<div class='alert alert-warning text-center'>{{Cette configuration suppose que vous avez installé vous même zigbee2mqtt sur une machine déportée (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local}}</div>
-    </div>
-		  
+	<div class='alert alert-warning text-center'>{{Cette configuration suppose que vous avez installé vous même zigbee2MQTT sur une machine déportée (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local}}</div>
+    </div>	  
     <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Port du contrôleur}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le port du contrôleur Zigbee. Le mode Auto ne fonctionne qu'avec les clés Deconz}}"></i></sup>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionnez le port du contrôleur Zigbee<br/>Le mode Auto ne fonctionne qu'avec les clés Deconz}}"></i></sup>
       </label>
       <div class="col-md-3">
         <select class="configKey form-control" data-l1key="port">
@@ -74,7 +73,7 @@ if (!isConnect()) {
     </div>
     <div class="form-group zigbee_portConf gateway" style="display:none;">
       <label class="col-md-4 control-label">{{Passerelle distante}} <sub>(IP:PORT)</sub>
-        <sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'adresse de la passerelle distante}}"></i></sup>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Renseignez l'adresse de la passerelle distante}}"></i></sup>
       </label>
       <div class="col-md-3">
         <input class="configKey form-control" data-l1key="gateway" />
@@ -82,7 +81,7 @@ if (!isConnect()) {
     </div>
     <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Type de contrôleur}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner le type de contrôleur Zigbee à utiliser}}"></i></sup>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Sélectionnez le type de contrôleur Zigbee à utiliser}}"></i></sup>
       </label>
       <div class="col-md-3">
         <select class="configKey form-control" data-l1key="controller" id="sel_z2mControllerType">
@@ -97,24 +96,32 @@ if (!isConnect()) {
     </div>
     <div class="form-group z2m_controllerType ezsp">
       <label class="col-md-4 control-label">{{Mise à jour du firmware du contrôleur}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Cliquer sur le bouton pour mettre à jour le firmware du contrôleur. Le démon Zigbee est stoppé durant le processus}}"></i></sup>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Cliquez sur le bouton pour mettre à jour le firmware du contrôleur<br/>Le démon Zigbee est stoppé durant le processus}}"></i></sup>
       </label>
       <div class="col-md-4">
           <a class="btn btn-warning" id="bt_UpdateFirmware"><i class="fas fa-download"></i> {{Mettre à jour le firmware}}</a>
       </div>
     </div>
     <div class="form-group z2m_mode local">
-      <label class="col-md-4 control-label">{{Port d'écoute de Zigbee2mqtt}}</label>
+      <label class="col-md-4 control-label">{{Port d'écoute de Zigbee2MQTT}}
+      <sup><i class="fas fa-question-circle tooltips" title="{{Port 8080 par défaut}}"></i></sup>
+      </label>
       <div class="col-md-3">
         <input type="number" class="configKey form-control" data-l1key="z2m_listen_port" />
       </div>
     </div>
     <div class="form-group z2m_mode local">
-      <label class="col-md-4 control-label">{{Interface z2m}}</label>
+      <label class="col-md-4 control-label">{{Accès à la page web z2m}}
+      <sup><i class="fas fa-question-circle tooltips" title="{{Cliquez sur ICI pour accèder à l'interface web de z2m}}"></i></sup>
+      </label>
       <div class="col-md-1">
-        <a target="_blank" href="http://<?php echo network::getNetworkAccess('internal', 'ip').':'.config::byKey('z2m_listen_port', 'z2m', 8080) ?>">{{Ici}}</a>
+        <a target="_blank" href="http://<?php echo network::getNetworkAccess('internal', 'ip').':'.config::byKey('z2m_listen_port', 'z2m', 8080) ?>"><span class="label label-info">ICI</span></a>
       </div>
-      <label class="col-md-1 control-label">{{Identifiant}}</label>
+      </div>
+      <div class="form-group z2m_mode local">
+      <label class="col-md-4 control-label">{{Identifiant}}
+      <sup><i class="fas fa-question-circle tooltips" title="{{Code nécessaire pour l'accès web z2m}}"></i></sup>
+      </label>
       <div class="col-md-3">
         <span class="label label-info"><?php echo config::byKey('z2m_auth_token', 'z2m', '') ?></span>
       </div>
@@ -139,8 +146,8 @@ if (!isConnect()) {
       </div>
     </div>
     <div class="form-group z2m_mode local">
-		<label class="col-md-4 control-label">{{Version Zigbee2mqtt}}
-			<sup><i class="fas fa-question-circle tooltips" title="{{Version de la librairie Zigbee2mqtt}}"></i></sup>
+		<label class="col-md-4 control-label">{{Version actuelle de Zigbee2MQTT}}
+			<sup><i class="fas fa-question-circle tooltips" title="{{Version de la librairie Zigbee2MQTT}}"></i></sup>
 		</label>
 		<div class="col-md-7">
 		<?php
@@ -156,17 +163,22 @@ if (!isConnect()) {
 		$wantedVersion = config::byKey('wantedVersion', 'z2m', '');
 		if (version_compare($localVersion, $wantedVersion, '<')) {
 			echo '<span class="label label-warning">' . $localVersion . '</span><br>';
-			echo "<div class='alert alert-warning text-center'>{{Votre version de zigbee2mqtt n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
+			echo "<div class='alert alert-warning text-center'>{{Votre version de zigbee2MQTT n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
 		} else {
-			echo '<span class="label label-success">' . $localVersion . '</span><br>';
-		}
+			echo '<span class="label label-success">' . $localVersion . '</span>';
+            }
+            $lastV = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
+            if ($lastV !== false) {
+            $V = json_decode($lastV, true);
+  if (is_array($V) && json_last_error() == '' && isset($V['version']) && $package['version'] !== $V['version']) {
+    echo '<br/><img src="https://img.shields.io/github/v/release/koenkk/zigbee2mqtt.svg"/> disponible <small>(Vous devez relancer les dépendances pour mettre à jour)</small>';
+  }
+}
 		?>
 		</div>
 	</div>
   </fieldset>
 </form>
-
-
 <script>
   $('#sel_z2mMode').off('change').on('change', function() {
     $('.z2m_mode').hide();
@@ -189,7 +201,6 @@ if (!isConnect()) {
       $('.z2m_controllerType.' + $(this).value()).show();
     }
   })
-
   $('#bt_UpdateFirmware').off('clic').on('click', function() {
     $('#md_modal').dialog({
       title: "{{Mise à jour du firmware du contrôleur}}"
