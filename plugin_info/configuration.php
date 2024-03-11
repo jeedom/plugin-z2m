@@ -55,9 +55,13 @@ if (!isConnect()) {
           <option value="none">{{Aucun}}</option>
           <option value="auto">{{Auto}}</option>
           <option value="gateway">{{Passerelle distante}}</option>
-          <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>
-          <option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>
-          <?php
+	<?php 
+          if(file_exists('/dev/ttyS2')){
+          	echo ' <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>';
+          }
+	  if(file_exists('/dev/ttyLuna-Zigbee')){
+          	echo '<option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>';
+          }
           foreach (jeedom::getUsbMapping() as $name => $value) {
             if(isset($findPort[$value])){
                 continue;
