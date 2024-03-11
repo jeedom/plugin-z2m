@@ -27,6 +27,15 @@ foreach ($eqLogics as $eqLogic) {
 $devices[0] = array('HumanNameFull' => 'Contrôleur', 'HumanName' => 'Contrôleur', 'id' => 0, 'img' => 'plugins/z2m/core/config/devices/coordinator.png');
 sendVarToJS('z2m_devices', $devices);
 sendVarToJS('devices_attr', $deviceAttr);
+$bridge_infos = z2m::getDeviceInfo('bridge1');
+if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
+	event::add('jeedom::alert', array(
+          'level' => 'success',
+          'page' => 'z2m',
+          'message' => __('Mode inclusion actif', __FILE__),
+          'ttl' => $bridge_infos['permit_join_timeout'] * 1000
+        ));
+}
 ?>
 
 <div class="row row-overflow">
@@ -35,10 +44,15 @@ sendVarToJS('devices_attr', $deviceAttr);
 		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 		<!-- Boutons de gestion du plugin -->
 		<div class="eqLogicThumbnailContainer">
-			<div class="cursor changeIncludeState include card logoPrimary" data-mode="1" data-state="1">
+			<div class="cursor changeIncludeStateEnable card logoPrimary">
 				<i class="fas fa-sign-in-alt fa-rotate-90"></i>
 				<br />
-				<span>{{Mode inclusion}}</span>
+				<span>{{Activer inclusion}}</span>
+			</div>
+			<div class="cursor changeIncludeStateDisable card">
+				<i class="fas fa-sign-out-alt fa-rotate-270"></i>
+				<br />
+				<span>{{Désactiver inclusion}}</span>
 			</div>
 			<div class="cursor logoSecondary" id="bt_includeDeviceByCode">
 				<i class="fas fa-sign-in-alt fa-rotate-90"></i>
@@ -245,9 +259,9 @@ sendVarToJS('devices_attr', $deviceAttr);
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-								<th style="width: 450px;">{{Nom}}</th>
+								<th style="width: 400px;">{{Nom}}</th>
 								<th style="width: 130px;">{{Type}}</th>
-								<th>{{Logical ID}}</th>
+								<th style="width: 250px;">{{Logical ID}}</th>
 								<th>{{Paramètres}}</th>
 								<th style="width:300px;">{{Options}}</th>
 								<th>{{Etat}}</th>

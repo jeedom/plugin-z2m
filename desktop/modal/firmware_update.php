@@ -37,17 +37,22 @@ if (!isConnect('admin')) {
     <div class="form-group">
       <label class="col-sm-4 control-label">{{Port Zigbee}}</label>
       <div class="col-sm-2">
-        <select class="firmwareAttr form-control" data-l1key="port">
+       <select class="configKey form-control" data-l1key="port">
           <option value="none">{{Aucun}}</option>
+          <option value="auto">{{Auto}}</option>
           <option value="gateway">{{Passerelle distante}}</option>
-          <option value="/dev/ttyS2">{{Atlas}}</option>
+          <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>
+          <option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>
           <?php
           foreach (jeedom::getUsbMapping() as $name => $value) {
-            echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
+            if(isset($findPort[$value])){
+                continue;
+            }
+            echo '<option value="' . $value . '">' . $name . ' (' . $value . ')</option>';
           }
-          foreach (ls('/dev/', 'tty*') as $value) {
-            echo '<option value="/dev/' . $value . '">/dev/' . $value . '</option>';
-          }
+      	  if(file_exists('/dev/ttyAMA0')){
+      		  echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
+      	  }
           ?>
         </select>
       </div>

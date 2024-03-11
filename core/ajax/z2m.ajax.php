@@ -27,7 +27,7 @@ try {
 
   if (init('action') == 'include') {
     $data = array(
-      'value' => true,
+      'value' => (init('mode') == 1),
       'time' => 180
     );
     if(init('id') != 'all'){
