@@ -82,7 +82,7 @@ sendVarToJS('z2m_network_map', $map);
     <li><a href="#action_configuration" data-toggle="tab"><i class="fas fa-cogs"></i></i> {{Configuration}}</a></li>
     <li><a href="#action_network" data-toggle="tab"><i class="fas fa-terminal"></i></i> {{Actions}}</a></li>
     <li><a href="#devices_network" data-toggle="tab"><i class="fab fa-codepen"></i> {{Noeuds}} (<?php echo count($devices) - 1 ?>)</a></li>
-    <li role="presentation" id="tab_graph"><a href="#graph_network" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-image"></i> {{Graphique du réseaux}}</a></li>
+    <li role="presentation" id="tab_graph"><a href="#graph_network" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-image"></i> {{Graphique du réseau}}</a></li>
     <li role="presentation"><a href="#rawBridgeTab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Informations brutes}}</a></li>
     <a class="btn btn-info pull-right" id="bt_refreshNetwork"><i class="fas fa-sync"></i></a>
 </ul>
@@ -101,15 +101,16 @@ sendVarToJS('z2m_network_map', $map);
                         <p>
                             {{Version :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['version'] ?></span></b>
+                            <br/>
                             {{Niveau de log :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['log_level'] ?></span></b>
-                            <br />
+                            <br/>
                             {{Coordinateur :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['coordinator']['type'] ?></span></b>
                             {{Port :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['config']['serial']['port'] ?></span></b>
                             <br />
-                            {{Interval de verification OTA :}}
+                            {{Intervalle de vérification OTA :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['config']['ota']['update_check_interval'] ?>s</span></b>
                         </p>
                     </div>
@@ -117,14 +118,16 @@ sendVarToJS('z2m_network_map', $map);
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><i class="fas fa-info-circle"></i> {{Réseaux zigbee}}</h4>
+                        <h4 class="panel-title"><i class="fas fa-info-circle"></i> {{Réseau zigbee}}</h4>
                     </div>
                     <div class="panel-body">
                         <p>
                             {{Canal :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['network']['channel'] ?></span></b>
+                            <br/>
                             {{Ext pan id :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['network']['extended_pan_id'] ?></span></b>
+                            <br/>
                             {{Pan id :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['network']['pan_id'] ?></span></b>
                         </p>
@@ -140,8 +143,10 @@ sendVarToJS('z2m_network_map', $map);
                         <p>
                             {{Topic :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['config']['mqtt']['base_topic'] ?></span></b>
+                            <br/>
                             {{Serveur :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['config']['mqtt']['server'] ?></span></b>
+                            <br/>
                             {{Utilisateur :}}
                             <b><span class="label label-default" style="font-size : 1em;"><?php echo $infos['config']['mqtt']['user'] ?></span></b>
                         </p>
@@ -233,12 +238,12 @@ sendVarToJS('z2m_network_map', $map);
             </thead>
             <tbody>
                 <tr>
-                    <td><a class="btn btn-default" id="bt_z2mNetworkBackup">{{Sauvegarder}}</a></td>
-                    <td>{{Créer un zip contenant une sauvegarde du réseaux}}</td>
-                </tr>
+                    <td><a class="btn btn-info" id="bt_z2mNetworkBackup">{{Sauvegarder}}</a></td>
+<td>{{Création d'un zip contenant une sauvegarde du réseau}} <a class="btn btn-success" href="index.php?v=d&p=editor&root=plugins/z2m/data/backup">{{Accéder à la sauvegarde}}</a></td>
+               </tr>
                 <tr>
-                    <td><a class="btn btn-warning" id="bt_z2mNetworkRestart">{{Redemarrer}}</a></td>
-                    <td>{{Redemarre zigbee2mqtt}}</td>
+                    <td><a class="btn btn-warning" id="bt_z2mNetworkRestart">{{Redémarrer  }}</a></td>
+                    <td>{{Redémarre zigbee2mqtt}}</td>
                 </tr>
             </tbody>
         </table>
@@ -254,7 +259,7 @@ sendVarToJS('z2m_network_map', $map);
                     <th>{{Nom}}</th>
                     <th>{{LQI}}</th>
                     <th>{{Type}}</th>
-                    <th>{{Derniere communication}}</th>
+                    <th>{{Dernière communication}}</th>
                     <th>{{Action}}</th>
                 </tr>
             </thead>
@@ -417,7 +422,7 @@ sendVarToJS('z2m_network_map', $map);
             },
             success: function() {
                 $('#div_alert').showAlert({
-                    message: '{{Paramètre envoyé. Attention cela peut demander un redemarrage du Z2M}}',
+                    message: '{{Paramètre envoyé. Attention cela peut demander un redémarrage de Z2M}}',
                     level: 'success'
                 });
             }
@@ -427,7 +432,7 @@ sendVarToJS('z2m_network_map', $map);
 
     $('#bt_refreshNetwork').off('click').on('click', function() {
         $('#md_modal').dialog({
-            title: "{{Configuration du réseaux}}"
+            title: "{{Configuration du réseau}}"
         }).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
     });
 
@@ -441,7 +446,7 @@ sendVarToJS('z2m_network_map', $map);
             },
             success: function() {
                 $('#div_alert').showAlert({
-                    message: '{{Demande de sauvegarde envoyée avec success}}',
+                    message: '{{Demande de sauvegarde envoyée avec succès}}',
                     level: 'success'
                 });
             }
@@ -458,7 +463,7 @@ sendVarToJS('z2m_network_map', $map);
             },
             success: function() {
                 $('#div_alert').showAlert({
-                    message: '{{Demande de redemarrage envoyée avec success}}',
+                    message: '{{Demande de redémarrage envoyée avec succès}}',
                     level: 'success'
                 });
             }
@@ -479,7 +484,7 @@ sendVarToJS('z2m_network_map', $map);
             },
             success: function() {
                 $('#div_alert').showAlert({
-                    message: '{{Demande de suppression envoyée avec success}}',
+                    message: '{{Demande de suppression envoyée avec succès}}',
                     level: 'success'
                 });
             }
@@ -496,7 +501,7 @@ sendVarToJS('z2m_network_map', $map);
             },
             success: function() {
                 $('#div_alert').showAlert({
-                    message: '{{Demande de mise à jour de la carte réseaux envoyée. Veuillez attendre 3min et reouvrir la carte}}',
+                    message: '{{Demande de mise à jour de la carte réseau envoyée. Veuillez attendre 3min et réouvrir la carte}}',
                     level: 'success'
                 });
             }
