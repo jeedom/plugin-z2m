@@ -40,23 +40,24 @@ if (!isConnect('admin')) {
       <label class="col-sm-4 control-label">{{Port Zigbee}}</label>
       <div class="col-sm-2">
       <select class="firmwareAttr form-control" data-l1key="port">
-	        <?php 
-          if(file_exists('/dev/ttyS2')){
-          	echo ' <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>';
+        <option value="none">{{Aucun}}</option>
+        <?php 
+        if(file_exists('/dev/ttyS2')){
+          echo ' <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>';
+        }
+        if(file_exists('/dev/ttyLuna-Zigbee')){
+          echo '<option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>';
+        }
+        foreach (jeedom::getUsbMapping() as $name => $value) {
+          if(isset($findPort[$value])){
+              continue;
           }
-	        if(file_exists('/dev/ttyLuna-Zigbee')){
-          	echo '<option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>';
-          }
-          foreach (jeedom::getUsbMapping() as $name => $value) {
-            if(isset($findPort[$value])){
-                continue;
-            }
-            echo '<option value="' . $value . '">' . $name . ' (' . $value . ')</option>';
-          }
-          if(file_exists('/dev/ttyAMA0')){
-           echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
-          }
-          ?>
+          echo '<option value="' . $value . '">' . $name . ' (' . $value . ')</option>';
+        }
+        if(file_exists('/dev/ttyAMA0')){
+          echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
+        }
+        ?>
         </select>
       </div>
     </div>
