@@ -38,6 +38,9 @@ class z2m extends eqLogic {
   }
 
   public static function firmwareUpdate($_options = array()) {
+    if(file_exists('/dev/ttyLuna-Zigbee' && $_options['sub_controller'] != 'luna')){
+      throw new Exception(__("Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour de firmware Luna)", __FILE__));
+    }
     config::save('deamonAutoMode', 0, 'z2m');
     log::clear(__CLASS__ . '_firmware');
     $log = log::getPathToLog(__CLASS__ . '_firmware');
