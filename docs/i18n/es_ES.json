@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
+        "13\/03\/2024": "13\/03\/2024",
+        "Limitation de la mise à jour du firmware zigbee à Luna sur les box Luna (évite de casser la puce Zigbee en cas de mauvais choix": "Limitación de actualización del firmware Zigbee a Luna en cajas Luna (evita romper el chip Zigbee en caso de elección incorrecta",
         "26\/02\/2024": "26\/02\/2024",
         "Correction d'un soucis sur l'installation de mqtt": "Se solucionó un problema con la instalación de mqtt",
         "Modification sur le sous-topic (c'est maintenant un champs de configuration propre à la commande), attention a bien mettre a jour vos commandes si vous vous en etes servi": "Modificación del subtema (ahora es un campo de configuración específico del comando), tenga cuidado de actualizar sus comandos si los ha utilizado",
