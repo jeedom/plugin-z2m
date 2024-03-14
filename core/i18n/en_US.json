@@ -52,8 +52,6 @@
         "Elelabs\/Popp": "Elelabs\/Popp",
         "Luna": "Luna",
         "Port Zigbee": "Zigbee port",
-        "Auto": "Auto",
-        "Passerelle distante": "Remote Gateway",
         "Atlas (\/dev\/ttyS2)": "Atlas (\/dev\/ttyS2)",
         "Luna Zigbee (\/dev\/ttyLuna-Zigbee)": "Luna Zigbee (\/dev\/ttyLuna-Zigbee)",
         "Firmware": "Firmware",
@@ -279,6 +277,7 @@
         "Aucune méthode correspondante à": "No matching method"
     },
     "plugins\/z2m\/core\/class\/z2m.class.php": {
+        "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)": "Please note, it is not possible to launch this type of firmware update on your box (you can only launch a Luna firmware update)",
         "Lancement de la mise à jour du firmware pour : ": "Launching the firmware update for:",
         "Pas de mise à jour possible du firmware pour : ": "No firmware update possible for:",
         "Fin de la mise à jour du firmware de la clef": "End of key firmware update",

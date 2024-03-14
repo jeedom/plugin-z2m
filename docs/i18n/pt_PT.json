@@ -2,6 +2,10 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "14\/03\/2024": "14\/03\/2024",
+        "Ajout du port \/dev\/ttyACM0": "Adicionada porta \/dev\/ttyACM0",
+        "13\/03\/2024": "13\/03\/2024",
+        "Limitation de la mise à jour du firmware zigbee à Luna sur les box Luna (évite de casser la puce Zigbee en cas de mauvais choix": "Limitação de atualização do firmware Zigbee para Luna nas caixas Luna (evita quebrar o chip Zigbee em caso de escolha errada",
         "26\/02\/2024": "26\/02\/2024",
         "Correction d'un soucis sur l'installation de mqtt": "Corrigido um problema com a instalação do mqtt",
         "Modification sur le sous-topic (c'est maintenant un champs de configuration propre à la commande), attention a bien mettre a jour vos commandes si vous vous en etes servi": "Modificação no subtópico (agora é um campo de configuração específico do comando), tome cuidado para atualizar seus comandos caso você os tenha utilizado",

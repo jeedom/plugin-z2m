@@ -29,7 +29,9 @@ if (!isConnect('admin')) {
       <div class="col-sm-2">
         <select class="firmwareAttr form-control" data-l1key="sub_controller">
           <option value="">{{Aucun}}</option>
-          <option value="elelabs">{{Elelabs/Popp}}</option>
+          <?php if(!file_exists('/dev/ttyLuna-Zigbee')){ ?>
+            <option value="elelabs">{{Elelabs/Popp}}</option>
+          <?php } ?>
           <option value="luna">{{Luna}}</option>
         </select>
       </div>
@@ -37,23 +39,28 @@ if (!isConnect('admin')) {
     <div class="form-group">
       <label class="col-sm-4 control-label">{{Port Zigbee}}</label>
       <div class="col-sm-2">
-       <select class="configKey form-control" data-l1key="port">
-          <option value="none">{{Aucun}}</option>
-          <option value="auto">{{Auto}}</option>
-          <option value="gateway">{{Passerelle distante}}</option>
-          <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>
-          <option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>
-          <?php
-          foreach (jeedom::getUsbMapping() as $name => $value) {
-            if(isset($findPort[$value])){
-                continue;
-            }
-            echo '<option value="' . $value . '">' . $name . ' (' . $value . ')</option>';
+      <select class="firmwareAttr form-control" data-l1key="port">
+        <option value="none">{{Aucun}}</option>
+        <?php 
+        if(file_exists('/dev/ttyS2')){
+          echo ' <option value="/dev/ttyS2">{{Atlas (/dev/ttyS2)}}</option>';
+        }
+        if(file_exists('/dev/ttyLuna-Zigbee')){
+          echo '<option value="/dev/ttyLuna-Zigbee">{{Luna Zigbee (/dev/ttyLuna-Zigbee)}}</option>';
+        }
+        foreach (jeedom::getUsbMapping() as $name => $value) {
+          if(isset($findPort[$value])){
+              continue;
           }
-      	  if(file_exists('/dev/ttyAMA0')){
-      		  echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
-      	  }
-          ?>
+          echo '<option value="' . $value . '">' . $name . ' (' . $value . ')</option>';
+        }
+        if(file_exists('/dev/ttyAMA0')){
+          echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
+        }
+        if(file_exists('/dev/ttyACM0')){
+          echo '<option value="/dev/ttyACM0">/dev/ttyACM0</option>';
+        }
+        ?>
         </select>
       </div>
     </div>
