@@ -71,6 +71,9 @@ if (!isConnect()) {
           if(file_exists('/dev/ttyAMA0')){
            echo '<option value="/dev/ttyAMA0">/dev/ttyAMA0</option>';
           }
+ 	  if(file_exists('/dev/ttyACM0')){
+           echo '<option value="/dev/ttyACM0">/dev/ttyACM0</option>';
+          }
           ?>
         </select>
       </div>
