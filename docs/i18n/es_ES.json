@@ -2,8 +2,6 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
-        "14\/03\/2024": "14\/03\/2024",
-        "Ajout du port \/dev\/ttyACM0": "Se agregó el puerto \/dev\/ttyACM0",
         "13\/03\/2024": "13\/03\/2024",
         "Limitation de la mise à jour du firmware zigbee à Luna sur les box Luna (évite de casser la puce Zigbee en cas de mauvais choix": "Limitación de actualización del firmware Zigbee a Luna en cajas Luna (evita romper el chip Zigbee en caso de elección incorrecta",
         "26\/02\/2024": "26\/02\/2024",
