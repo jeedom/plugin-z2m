@@ -26,7 +26,7 @@ $('#bt_includeDeviceByCode').off('click').on('click',function(){
         $('#div_alert').showAlert({message: error.message, level: 'danger'});
       },
       success: function () {
-        $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succes}}', level: 'success'});
+        $('#div_alert').showAlert({message: '{{Demande d\'ajout de l\'équipement par code envoyée avec succès}}', level: 'success'});
       }
     });
   });
@@ -38,7 +38,7 @@ $('#bt_syncEqLogicZ2m').off('click').on('click',function(){
       $('#div_alert').showAlert({message: error.message, level: 'danger'});
     },
     success: function () {
-      $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succes}}', level: 'success'});
+      $('#div_alert').showAlert({message: '{{Synchronisation lancée avec succès}}', level: 'success'});
     }
   });
 });
@@ -54,7 +54,7 @@ $('#bt_addGroup').off('click').on('click',function(){
         $('#div_alert').showAlert({message: error.message, level: 'danger'});
       },
       success: function () {
-        $('#div_alert').showAlert({message: '{{Demande du groupe envoyée avec succes}}', level: 'success'});
+        $('#div_alert').showAlert({message: '{{Demande du groupe envoyée avec succès}}', level: 'success'});
       }
     });
   });
@@ -82,7 +82,7 @@ if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr) {
 });
 
 $('#bt_z2mNetwork').off('click').on('click', function () {
-$('#md_modal').dialog({title: "{{Configuration du réseaux}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
+$('#md_modal').dialog({title: "{{Configuration du réseau}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
 });
 
 function printEqLogic(_eqLogic) {
@@ -268,7 +268,7 @@ $.ajax({
       $('#div_alert').showAlert({message: data.result, level: 'danger'});
       return;
     }
-    $('#div_alert').showAlert({message: '{{Operation realisee avec succes}}', level: 'success'});
+    $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
     window.location.reload();
   }
 });
