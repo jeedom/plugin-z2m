@@ -1137,7 +1137,7 @@ class z2mCmd extends cmd {
   /*     * *********************Methode d'instance************************* */
 
   public function preSave(){
-    if($this->getType() == 'action' && $this->getSubType() != 'color'){
+    if($this->getType() == 'action' && $this->getSubType() != 'color' && $this->getLogicalId() != 'refresh'){
       if(version_compare(jeedom::version(), '4.4.2') < 0){
         $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
       }else{
@@ -1183,7 +1183,7 @@ class z2mCmd extends cmd {
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
-    if($this->getLogicalId() == 'refresh'){
+    if($this->getLogicalId() == 'refresh' || $this->getLogicalId() == 'json::{"refresh":null}'){
       $eqLogic->refreshValue();
       return;
     }
