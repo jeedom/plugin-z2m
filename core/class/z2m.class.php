@@ -774,7 +774,7 @@ class z2m extends eqLogic {
   }
 
   public static function getCmdConf($_infos, $_suffix = null, $_preffix = null,$_father_property = null) {
-    if ($_infos['type'] == 'composite' && $_infos['name'] == 'color_xy') {
+    if ($_infos['type'] == 'composite') {
       return null;
     }
     if (self::$_cmd_converter == null) {
