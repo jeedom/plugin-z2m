@@ -1039,26 +1039,6 @@ class z2m extends eqLogic {
             }
           }
           break;
-        case 'level_config':
-          $cmd = $this->getCmd('info', 'level_config');
-          if (!is_object($cmd)) {
-            $cmd = new z2mCmd();
-            $cmd->setName('level_config');
-            if (isset($_infos['endpoint'])) {
-              $cmd->setConfiguration('endpoint', $_infos['endpoint']);
-              $cmd->setName('level_config ' . $_infos['endpoint']);
-            }
-            $cmd->setLogicalId('level_config');
-          }
-          $cmd->setType('info');
-          $cmd->setSubType('string');
-          $cmd->setEqLogic_id($this->getId());
-          try {
-            $cmd->save();
-          } catch (\Throwable $th) {
-            log::add('z2m', 'debug', '[createCmd] Can not create cmd ' . json_encode(utils::o2a($cmd)) . ' => ' . $th->getMessage());
-          }
-          break;
       }
     }
   }
