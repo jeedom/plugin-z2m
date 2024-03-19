@@ -258,7 +258,7 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-                                <th class="hidden-xs" style="min-width:50px;width:70px;"> ID</th>
+                                <th class="hidden-xs" style="min-width:50px;width:70px;">{{ID}}</th>
 								<th style="width: 250px;">{{Nom}}</th>
 								<th style="width: 130px;">{{Type}}</th>
 								<th style="width: 250px;">{{Logical ID}}</th>
