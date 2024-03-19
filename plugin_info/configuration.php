@@ -140,7 +140,7 @@ if (!isConnect()) {
     </div>
      <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Version voulue (réservé aux utilisateurs avancés)}}
-        <sup><i class="fas fa-question-circle tooltips" title="{{Laisser vide pour mettre la dernière version disponible}}"></i></sup>
+        <sup><i class="fas fa-question-circle tooltips" title="{{Laisser vide pour installer la dernière version disponible <br/>Si vous voulez forcer une installation précise, cliquez sur le bouton &#x2192; Liste des versions <br/> Encodez la version voulue et pensez à sauvegarder avant de relancer les dépendances}}"></i></sup>
       </label>
       <div class="col-md-3">
         <input class="configKey form-control" data-l1key="wanted_z2m_version" />
