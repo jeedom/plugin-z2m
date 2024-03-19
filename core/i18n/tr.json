@@ -227,7 +227,7 @@
         "Identification": "Identification",
         "Identifiant du module": "Identifiant du module",
         "Auto-actualisation": "Auto-actualisation",
-        "&#x26A0; Nous recommandons de ne jamais rien mettre ici de vous même, une erreur et c'est tout votre réseau zigbee qui est cassé &#x26A0;": "&#x26A0; Nous recommandons de ne jamais rien mettre ici de vous même, une erreur et c'est tout votre réseau zigbee qui est cassé &#x26A0;",
+        "&#x26A0; Nous recommandons de ne jamais rien mettre ici de vous même, une erreur et c'est tout votre réseau zigbee qui est cassé &#x26A0;": "⚠ Nous recommandons de ne jamais rien mettre ici de vous même, une erreur et c'est tout votre réseau zigbee qui est cassé ⚠",
         " Cron": " Cron",
         "Messages équipement": "Messages équipement",
         "Ne pas autoriser les messages si l'équipement n'a pas été vu depuis plus de X(secondes)": "Ne pas autoriser les messages si l'équipement n'a pas été vu depuis plus de X(secondes)",
