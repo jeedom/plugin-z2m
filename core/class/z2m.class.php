@@ -408,7 +408,7 @@ class z2m extends eqLogic {
   }
 
   
-  public function findIeeeAddrRecursive($data) {
+  public static function findIeeeAddrRecursive($data) {
       // MQTT Manager ne transmet que les topics mis à jour donc l'appel à la recursivité n'est pas un problème
       $ret = null; // Variable pour stocker le résultat
       foreach ($data as $key => $value) {
