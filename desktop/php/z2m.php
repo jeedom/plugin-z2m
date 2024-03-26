@@ -62,7 +62,7 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 			<div class="cursor logoSecondary" id="bt_z2mNetwork">
 				<i class="fas fa-sitemap"></i>
 				<br>
-				<span>{{Réseaux Zigbee}}</span>
+				<span>{{Réseau Zigbee}}</span>
 			</div>
 			<div class="cursor logoSecondary" id="bt_syncEqLogicZ2m">
 				<i class="fas fa-sync-alt"></i>
@@ -203,18 +203,17 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Auto-actualisation (cron)}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Nous recommandons de ne jamais rien mettre ici de vous meme, une erreur et c'est tout votre réseaux zigbee qui est cassé !!!!}}"></i></sup>
+								<label class="col-sm-3 control-label">{{Auto-actualisation}}
+									<sup><i class="fas fa-exclamation-triangle tooltips" style="color: #ff0000;" title="{{&#x26A0; Nous recommandons de ne jamais rien mettre ici de vous même, une erreur et c'est tout votre réseau zigbee qui est cassé &#x26A0;}}"></i></sup>
 								</label>
 								<div class="col-sm-2">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="autorefresh" placeholder="{{Auto-actualisation (cron)}}" />
-								</div>
-								<div class="col-sm-1">
-									<i class="fas fa-question-circle cursor floatright" id="bt_cronGenerator"></i>
-								</div>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="autorefresh" placeholder="{{ Cron}}" />
+								</div>								
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Ne pas autorisé les message si l'équipement n'a pas été vue depuis plus de (s)}}</label>
+								<label class="col-sm-3 control-label">{{Messages équipement}}
+                                <sup><i class="fas fa-question-circle tooltips" title="{{Ne pas autoriser les messages si l'équipement n'a pas été vu depuis plus de X(secondes)}}"></i></sup>
+                                </label>
 								<div class="col-sm-2">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maxLastSeen" />
 								</div>
@@ -226,7 +225,7 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 						<div class="col-lg-6">
 							<legend><i class="fas fa-info"></i> {{Informations}}</legend>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Model}}</label>
+								<label class="col-sm-3 control-label">{{Modèle}}</label>
 								<div class="col-sm-7">
 									<span class="eqLogicAttr label label-info" data-l1key="configuration" data-l2key="device" />
 								</div>
@@ -259,12 +258,13 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 					<table id="table_cmd" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-								<th style="width: 400px;">{{Nom}}</th>
+                                <th class="hidden-xs" style="min-width:50px;width:70px;">{{ID}}</th>
+								<th style="width: 250px;">{{Nom}}</th>
 								<th style="width: 130px;">{{Type}}</th>
 								<th style="width: 250px;">{{Logical ID}}</th>
-								<th>{{Paramètres}}</th>
+                                <th style="width:360px;">{{Paramètres}}</th>
 								<th style="width:300px;">{{Options}}</th>
-								<th>{{Etat}}</th>
+                                <th style="width:100px;">{{Etat}}</th>					
 								<th style="width: 150px;">{{Action}}</th>
 							</tr>
 						</thead>

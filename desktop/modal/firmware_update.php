@@ -19,9 +19,9 @@ if (!isConnect('admin')) {
 }
 ?>
 <div id='div_alertFirmwareUpdate' style="display: none;"></div>
-<legend>{{Backup}}</legend>
-<div class="alert alert-info">{{IMPORTANT : seul les clefs Elelabs peuvent etre mise à jour par Jeedom actuellement}}</div>
-<div class="alert alert-info">{{IMPORTANT : NE PAS UTILISER SUR LA LUNA au rique de briquer votre controleur Zigbee}}</div>
+<legend>{{Mise à jour}}</legend>
+<div class="alert alert-info">{{IMPORTANT : seul les clefs Elelabs peuvent être mises à jour par Jeedom actuellement}}</div>
+<div class="alert alert-info">{{IMPORTANT : NE PAS UTILISER SUR LA LUNA au risque de briquer votre contrôleur Zigbee}}</div>
 <form class="form-horizontal">
   <fieldset>
     <div class="form-group">

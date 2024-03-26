@@ -408,7 +408,7 @@ class z2m extends eqLogic {
   }
 
   
-  public function findIeeeAddrRecursive($data) {
+  public static function findIeeeAddrRecursive($data) {
       // MQTT Manager ne transmet que les topics mis à jour donc l'appel à la recursivité n'est pas un problème
       $ret = null; // Variable pour stocker le résultat
       foreach ($data as $key => $value) {
@@ -774,7 +774,7 @@ class z2m extends eqLogic {
   }
 
   public static function getCmdConf($_infos, $_suffix = null, $_preffix = null,$_father_property = null) {
-    if ($_infos['type'] == 'composite' && $_infos['name'] == 'color_xy') {
+    if ($_infos['type'] == 'composite') {
       return null;
     }
     if (self::$_cmd_converter == null) {
@@ -1137,7 +1137,7 @@ class z2mCmd extends cmd {
   /*     * *********************Methode d'instance************************* */
 
   public function preSave(){
-    if($this->getType() == 'action' && $this->getSubType() != 'color'){
+    if($this->getType() == 'action' && $this->getSubType() != 'color' && $this->getLogicalId() != 'refresh'){
       if(version_compare(jeedom::version(), '4.4.2') < 0){
         $logicalId = $this->getConfiguration('logicalId',$this->getLogicalId());
       }else{
@@ -1183,7 +1183,7 @@ class z2mCmd extends cmd {
   // Exécution d'une commande
   public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
-    if($this->getLogicalId() == 'refresh'){
+    if($this->getLogicalId() == 'refresh' || $this->getLogicalId() == 'json::{"refresh":null}'){
       $eqLogic->refreshValue();
       return;
     }
