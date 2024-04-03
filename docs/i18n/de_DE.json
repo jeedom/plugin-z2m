@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "03\/04\/2024": "03.04.2024",
+        "Correction d'un bug sur l'image de la derniere version de zigbee2mqtt": "Ein Fehler im Image der neuesten Version von zigbee2mqtt wurde behoben",
         "20\/03\/2024": "20.03.2024",
         "Correction d'un bug avec la commande refresh": "Ein Fehler mit dem Aktualisierungsbefehl wurde behoben",
         "13\/03\/2024": "13.03.2024",
