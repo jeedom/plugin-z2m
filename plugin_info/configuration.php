@@ -176,7 +176,7 @@ if (!isConnect()) {
 		$V = json_decode($lastV, true);
 	    	if (is_array($V) && json_last_error() == '' && isset($V['version']) && $package['version'] !== $V['version']) {
 	         $imageData = base64_encode(file_get_contents('https://img.shields.io/github/v/release/koenkk/zigbee2mqtt.svg'));
-		 $src = 'data: '.mime_content_type($image).';base64,'.$imageData;	
+		 $src = 'data:image/svg+xml;base64,'.$imageData;
 	   	 echo '<br/><img src="'.$src .'"/> disponible <small>(Vous devez relancer les dépendances pour mettre à jour)</small>';
 	  	}
 	     }
