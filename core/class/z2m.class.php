@@ -665,7 +665,7 @@ class z2m extends eqLogic {
         $eqLogic->setConfiguration('group_id', $group['id']);
         $eqLogic->save();
         foreach ($group['scenes'] as $scene) {
-          $cmd = $eqLogic->getCmd('action', 'scene_recall::' . $scene['id']);
+          $cmd = $eqLogic->getCmd('action', 'json::{"scene_recall":' . $scene['id'] . '}');
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             $cmd->setLogicalId('scene_recall::' . $scene['id']);
