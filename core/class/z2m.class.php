@@ -211,8 +211,10 @@ class z2m extends eqLogic {
     }
     $configuration = yaml_parse_file($data_path . '/configuration.yaml');
     $configuration['permit_join'] = false;
-
-    $configuration['mqtt']['server'] = 'mqtt://' . $mqtt['ip'] . ':';
+    if(!isset($mqtt['protocol'])){
+        $mqtt['protocol'] = 'mqtt';
+    }
+    $configuration['mqtt']['server'] = $mqtt['protocol'].'://' . $mqtt['ip'] . ':';
     $configuration['mqtt']['server'] .= (isset($mqtt['port'])) ? intval($mqtt['port']) : 1883;
     $configuration['mqtt']['user'] = $mqtt['user'];
     $configuration['mqtt']['password'] = $mqtt['password'];
@@ -663,7 +665,7 @@ class z2m extends eqLogic {
         $eqLogic->setConfiguration('group_id', $group['id']);
         $eqLogic->save();
         foreach ($group['scenes'] as $scene) {
-          $cmd = $eqLogic->getCmd('action', 'scene_recall::' . $scene['id']);
+          $cmd = $eqLogic->getCmd('action', 'json::{"scene_recall":' . $scene['id'] . '}');
           if (!is_object($cmd)) {
             $cmd = new z2mCmd();
             $cmd->setLogicalId('scene_recall::' . $scene['id']);

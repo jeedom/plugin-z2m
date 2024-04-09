@@ -35,7 +35,7 @@
         "N'oubliez pas de redémarrer le démon après tout changement pour qu'il soit pris en compte": "N'oubliez pas de redemarrer le démon après tout changement pour qu'il soit pris en compte",
         "Editer": "Editer",
         "Version voulue (réservé aux utilisateurs avancés)": "Version voulue (réservé aux utilisateurs avancés)",
-        "Laisser vide pour installer la dernière version disponible <br\/>Si vous voulez forcer une installation précise, cliquez sur le bouton &#x2192; Liste des versions <br\/> Encodez la version voulue et pensez à sauvegarder avant de relancer les dépendances": "Laisser vide pour installer la dernière version disponible <br\/>Si vous voulez forcer une installation précise, cliquez sur le bouton &#x2192; Liste des versions <br\/> Encodez la version voulue et pensez à sauvegarder avant de relancer les dépendances",
+        "Laisser vide pour installer la dernière version disponible <br\/>Si vous voulez forcer une installation précise, cliquez sur le bouton &#x2192; Liste des versions <br\/> Encodez la version voulue et pensez à sauvegarder avant de relancer les dépendances": "Laisser vide pour installer la dernière version disponible <br\/>Si vous voulez forcer une installation précise, cliquez sur le bouton → Liste des versions <br\/> Encodez la version voulue et pensez à sauvegarder avant de relancer les dépendances",
         "Liste des versions": "Liste des versions",
         "Version actuelle de Zigbee2MQTT": "Version actuelle de Zigbee2MQTT",
         "Version de la librairie Zigbee2MQTT": "Version de la librairie Zigbee2mqtt",
