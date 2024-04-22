@@ -2,7 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "22\/04\/2024": "22.04.2024",
         "Correction d'un bug sur duplication de commande (sur les scenes": "Ein Fehler bei der Befehlsduplizierung (in Szenen) wurde behoben",
+        "Correction d'un bug sur les slider avec valeur negative": "Ein Fehler bei Schiebereglern mit negativem Wert wurde behoben",
         "03\/04\/2024": "03.04.2024",
         "Correction d'un bug sur l'image de la derniere version de zigbee2mqtt": "Ein Fehler im Image der neuesten Version von zigbee2mqtt wurde behoben",
         "20\/03\/2024": "20.03.2024",
