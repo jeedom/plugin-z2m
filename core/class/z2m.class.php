@@ -1221,6 +1221,8 @@ class z2mCmd extends cmd {
       $logicalId = str_replace(array_keys($replace), $replace, $logicalId);
       $logicalId = preg_replace( "/\"(\d+)\"/", '$1', $logicalId);
       $logicalId = preg_replace( "/\"(\d+\.\d+)\"/", '$1', $logicalId);
+      $logicalId = preg_replace( "/\"(-\d+)\"/", '$1', $logicalId);
+      $logicalId = preg_replace( "/\"(-\d+\.\d+)\"/", '$1', $logicalId);
       $datas = json_decode(str_replace('json::','',$logicalId),true);
     }else{
       $infos = explode('::', str_replace(array_keys($replace), $replace, $logicalId));
