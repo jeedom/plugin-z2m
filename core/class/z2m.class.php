@@ -300,6 +300,8 @@ class z2m extends eqLogic {
     }
     exec(system::getCmdSudo() .' chown www-data -R "/root/.npm"');
     exec(system::getCmdSudo() .' chmod 777 -R "/root/.npm"');
+    exec(system::getCmdSudo() .' chown www-data -R "'.log::getPathToLog('z2md').'"');
+    exec(system::getCmdSudo() .' chmod 775 -R "'.log::getPathToLog('z2md').'"');
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
     $cmd = '';
     $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
