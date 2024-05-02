@@ -18,6 +18,7 @@
         "Sélectionnez le type de contrôleur Zigbee à utiliser": "Select the type of Zigbee controller to use",
         "ZNP\/TI": "ZNP\/IT",
         "EZSP (Atlas\/Luna\/Smart)": "EZSP (Atlas\/Luna\/Smart)",
+        "Ember": "Ember",
         "Deconz\/Conbee": "Deconz\/Conbee",
         "Conbee 3": "Conbee 3",
         "Raspbee 2": "Raspbee 2",

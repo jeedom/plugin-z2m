@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "If there is no information on the update, it means that it concerns only the update of documentation, translation or text",
+        "Ajout du type de clef Ember": "Added Ember key type",
         "22\/04\/2024": "04\/22\/2024",
         "Correction d'un bug sur duplication de commande (sur les scenes": "Fixed a bug on command duplication (on scenes",
         "Correction d'un bug sur les slider avec valeur negative": "Fixed a bug on sliders with negative value",
