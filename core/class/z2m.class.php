@@ -772,6 +772,9 @@ class z2m extends eqLogic {
         unlink($filename);
       }
       file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.jpg'));
+      if(filesize($filename) < 1){
+        file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.png'));
+      }
     }
     if (!file_exists($filename)) {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
