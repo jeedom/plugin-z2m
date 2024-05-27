@@ -23,6 +23,8 @@
         "Conbee 3": "Conbee 3",
         "Raspbee 2": "Himbeere 2",
         "Zigate (alpha)": "Zigate (Alpha)",
+        "Baudrate": "Baudrate",
+        "Reserver aux utilisateurs avancés": "Für fortgeschrittene Benutzer reservieren",
         "Mise à jour du firmware du contrôleur": "Controller-Firmware-Update",
         "Cliquez sur le bouton pour mettre à jour le firmware du contrôleur<br\/>Le démon Zigbee est stoppé durant le processus": "Klicken Sie auf die Schaltfläche, um die Controller-Firmware zu aktualisieren<br\/> Der Zigbee-Daemon wird während des Vorgangs gestoppt",
         "Mettre à jour le firmware": "Firmware aktualisieren",

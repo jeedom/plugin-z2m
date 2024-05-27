@@ -23,6 +23,8 @@
         "Conbee 3": "Conbee 3",
         "Raspbee 2": "Framboesa 2",
         "Zigate (alpha)": "Zigate (alfa)",
+        "Baudrate": "Taxa de transmissão",
+        "Reserver aux utilisateurs avancés": "Reserva para usuários avançados",
         "Mise à jour du firmware du contrôleur": "Atualização de firmware do controlador",
         "Cliquez sur le bouton pour mettre à jour le firmware du contrôleur<br\/>Le démon Zigbee est stoppé durant le processus": "Clique no botão para atualizar o firmware do controlador<br\/> O daemon Zigbee é interrompido durante o processo",
         "Mettre à jour le firmware": "Atualizar firmware",
