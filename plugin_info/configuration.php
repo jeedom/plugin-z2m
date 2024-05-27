@@ -99,6 +99,14 @@ if (!isConnect()) {
         </select>
       </div>
     </div>
+    <div class="form-group z2m_mode local z2m_controllerType ezsp ember ti">
+      <label class="col-md-4 control-label">{{Baudrate}}
+      <sup><i class="fas fa-question-circle tooltips" title="{{Reserver aux utilisateurs avancés}}"></i></sup>
+      </label>
+      <div class="col-md-3">
+        <input type="number" class="configKey form-control" data-l1key="baudrate" />
+      </div>
+    </div>
     <div class="form-group z2m_controllerType ezsp">
       <label class="col-md-4 control-label">{{Mise à jour du firmware du contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Cliquez sur le bouton pour mettre à jour le firmware du contrôleur<br/>Le démon Zigbee est stoppé durant le processus}}"></i></sup>
