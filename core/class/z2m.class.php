@@ -125,12 +125,19 @@ class z2m extends eqLogic {
     }
     shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
      /*     * *************************Message for Zigbee2MQTT update****************************** */
-    $localVersion = config::byKey('zigbee2mqttVersion', 'z2m', '');    
-    if ($localVersion!='') {
+    $file = dirname(__FILE__) . '/../resources/zigbee2mqtt/package.json';
+		$package = array();
+		if (file_exists($file)) {
+			$package = json_decode(file_get_contents($file), true);
+		}
+		if (isset($package['version'])){
+			config::save('zigbee2mqttVersion', $package['version'], 'z2m');
+		} 
+    if ($package['version'] !='') {
       $releaseVersion = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
       if ($releaseVersion !== false) {
         $releaseVersion = json_decode($releaseVersion, true);
-        if (is_array($releaseVersion) && json_last_error() == '' && isset($releaseVersion['version']) && $localVersion !== $releaseVersion['version']) {
+        if (is_array($releaseVersion) && json_last_error() == '' && isset($releaseVersion['version']) && $package['version'] !== $releaseVersion['version']) {
           log::add('z2m', 'info', 'Nouvelle version de Zigbee2MQTT disponible : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)');
           message::add('z2m', __('Nouvelle version de Zigbee2MQTT disponible' ,__FILE__) . ' : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)', null, null);
         }
