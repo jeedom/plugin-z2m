@@ -4,9 +4,12 @@
 >
 >Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto.
 
+# 16/07/2024
+
 - Corrigido erro indicando atualização do zigbee2mqtt quando a versão já está atualizada
 - Adicionado tipo de chave Ember
 - Corrigido um problema ao iniciar o daemon pela primeira vez em relação aos direitos do arquivo de log
+- Corrigido um problema em algumas imagens
 
 # 22/04/2024
 
