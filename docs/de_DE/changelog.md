@@ -4,7 +4,14 @@
 >
 >Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt.
 
+- Es wurde ein Fehler behoben, der auf ein Update von zigbee2mqtt hinweist, wenn die Version bereits auf dem neuesten Stand ist
+- Ember-Schlüsseltyp hinzugefügt
+- Beim ersten Start des Daemons wurde ein Problem bezüglich der Rechte an der Protokolldatei behoben
+
+# 22.04.2024
+
 - Ein Fehler bei der Befehlsduplizierung (in Szenen) wurde behoben)
+- Ein Fehler bei Schiebereglern mit negativem Wert wurde behoben
 
 # 03.04.2024
 

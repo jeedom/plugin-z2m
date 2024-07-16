@@ -91,11 +91,20 @@ if (!isConnect()) {
         <select class="configKey form-control" data-l1key="controller" id="sel_z2mControllerType">
           <option value="ti">{{ZNP/TI}}</option>
           <option value="ezsp">{{EZSP (Atlas/Luna/Smart)}}</option>
+	  <option value="ember">{{Ember}}</option>	
           <option value="deconz">{{Deconz/Conbee}}</option>
           <option value="conbee_3">{{Conbee 3}}</option>
           <option value="raspbee_2">{{Raspbee 2}}</option>
           <option value="zigate">{{Zigate (alpha)}}</option>
         </select>
+      </div>
+    </div>
+    <div class="form-group z2m_mode local z2m_controllerType ezsp ember ti">
+      <label class="col-md-4 control-label">{{Baudrate}}
+      <sup><i class="fas fa-question-circle tooltips" title="{{Reserver aux utilisateurs avancés}}"></i></sup>
+      </label>
+      <div class="col-md-3">
+        <input type="number" class="configKey form-control" data-l1key="baudrate" />
       </div>
     </div>
     <div class="form-group z2m_controllerType ezsp">
@@ -198,7 +207,9 @@ if (!isConnect()) {
       $('.zigbee_portConf.' + $(this).value()).show();
     }
     if ($(this).value() == '/dev/ttyS2' || $(this).value() == '/dev/ttyLuna-Zigbee'){
-	$('#sel_z2mControllerType').value('ezsp');
+	if($('#sel_z2mControllerType').value() != 'ezsp' && $('#sel_z2mControllerType').value() != 'ember'){
+		$('#sel_z2mControllerType').value('ezsp');
+	}	
     }
   });
   $('#sel_z2mControllerType').off('change').on('change', function() {

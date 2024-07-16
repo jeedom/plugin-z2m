@@ -4,7 +4,14 @@
 >
 >If there is no information on the update, it means that it concerns only the update of documentation, translation or text.
 
+- Fixed an error indicating an update of zigbee2mqtt when the version is already up to date
+- Added Ember key type
+- Fixed a problem when starting the daemon for the first time regarding rights to the log file
+
+# 04/22/2024
+
 - Fixed a bug on command duplication (on scenes)
+- Fixed a bug on sliders with negative value
 
 # 03/04/2024
 

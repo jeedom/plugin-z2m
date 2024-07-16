@@ -2,7 +2,12 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Correction d'une erreur indiquant une mise à jour de zigbee2mqtt alors que la version est deja à jour": "Es wurde ein Fehler behoben, der auf ein Update von zigbee2mqtt hinweist, wenn die Version bereits auf dem neuesten Stand ist",
+        "Ajout du type de clef Ember": "Ember-Schlüsseltyp hinzugefügt",
+        "Correction d'un soucis au premier démarrage du démon sur les droits sur le fichier de log": "Beim ersten Start des Daemons wurde ein Problem bezüglich der Rechte an der Protokolldatei behoben",
+        "22\/04\/2024": "22.04.2024",
         "Correction d'un bug sur duplication de commande (sur les scenes": "Ein Fehler bei der Befehlsduplizierung (in Szenen) wurde behoben",
+        "Correction d'un bug sur les slider avec valeur negative": "Ein Fehler bei Schiebereglern mit negativem Wert wurde behoben",
         "03\/04\/2024": "03.04.2024",
         "Correction d'un bug sur l'image de la derniere version de zigbee2mqtt": "Ein Fehler im Image der neuesten Version von zigbee2mqtt wurde behoben",
         "20\/03\/2024": "20.03.2024",
