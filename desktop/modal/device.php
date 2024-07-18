@@ -209,7 +209,11 @@ sendVarToJS('z2m_device_ieee', $eqLogic->getLogicalId());
                         }
                         if ($binding['target']['type'] == 'group') {
                             $device = eqLogic::byLogicalId('group_' . z2m::convert_to_addr($binding['target']['id']), 'z2m');
-                            $to = $device->getConfiguration('friendly_name');
+                            if(is_object($device)){
+                                $to = $device->getConfiguration('friendly_name');
+                            }else{
+                                $to = 'N/A ('.z2m::convert_to_addr($binding['target']['id']).')';
+                            }
                         }
 
                         echo '<tr data-cluster="' . $binding['cluster'] . '" data-from="' . $infos['ieee_address'] . '" data-to="' . $to . '">';
