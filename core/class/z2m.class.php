@@ -123,7 +123,7 @@ class z2m extends eqLogic {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
       return;
     }
-    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
+    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- 2>&1 > /dev/null ");
      /*     * *************************Message for Zigbee2MQTT update****************************** */
     $file = dirname(__FILE__) . '/../resources/zigbee2mqtt/package.json';
 		$package = array();
@@ -132,14 +132,14 @@ class z2m extends eqLogic {
 		}
 		if (isset($package['version'])){
 			config::save('zigbee2mqttVersion', $package['version'], 'z2m');
-		} 
-    if ($package['version'] !='') {
-      $releaseVersion = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
-      if ($releaseVersion !== false) {
-        $releaseVersion = json_decode($releaseVersion, true);
-        if (is_array($releaseVersion) && json_last_error() == '' && isset($releaseVersion['version']) && $package['version'] !== $releaseVersion['version']) {
-          log::add('z2m', 'info', 'Nouvelle version de Zigbee2MQTT disponible : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)');
-          message::add('z2m', __('Nouvelle version de Zigbee2MQTT disponible' ,__FILE__) . ' : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)', null, null);
+      if ($package['version'] !='') {
+        $releaseVersion = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
+        if ($releaseVersion !== false) {
+          $releaseVersion = json_decode($releaseVersion, true);
+          if (is_array($releaseVersion) && json_last_error() == '' && isset($releaseVersion['version']) && $package['version'] !== $releaseVersion['version']) {
+            log::add('z2m', 'info', 'Nouvelle version de Zigbee2MQTT disponible : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)');
+            message::add('z2m', __('Nouvelle version de Zigbee2MQTT disponible' ,__FILE__) . ' : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)', null, null);
+          }
         }
       }
     }
