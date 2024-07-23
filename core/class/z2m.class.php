@@ -34,6 +34,13 @@ class z2m extends eqLogic {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
         return;
     }
+    $deamon_info = self::deamon_info();
+    $retry = 0;
+    while ($deamon_info['launchable'] != 'ok' && $retry < 10) {
+      $retry++;
+      sleep(20);
+      $deamon_info = self::deamon_info();
+    }
     self::deamon_start();
   }
 
@@ -306,7 +313,7 @@ class z2m extends eqLogic {
     $data_path = dirname(__FILE__) . '/../../data';
     $deamon_info = self::deamon_info();
     if ($deamon_info['launchable'] != 'ok') {
-      throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+      throw new Exception(__('Veuillez vérifier la configuration : ', __FILE__).$deamon_info['launchable_message']);
     }
     exec(system::getCmdSudo() .' chown www-data -R "/root/.npm"');
     exec(system::getCmdSudo() .' chmod 777 -R "/root/.npm"');
