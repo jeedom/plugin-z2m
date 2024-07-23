@@ -296,7 +296,7 @@
         "Le plugin MQTT Manager n'est pas installé": "Le plugin MQTT Manager n'est pas installé",
         "Le démon MQTT Manager n'est pas démarré": "Le démon MQTT Manager n'est pas démarré",
         "Plugin Mqtt Manager (mqtt2) non installé, dépendance en cours pour corriger. Veuillez refaire la configuration dans quelques minutes": "Plugin Mqtt Manager (mqtt2) non installé, dépendance en cours pour corriger. Veuillez refaire la configuration dans quelques minutes",
-        "Veuillez vérifier la configuration": "Veuillez vérifier la configuration",
+        "Veuillez vérifier la configuration : ": "Veuillez vérifier la configuration :",
         "Démarrage du démon Z2M": "Démarrage du démon Z2M",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs",
         "Arrêt du démon z2m": "Arrêt du démon z2m",
