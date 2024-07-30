@@ -262,7 +262,7 @@ class z2m extends eqLogic {
       $configuration['serial']['baudrate'] = 115200;
     }elseif(config::byKey('controller', 'z2m') == 'raspbee_2'){
       $configuration['serial']['adapter'] = 'deconz';
-      $configuration['serial']['baudrate'] = 38400;
+      //$configuration['serial']['baudrate'] = 38400;
     }elseif (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
     }else{
@@ -784,16 +784,16 @@ class z2m extends eqLogic {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     $filename = __DIR__ . '/../../data/img/' . $model . '.jpg';
-    if (!file_exists($filename) || filesize($filename) == 0) {
+    if (!file_exists($filename) || filesize($filename) < 2) {
       if (file_exists($filename)) {
         unlink($filename);
       }
       file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.jpg'));
-      if(filesize($filename) < 1){
+      if(filesize($filename) < 2){
         file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.png'));
       }
     }
-    if (!file_exists($filename)) {
+    if (!file_exists($filename) || filesize($filename) < 2) {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     return 'plugins/z2m/data/img/' . $model . '.jpg';
