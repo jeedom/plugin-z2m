@@ -179,16 +179,20 @@ if (!isConnect()) {
 			echo "<div class='alert alert-warning text-center'>{{Votre version de zigbee2MQTT n'est pas celle recommandée par le plugin. Vous utilisez actuellement la version }}<code>". $localVersion .'</code>. {{ Le plugin nécessite la version }}<code>'. $wantedVersion .'</code>. {{Veuillez relancer les dépendances pour mettre à jour la librairie. Relancez ensuite le démon pour voir la nouvelle version.}}</div>';
 		} else {
 			echo '<span class="label label-success">' . $localVersion . '</span>';
-            }
-            $lastV = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
-            if ($lastV !== false) {
-		$V = json_decode($lastV, true);
-	    	if (is_array($V) && json_last_error() == '' && isset($V['version']) && $package['version'] !== $V['version']) {
-	         $imageData = base64_encode(file_get_contents('https://img.shields.io/github/v/release/koenkk/zigbee2mqtt.svg'));
-		 $src = 'data:image/svg+xml;base64,'.$imageData;
-	   	 echo '<br/><img src="'.$src .'"/> disponible <small>(Vous devez relancer les dépendances pour mettre à jour)</small>';
-	  	}
-	     }
+    }
+    $lastV = cache::byKey('z2m::lastZ2mVersion')->getValue();
+    if($lastV === null){
+      $lastV = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json', 0, stream_context_create(["http"=>["timeout"=>1]]));
+      cache::set('z2m::lastZ2mVersion',$lastV,86400);
+    }
+    if ($lastV !== false) {
+      $V = json_decode($lastV, true);
+      if (is_array($V) && json_last_error() == '' && isset($V['version']) && $package['version'] !== $V['version']) {
+        $imageData = base64_encode(file_get_contents('https://img.shields.io/github/v/release/koenkk/zigbee2mqtt.svg', 0, stream_context_create(["http"=>["timeout"=>1]])));
+        $src = 'data:image/svg+xml;base64,'.$imageData;
+        echo '<br/><img src="'.$src .'"/> disponible <small>(Vous devez relancer les dépendances pour mettre à jour)</small>';
+      }
+	  }
 		?>
 		</div>
 	</div>
