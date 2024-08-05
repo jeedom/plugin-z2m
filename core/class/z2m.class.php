@@ -34,6 +34,13 @@ class z2m extends eqLogic {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
         return;
     }
+    $deamon_info = self::deamon_info();
+    $retry = 0;
+    while ($deamon_info['launchable'] != 'ok' && $retry < 10) {
+      $retry++;
+      sleep(20);
+      $deamon_info = self::deamon_info();
+    }
     self::deamon_start();
   }
 
@@ -120,29 +127,29 @@ class z2m extends eqLogic {
   }
 
   public static function cronDaily() {
-    if(config::byKey('z2m::mode', 'z2m') == 'distant'){
-      return;
-    }
-    shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip | head -n -10 | xargs -d '\n' rm -f -- >> /dev/null 2>&1");
-     /*     * *************************Message for Zigbee2MQTT update****************************** */
-    $file = dirname(__FILE__) . '/../resources/zigbee2mqtt/package.json';
-		$package = array();
-		if (file_exists($file)) {
-			$package = json_decode(file_get_contents($file), true);
+	if(config::byKey('z2m::mode', 'z2m') == 'distant'){
+		return;
+	}
+	shell_exec("ls -1tr " . __DIR__ . "/../../data/backup/*.zip 2> /dev/null | head -n -10 | xargs -d '\n' rm -f -- 2>&1 > /dev/null ");
+	/*     * *************************Message for Zigbee2MQTT update****************************** */
+	$file = dirname(__FILE__) . '/../../resources/zigbee2mqtt/package.json';
+	$package = array();
+	if (file_exists($file)) {
+		$package = json_decode(file_get_contents($file), true);
+	}
+	if (isset($package['version'])){
+		config::save('zigbee2mqttVersion', $package['version'], 'z2m');
+		if ($package['version'] !='') {
+			$releaseVersion = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
+				if ($releaseVersion !== false) {
+				$releaseVersion = json_decode($releaseVersion, true);
+				if (is_array($releaseVersion) && json_last_error() == '' && isset($releaseVersion['version']) && $package['version'] !== $releaseVersion['version']) {
+					log::add('z2m', 'info', 'Nouvelle version de Zigbee2MQTT disponible : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)');
+					message::add('z2m', __('Nouvelle version de Zigbee2MQTT disponible' ,__FILE__) . ' : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)', null, null);
+				}
+			}
 		}
-		if (isset($package['version'])){
-			config::save('zigbee2mqttVersion', $package['version'], 'z2m');
-		} 
-    if ($package['version'] !='') {
-      $releaseVersion = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
-      if ($releaseVersion !== false) {
-        $releaseVersion = json_decode($releaseVersion, true);
-        if (is_array($releaseVersion) && json_last_error() == '' && isset($releaseVersion['version']) && $package['version'] !== $releaseVersion['version']) {
-          log::add('z2m', 'info', 'Nouvelle version de Zigbee2MQTT disponible : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)');
-          message::add('z2m', __('Nouvelle version de Zigbee2MQTT disponible' ,__FILE__) . ' : '.$releaseVersion['version'].' (Relancez les dépendances du plugin Jeezigbee pour effectuer la mise à jour)', null, null);
-        }
-      }
-    }
+	}
   }
   
   public static function cron() {
@@ -255,7 +262,7 @@ class z2m extends eqLogic {
       $configuration['serial']['baudrate'] = 115200;
     }elseif(config::byKey('controller', 'z2m') == 'raspbee_2'){
       $configuration['serial']['adapter'] = 'deconz';
-      $configuration['serial']['baudrate'] = 38400;
+      //$configuration['serial']['baudrate'] = 38400;
     }elseif (config::byKey('controller', 'z2m') != 'ti') {
       $configuration['serial']['adapter'] = config::byKey('controller', 'z2m');
     }else{
@@ -306,7 +313,7 @@ class z2m extends eqLogic {
     $data_path = dirname(__FILE__) . '/../../data';
     $deamon_info = self::deamon_info();
     if ($deamon_info['launchable'] != 'ok') {
-      throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+      throw new Exception(__('Veuillez vérifier la configuration : ', __FILE__).$deamon_info['launchable_message']);
     }
     exec(system::getCmdSudo() .' chown www-data -R "/root/.npm"');
     exec(system::getCmdSudo() .' chmod 777 -R "/root/.npm"');
@@ -777,16 +784,19 @@ class z2m extends eqLogic {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     $filename = __DIR__ . '/../../data/img/' . $model . '.jpg';
-    if (!file_exists($filename) || filesize($filename) == 0) {
+    if (!file_exists($filename) || filesize($filename) < 2) {
       if (file_exists($filename)) {
         unlink($filename);
       }
-      file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.jpg'));
-      if(filesize($filename) < 1){
-        file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.png'));
+      file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.png', 0, stream_context_create(["http"=>["timeout"=>1]])));
+      if(filesize($filename) < 2){
+        if (file_exists($filename)) {
+          unlink($filename);
+        }
+        file_put_contents($filename, file_get_contents('https://www.zigbee2mqtt.io/images/devices/' . $model . '.jpg', 0, stream_context_create(["http"=>["timeout"=>1]])));
       }
     }
-    if (!file_exists($filename)) {
+    if (!file_exists($filename) || filesize($filename) < 2) {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     return 'plugins/z2m/data/img/' . $model . '.jpg';
