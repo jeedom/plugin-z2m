@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "05\/08\/2024": "05\/08\/2024",
         "Amélioration de la gestion des images": "Gerenciamento de imagem aprimorado",
         "Correction du baudrate sur deconz": "Correção de taxa de transmissão no deconz",
         "Correction d'un bug d'affichage de la fenetre de configuration d'un noeud si un équipement est supprimé alors qu'il est utilisé en binding dans un autre": "Corrigido um bug que exibia a janela de configuração de um nó se um equipamento fosse excluído enquanto era usado na vinculação de outro",
