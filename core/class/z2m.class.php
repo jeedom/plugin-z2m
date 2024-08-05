@@ -776,6 +776,12 @@ class z2m extends eqLogic {
   }
 
   public function getImgFilePath() {
+    if(method_exists($this,'getCustomImage')){
+      $customImage = $this->getCustomImage();
+      if($customImage !== null){
+         return $customImage;
+      }
+    }
     $model = str_replace(array('/', ' '), array('-', '-'), $this->getConfiguration('model'));
     if ($this->getConfiguration('isgroup', 0) == 1) {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
