@@ -69,7 +69,7 @@ if (!isConnect('admin')) {
             <option value="zigbee">{{Dernier firmware zigbee officiel}}</option>
             <option value="fix_bootloader">{{Correction bootloader (uniquement Atlas)}}</option>
           </optgroup>
-          <optgroup label="{{Experimental (Pas de support}}">
+          <optgroup label="{{Experimental (Pas de support/Pas de garantie}}">
             <option value="ncp-uart-hw-v7.4.3.0-elelabs-elx0x3-115200.gbl">Ember ncp-uart-hw-v7.4.3.0-elelabs-elx0x3-115200</option>
           </optgroup>
         </select>
