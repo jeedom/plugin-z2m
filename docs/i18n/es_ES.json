@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
+        "Possibilité sur les box ayant des dongle elelabs de flasher le firmware Ember (experimental cela peut completement casser votre dongle et ne sera ni couvert par la garantie ni le support": "Posibilidad en cajas con dongles elelabs de actualizar el firmware de Ember (experimentalmente, esto puede romper completamente su dongle y no estará cubierto por la garantía ni por el soporte)",
         "05\/08\/2024": "08\/05\/2024",
         "Amélioration de la gestion des images": "Gestión de imágenes mejorada",
         "Correction du baudrate sur deconz": "Corrección de velocidad en baudios en desconz",
