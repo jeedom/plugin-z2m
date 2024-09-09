@@ -48,8 +48,7 @@
     },
     "plugins\/z2m\/desktop\/modal\/firmware_update.php": {
         "Mise à jour": "Aktualisieren",
-        "IMPORTANT : seul les clefs Elelabs peuvent être mises à jour par Jeedom actuellement": "WICHTIG: Derzeit können nur Elelabs-Schlüssel von Jeedom aktualisiert werden",
-        "IMPORTANT : NE PAS UTILISER SUR LA LUNA au risque de briquer votre contrôleur Zigbee": "WICHTIG: NICHT AUF DER LUNA VERWENDEN, da sonst die Gefahr besteht, dass Ihr Zigbee-Controller beschädigt wird",
+        "IMPORTANT : seul les clefs Elelabs et les box Luna peuvent être mises à jour par Jeedom actuellement": "WICHTIG: Derzeit können nur Elelabs-Schlüssel und Luna-Boxen von Jeedom aktualisiert werden",
         "Type de clef": "Schlüsselart",
         "Aucun": "Keiner",
         "Elelabs\/Popp": "Elelabs\/Popp",
