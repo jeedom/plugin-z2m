@@ -20,8 +20,7 @@ if (!isConnect('admin')) {
 ?>
 <div id='div_alertFirmwareUpdate' style="display: none;"></div>
 <legend>{{Mise à jour}}</legend>
-<div class="alert alert-info">{{IMPORTANT : seul les clefs Elelabs peuvent être mises à jour par Jeedom actuellement}}</div>
-<div class="alert alert-info">{{IMPORTANT : NE PAS UTILISER SUR LA LUNA au risque de briquer votre contrôleur Zigbee}}</div>
+<div class="alert alert-info">{{IMPORTANT : seul les clefs Elelabs et les box Luna peuvent être mises à jour par Jeedom actuellement}}</div>
 <form class="form-horizontal">
   <fieldset>
     <div class="form-group">
@@ -65,8 +64,13 @@ if (!isConnect('admin')) {
       <label class="col-lg-4 control-label">{{Firmware}}</label>
       <div class="col-lg-2">
         <select class="firmwareAttr form-control zigbee_firmware_sub_controller elelabs" data-l1key="firmware" style="display:none;">
-          <option value="zigbee">{{Dernier firmware zigbee officiel}}</option>
-          <option value="fix_bootloader">{{Correction bootloader (uniquement Atlas)}}</option>
+          <optgroup label="{{Stable}}">
+            <option value="zigbee">{{Dernier firmware zigbee officiel}}</option>
+            <option value="fix_bootloader">{{Correction bootloader (uniquement Atlas)}}</option>
+          </optgroup>
+          <optgroup label="{{Experimental (Pas de support/Pas de garantie}}">
+            <option value="ncp-uart-hw-v7.4.3.0-elelabs-elx0x3-115200.gbl">Ember ncp-uart-hw-v7.4.3.0-elelabs-elx0x3-115200</option>
+          </optgroup>
         </select>
         <select class="firmwareAttr form-control zigbee_firmware_sub_controller luna" data-l1key="firmware" style="display:none;">
           <option value="6.10.3.ota">{{6.10.3}}</option>

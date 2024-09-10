@@ -20,7 +20,7 @@ if [ "${FIRMWARE}" = "zigbee" ];then
 elif [ "${FIRMWARE}" = "thread" ];then
   python3 Elelabs_EzspFwUtility.py ele_update -v thread -p ${DEVICE}
 else
-  wget https://github.com/zha-ng/EZSP-Firmware/raw/master/Elelabs-ELU013/${FIRMWARE}
+  wget https://github.com/darkxst/silabs-firmware-builder/raw/main/firmware_builds/elelabs-elx0x3/${FIRMWARE}
   if [ $? -ne 0 ]; then
     echo "Can download firmware"
     exit 1
