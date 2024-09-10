@@ -453,10 +453,10 @@ class z2m extends eqLogic {
 
   public static function handleMqttMessage($_datas) {
     log::add('z2m', 'debug', json_encode($_datas));
-    if (!isset($_datas['zigbee2mqtt'])) {
+    if (!isset($_datas[config::byKey('mqtt::topic', __CLASS__)])) {
       return;
     }
-    foreach ($_datas['zigbee2mqtt'] as $key => $values) {
+    foreach ($_datas[config::byKey('mqtt::topic', __CLASS__)] as $key => $values) {
       if ($key == 'bridge') {
         self::handle_bridge($values);
         continue;
