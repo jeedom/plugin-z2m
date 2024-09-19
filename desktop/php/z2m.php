@@ -226,8 +226,11 @@ if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_timeout'])){
 							<legend><i class="fas fa-info"></i> {{Informations}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Modèle}}</label>
-								<div class="col-sm-7">
-									<span class="eqLogicAttr label label-info" data-l1key="configuration" data-l2key="device" />
+								<div class="col-sm-6">
+									<span class="eqLogicAttr label label-info" data-l1key="configuration" data-l2key="device" ></span>
+								</div>
+								<div class="col-sm-3">
+									<span id="span_z2mLinkToDeviceConfig" ></span>
 								</div>
 							</div>
 							<div class="form-group">
