@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Ajout d'un lien sur la page de l'équipement qui renvoi sur la page zigbee2mqtt de l'équipement pour avoir plus d'informations": "Auf der Geräteseite wurde ein Link hinzugefügt, der für weitere Informationen auf die Geräteseite von zigbee2mqtt verweist",
         "10\/09\/2024": "10.09.2024",
         "Possibilité sur les box ayant des dongle elelabs de flasher le firmware Ember (experimental cela peut completement casser votre dongle et ne sera ni couvert par la garantie ni le support": "Bei Boxen mit elelabs-Dongles besteht die Möglichkeit, die Ember-Firmware zu flashen (experimentell). Dies kann Ihren Dongle vollständig beschädigen und wird weder von der Garantie noch vom Support abgedeckt",
         "Correction d'un bug si le topic racine n'est pas zigbee2mqtt": "Es wurde ein Fehler behoben, der auftrat, wenn das Stammthema nicht zigbee2mqtt lautete",
