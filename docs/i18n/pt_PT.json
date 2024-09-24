@@ -2,7 +2,10 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "Ajout d'un lien sur la page de l'équipement qui renvoi sur la page zigbee2mqtt de l'équipement pour avoir plus d'informations": "Adicionado um link na página do equipamento que se refere à página do equipamento zigbee2mqtt para obter mais informações",
+        "10\/09\/2024": "10\/09\/2024",
         "Possibilité sur les box ayant des dongle elelabs de flasher le firmware Ember (experimental cela peut completement casser votre dongle et ne sera ni couvert par la garantie ni le support": "Possibilidade em caixas com dongles elelabs de atualizar o firmware Ember (experimental isso pode quebrar completamente o seu dongle e não será coberto pela garantia nem pelo suporte",
+        "Correction d'un bug si le topic racine n'est pas zigbee2mqtt": "Corrigido um bug se o tópico raiz não fosse zigbee2mqtt",
         "05\/08\/2024": "05\/08\/2024",
         "Amélioration de la gestion des images": "Gerenciamento de imagem aprimorado",
         "Correction du baudrate sur deconz": "Correção de taxa de transmissão no deconz",
