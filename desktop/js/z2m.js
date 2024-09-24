@@ -95,8 +95,8 @@ function printEqLogic(_eqLogic) {
     }
   }
   $('#span_z2mLinkToDeviceConfig').empty()
-  if(_eqLogic.configuration.device && _eqLogic.configuration.device != ''){
-    $('#span_z2mLinkToDeviceConfig').html('<a href="https://www.zigbee2mqtt.io/devices/'+_eqLogic.configuration.device+'.html" target="_blank">{{Info}}</a>');
+  if(_eqLogic.configuration.model && _eqLogic.configuration.model != ''){
+    $('#span_z2mLinkToDeviceConfig').html('<a href="https://www.zigbee2mqtt.io/devices/'+_eqLogic.configuration.model+'.html" target="_blank">{{Info}}</a>');
   }
   return _eqLogic;
 }
