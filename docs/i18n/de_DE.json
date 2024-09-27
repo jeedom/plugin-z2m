@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "27\/09\/2024": "27.09.2024",
+        "Changement des versions minimum, core 4": "Änderung der Mindestversionen, Core 4",
+        "4 et OS Debian 11 minimum": "4 und OS Debian 11 mindestens",
         "24\/09\/2024": "24.09.2024",
         "Ajout d'un lien sur la page de l'équipement qui renvoi sur la page zigbee2mqtt de l'équipement pour avoir plus d'informations": "Auf der Geräteseite wurde ein Link hinzugefügt, der für weitere Informationen auf die Geräteseite von zigbee2mqtt verweist",
         "10\/09\/2024": "10.09.2024",
