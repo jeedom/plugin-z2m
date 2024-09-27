@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "If there is no information on the update, it means that it concerns only the update of documentation, translation or text",
+        "24\/09\/2024": "09\/24\/2024",
         "Ajout d'un lien sur la page de l'équipement qui renvoi sur la page zigbee2mqtt de l'équipement pour avoir plus d'informations": "Added a link on the equipment page that redirects to the zigbee2mqtt page of the equipment for more information",
         "10\/09\/2024": "10\/09\/2024",
         "Possibilité sur les box ayant des dongle elelabs de flasher le firmware Ember (experimental cela peut completement casser votre dongle et ne sera ni couvert par la garantie ni le support": "Possibility on boxes with elelabs dongles to flash the Ember firmware (experimental this can completely break your dongle and will not be covered by the warranty or support",
