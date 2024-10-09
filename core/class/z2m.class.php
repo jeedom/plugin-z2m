@@ -324,6 +324,9 @@ class z2m extends eqLogic {
     $cmd = '';
     $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
     $cmd .= ' npm start --prefix ' . $z2m_path;
+    if(file_exists($data_path.'/coordinator_backup.json')){
+      shell_exec(system::getCmdSudo().' rm -rf'.$data_path.'/coordinator_backup.json');
+    }
     log::add(__CLASS__, 'info', __('Démarrage du démon Z2M', __FILE__) . ' : ' . $cmd);
     exec(system::getCmdSudo() . $cmd . ' >> ' . log::getPathToLog('z2md') . ' 2>&1 &');
     $i = 0;
