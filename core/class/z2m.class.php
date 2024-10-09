@@ -327,6 +327,9 @@ class z2m extends eqLogic {
     if(file_exists($data_path.'/coordinator_backup.json')){
       shell_exec(system::getCmdSudo().' rm -rf'.$data_path.'/coordinator_backup.json');
     }
+    if(file_exists($data_path.'/database_backup.json')){
+      shell_exec(system::getCmdSudo().' rm -rf'.$data_path.'/database_backup.json');
+    }
     log::add(__CLASS__, 'info', __('Démarrage du démon Z2M', __FILE__) . ' : ' . $cmd);
     exec(system::getCmdSudo() . $cmd . ' >> ' . log::getPathToLog('z2md') . ' 2>&1 &');
     $i = 0;
