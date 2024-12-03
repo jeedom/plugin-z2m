@@ -38,6 +38,7 @@ if (!isConnect()) {
       <label class="col-md-4 control-label">{{Mode}}</label>
       <div class="col-md-3">
         <select class="configKey form-control" data-l1key="z2m::mode" id="sel_z2mMode">
+          <option value="">{{A configurer}}</option>
           <option value="distant">{{Distant}}</option>
           <option value="local">{{Local}}</option>
         </select>
