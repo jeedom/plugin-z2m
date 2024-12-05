@@ -108,6 +108,7 @@ if (!isConnect()) {
         <input type="number" class="configKey form-control" data-l1key="baudrate" />
       </div>
     </div>
+    <?php if(jeedom::getHardwareName() != 'Luna'){ ?>
     <div class="form-group z2m_controllerType ezsp">
       <label class="col-md-4 control-label">{{Mise à jour du firmware du contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Cliquez sur le bouton pour mettre à jour le firmware du contrôleur<br/>Le démon Zigbee est stoppé durant le processus}}"></i></sup>
@@ -116,6 +117,7 @@ if (!isConnect()) {
           <a class="btn btn-warning" id="bt_UpdateFirmware"><i class="fas fa-download"></i> {{Mettre à jour le firmware}}</a>
       </div>
     </div>
+    <?php } ?>
     <div class="form-group z2m_mode local">
       <label class="col-md-4 control-label">{{Port d'écoute de Zigbee2MQTT}}
       <sup><i class="fas fa-question-circle tooltips" title="{{Port 8080 par défaut}}"></i></sup>
