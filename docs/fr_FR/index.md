@@ -245,3 +245,7 @@ Cette partie est plutot pour les utilisateurs avancée qui voudraient ajouter de
 >**J'ai l'erreur "Refusing to start because configuration is not valid, found the following errors: devices/0xXXXXXXXXXXXXXXXX/homeassistant must be object,null"**
 >
 >C'est un bug dans zigbee2mqtt. Il faut aller dans la configuration de jeedom onglet os/db puis editeur de fichier. La il faut aller dans plugins/z2m/data et ouvrir le fichier configuration.yaml. Dans ce fichier rechercher la ligne homeassistant et la supprimer puis relancer le demon.
+
+>**J'ai l'erreur "Configuration is not consistent with adapter backup"**
+>
+>Il faut aller dans la configuration de Jeedom puis OS/DB puis editeur de fichier. Esnuite aller dans plugins/z2m/data et supprimer le fichier coordinator_backup.json
