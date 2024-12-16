@@ -3,6 +3,7 @@
         "Le plugin jMQTT est installé, veuillez vérifier la configuration du broker dans le plugin jMQTT et la reporter, si nécessaire, dans le plugin MQTT Manager.": "Le plugin jMQTT est installé, veuillez vérifier la configuration du broker dans le plugin jMQTT et la reporter, si nécessaire, dans le plugin MQTT Manager",
         "Topic racine": "Topic racine",
         "Mode": "Mode",
+        "A configurer": "A configurer",
         "Distant": "Distant",
         "Local": "Local",
         "Cette configuration suppose que vous avez installé vous même zigbee2MQTT sur une machine déportée (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local": "Cette configuration suppose que vous avez installé vous même zigbee2mqtt sur une machine déportée (donc pas sur jeedom). Cette configuration est assez rare si vous avez une box jeedom il faut choisir le mode local",
