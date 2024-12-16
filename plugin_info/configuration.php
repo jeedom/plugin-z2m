@@ -109,7 +109,7 @@ if (!isConnect()) {
       </div>
     </div>
     <?php if(jeedom::getHardwareName() != 'Luna'){ ?>
-    <div class="form-group z2m_controllerType ezsp">
+    <div class="form-group z2m_controllerType ezsp z2m_mode local">
       <label class="col-md-4 control-label">{{Mise à jour du firmware du contrôleur}}
         <sup><i class="fas fa-question-circle tooltips" title="{{Cliquez sur le bouton pour mettre à jour le firmware du contrôleur<br/>Le démon Zigbee est stoppé durant le processus}}"></i></sup>
       </label>
