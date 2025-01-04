@@ -2,6 +2,7 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "Debut du support de zigbee2mqtt 2.0": "Beginn der Unterstützung für zigbee2mqtt 2.0",
         "16\/12\/2024": "16.12.2024",
         "Mise à jour de la documentation": "Aktualisierung der Dokumentation",
         "Le bouton de mise à jour du firmware est masqué si vous etes en mode distant": "Die Schaltfläche zur Firmware-Aktualisierung ist ausgeblendet, wenn Sie sich im Remote-Modus befinden",
