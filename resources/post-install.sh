@@ -37,7 +37,12 @@ if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
     fi
 fi
 
-npm i --package-lock-only
-npm ci
-npm run build
+#npm i --package-lock-only
+#npm ci
+#npm run build
+
+npm install -g pnpm
+pnpm i --frozen-lockfile
+pnpm run build
+
 chown www-data:www-data -R ${BASEDIR}/zigbee2mqtt
