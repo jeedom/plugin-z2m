@@ -137,7 +137,7 @@ class z2m extends eqLogic {
 	if (file_exists($file)) {
 		$package = json_decode(file_get_contents($file), true);
 	}
-	if (isset($package['version']) && config::byKey('wanted_z2m_version', __CLASS__) == ''){
+	if (isset($package['version']) && config::byKey('wanted_z2m_version', __CLASS__,'') == ''){
 		config::save('zigbee2mqttVersion', $package['version'], 'z2m');
 		if ($package['version'] !='') {
 			$releaseVersion = file_get_contents('https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/package.json');
