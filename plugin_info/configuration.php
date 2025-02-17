@@ -91,6 +91,7 @@ if (!isConnect()) {
       <div class="col-md-3">
         <select class="configKey form-control" data-l1key="controller" id="sel_z2mControllerType">
           <option value="ti">{{ZNP/TI}}</option>
+	  <option value="zstack">{{Zstack}}</option>
           <option value="ezsp">{{EZSP (Atlas/Luna/Smart)}}</option>
 	  <option value="ember">{{Ember}}</option>	
           <option value="deconz">{{Deconz/Conbee}}</option>
