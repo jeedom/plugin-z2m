@@ -18,6 +18,7 @@
         "Type de contrôleur": "Controller type",
         "Sélectionnez le type de contrôleur Zigbee à utiliser": "Select the type of Zigbee controller to use",
         "ZNP\/TI": "ZNP\/IT",
+        "Zstack": "Zstack",
         "EZSP (Atlas\/Luna\/Smart)": "EZSP (Atlas\/Luna\/Smart)",
         "Ember": "Ember",
         "Deconz\/Conbee": "Deconz\/Conbee",
