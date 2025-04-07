@@ -570,7 +570,7 @@ class z2m extends eqLogic {
       log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . json_encode($_datas['response']));
     }
     if (isset($_datas['response']['permit_join'])) {
-      if ($_datas['response']['permit_join']['data']['value']) {
+      if ($_datas['response']['permit_join']['data']['time'] > 0) {
         event::add('jeedom::alert', array(
           'level' => 'success',
           'page' => 'z2m',
