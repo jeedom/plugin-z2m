@@ -30,13 +30,21 @@ cd ${BASEDIR}/zigbee2mqtt
 
 if [ -f "${BASEDIR}/../data/wanted_z2m_version" ]; then
     wanted_z2m_version=$(cat "${BASEDIR}/../data/wanted_z2m_version")
-    if [ ! -z "${wanted_z2m_version}" ];then
-       echo "Need version : "$wanted_z2m_version
+    if [ -n "${wanted_z2m_version}" ];then
+       echo "Need version : "${wanted_z2m_version}
        git fetch --all --tags
-       git checkout tags/$wanted_z2m_version
+       git checkout tags/${wanted_z2m_version}
     fi
 fi
 
-npm ci
-npm run build
+if [ -n "${wanted_z2m_version}" ] && [ $(echo $wanted_z2m_version | head -c 1) -lt 2 ] ; then
+ npm ci
+ npm run build
+else
+ npm install -g pnpm
+ pnpm i --frozen-lockfile
+ pnpm run build
+fi
+
+
 chown www-data:www-data -R ${BASEDIR}/zigbee2mqtt

@@ -82,20 +82,23 @@ if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr) {
 });
 
 $('#bt_z2mNetwork').off('click').on('click', function () {
-$('#md_modal').dialog({title: "{{Configuration du réseau}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
+  $('#md_modal').dialog({title: "{{Configuration du réseau}}"}).load('index.php?v=d&plugin=z2m&modal=network').dialog('open');
 });
 
 function printEqLogic(_eqLogic) {
-$('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
-if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr){
-console.log(devices_attr[$('.eqLogicAttr[data-l1key=id]').value()])
-  if ('multipleEndpoints' in devices_attr[$('.eqLogicAttr[data-l1key=id]').value()] && devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['multipleEndpoints']==1){
-     $('.childCreate').show();
-  } else {
-     $('.childCreate').hide();
+  $('#img_device').attr("src", $('.eqLogicDisplayCard.active img').attr('src'));
+  if ($('.eqLogicAttr[data-l1key=id]').value() in devices_attr){
+    if ('multipleEndpoints' in devices_attr[$('.eqLogicAttr[data-l1key=id]').value()] && devices_attr[$('.eqLogicAttr[data-l1key=id]').value()]['multipleEndpoints']==1){
+      $('.childCreate').show();
+    } else {
+      $('.childCreate').hide();
+    }
   }
-}
-return _eqLogic;
+  $('#span_z2mLinkToDeviceConfig').empty()
+  if(_eqLogic.configuration.model && _eqLogic.configuration.model != ''){
+    $('#span_z2mLinkToDeviceConfig').html('<a href="https://www.zigbee2mqtt.io/devices/'+_eqLogic.configuration.model+'.html" target="_blank">{{Info}}</a>');
+  }
+  return _eqLogic;
 }
 
 $('.changeIncludeStateEnable').off('click').on('click', function () {

@@ -4,7 +4,37 @@
 >
 >Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto.
 
+# 14/01/2025
+
+- Mise à jour de la doc
+
+# 07/01/2025
+
+- La version par defaut de zigbee2mqtt est maintenant 1.42.0
+- Support de l'installation de la version de zigbee2mqtt 2.0.X (attention pour l'instant l'installation est possible mais on ne garantie pas que tout marche meme si les 1er tests sont encourageant)
+- Correção de bug
+
+# 16/12/2024
+
+- Atualização da documentação
+- O botão de atualização de firmware fica oculto se você estiver no modo remoto
+- Inicialização do daemon aprimorada
+- Por padrão o plugin está em modo local (em vez de esperar pela configuração)
+- A versão do zigbee2mqtt é por padrão 1.41 (temporário até o lançamento do 2.0)
+- Botão de atualização de firmware removido no Luna (temporário)
+
+# 27/09/2024
+
+- Mudança de versões mínimas, core 4.4 e SO Debian 11 no mínimo
+
+# 24/09/2024
+
+- Adicionado um link na página do equipamento que se refere à página do equipamento zigbee2mqtt para obter mais informações
+
+# 10/09/2024
+
 - Possibilidade em caixas com dongles elelabs de atualizar o firmware Ember (experimental isso pode quebrar completamente o seu dongle e não será coberto pela garantia nem pelo suporte)
+- Corrigido um bug se o tópico raiz não fosse zigbee2mqtt
 
 # 05/08/2024
 

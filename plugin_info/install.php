@@ -19,6 +19,7 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function z2m_install() {
+  z2m::postConfig_wanted_z2m_version(config::byKey('wanted_z2m_version', 'z2m'));
   $plugin = plugin::byId('z2m');
   if (config::byKey('z2m::mode', 'z2m', 'local') == 'local') {
     $plugin->dependancy_changeAutoMode(1);
@@ -31,6 +32,11 @@ function z2m_install() {
 
 
 function z2m_update() {
+  if(trim(config::byKey('wanted_z2m_version',  'z2m')) == ''){
+     config::save('wanted_z2m_version', '1.42.0', 'z2m');
+  }else{
+    z2m::postConfig_wanted_z2m_version(config::byKey('wanted_z2m_version',  'z2m'));
+  }
   $plugin = plugin::byId('z2m');
   if (config::byKey('z2m::mode', 'z2m', 'local') == 'local') {
     $plugin->dependancy_changeAutoMode(1);
