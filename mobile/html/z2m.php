@@ -26,11 +26,12 @@ sendVarToJS('z2m_devices', $devices);
 sendVarToJS('devices_attr', $deviceAttr);
 $bridge_infos = z2m::getDeviceInfo('bridge1');
 if($bridge_infos['permit_join'] && isset($bridge_infos['permit_join_end'])){
+	$ttl = $bridge_infos['permit_join_end'] - time() * 1000;
 	event::add('jeedom::alert', array(
           'level' => 'success',
           'page' => 'z2m',
-          'message' => __('Mode inclusion actif', __FILE__),
-          'ttl' => $bridge_infos['permit_join_end'] - time() * 1000
+          'message' => __('Mode inclusion actif pendant '. intdiv($ttl, 1000) . 's', __FILE__),
+          'ttl' => $ttl
         ));
 }
 ?>
