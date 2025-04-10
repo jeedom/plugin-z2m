@@ -74,7 +74,6 @@ if (!isConnect('admin')) {
         </select>
         <select class="firmwareAttr form-control zigbee_firmware_sub_controller luna" data-l1key="firmware" style="display:none;">
           <option value="8.0.2.0.ota">{{8.0.2.0}}</option>
-          <option value="6.10.3.ota">{{6.10.3}}</option>
         </select>
       </div>
     </div>
