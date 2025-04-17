@@ -101,7 +101,7 @@ if (!isConnect()) {
         </select>
       </div>
     </div>
-    <div class="form-group z2m_mode local z2m_controllerType ezsp ember ti">
+    <div class="form-group z2m_mode local z2m_controllerType ezsp ember ti zstack">
       <label class="col-md-4 control-label">{{Baudrate}}
       <sup><i class="fas fa-question-circle tooltips" title="{{Reserver aux utilisateurs avancés}}"></i></sup>
       </label>
