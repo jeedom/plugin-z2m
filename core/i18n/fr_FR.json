@@ -18,6 +18,7 @@
         "Type de contrôleur": "Type de contrôleur",
         "Sélectionnez le type de contrôleur Zigbee à utiliser": "Sélectionnez le type de contrôleur Zigbee à utiliser",
         "ZNP\/TI": "ZNP\/TI",
+        "Zstack": "Zstack",
         "EZSP (Atlas\/Luna\/Smart)": "EZSP (Atlas\/Luna\/Smart)",
         "Ember": "Ember",
         "Deconz\/Conbee": "Deconz\/Conbee",
@@ -62,7 +63,7 @@
         "Dernier firmware zigbee officiel": "Dernier firmware zigbee officiel",
         "Correction bootloader (uniquement Atlas)": "Correction bootloader (uniquement Atlas)",
         "Experimental (Pas de support\/Pas de garantie": "Experimental (Pas de support\/Pas de garantie",
-        "6.10.3": "6.10.3",
+        "8.0.2.0": "8.0.2.0",
         "Lancer la mise à jour": "Lancer la mise à jour",
         "Lancer": "Lancer",
         "Mise à jour du firmware de la clef": "Mise à jour du firmware de la clef"
@@ -291,6 +292,7 @@
     "plugins\/z2m\/core\/class\/z2m.class.php": {
         "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)": "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)",
         "Lancement de la mise à jour du firmware pour : ": "Lancement de la mise à jour du firmware pour : ",
+        "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna": "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna",
         "Pas de mise à jour possible du firmware pour : ": "Pas de mise à jour possible du firmware pour : ",
         "Fin de la mise à jour du firmware de la clef": "Fin de la mise à jour du firmware de la clef",
         "Nouvelle version de Zigbee2MQTT disponible' ": "Nouvelle version de Zigbee2MQTT disponible' ",
