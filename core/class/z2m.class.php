@@ -312,6 +312,8 @@ class z2m extends eqLogic {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
       return;
     }
+    exec(system::getCmdSudo() . 'chown -R ' . system::get('www-uid') . ':' . system::get('www-gid') . ' ' . dirname(__FILE__) . '/../../;');
+		exec(system::getCmdSudo() . 'chmod 775 -R ' . dirname(__FILE__) . '/../../;');
     self::deamon_stop();
     self::configure_z2m_deamon();
     $data_path = dirname(__FILE__) . '/../../data';
