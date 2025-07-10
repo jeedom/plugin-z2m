@@ -41,7 +41,7 @@ if [ -n "${wanted_z2m_version}" ] && [ $(echo $wanted_z2m_version | head -c 1) -
  npm ci
  npm run build
 else
- npm install -g pnpm@10.4.1
+ npm install -g pnpm@10.12.1
  pnpm i --frozen-lockfile
  pnpm run build
 fi
