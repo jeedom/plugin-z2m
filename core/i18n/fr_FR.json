@@ -304,7 +304,7 @@
         "Démarrage du démon Z2M": "Démarrage du démon Z2M",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs",
         "Arrêt du démon z2m": "Arrêt du démon z2m",
-        "Péripherique en cours d\\'inclusion : ": "Péripherique en cours d\\'inclusion : ",
+        "Péripherique en cours d'inclusion": "Péripherique en cours d'inclusion",
         "Z2M à renvoyé une erreur : ": "Z2M à renvoyé une erreur : ",
         "Mode inclusion actif": "Mode inclusion actif",
         "Mode inclusion inactif": "Mode inclusion inactif",

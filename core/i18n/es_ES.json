@@ -304,7 +304,7 @@
         "Démarrage du démon Z2M": "Iniciando el demonio Z2M",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "No se pudo iniciar el demonio Zigbee2mqtt, verifique los registros",
         "Arrêt du démon z2m": "Deteniendo el demonio z2m",
-        "Péripherique en cours d\\'inclusion : ": "Dispositivo incluido:",
+        "Péripherique en cours d'inclusion": "Péripherique en cours d'inclusion",
         "Z2M à renvoyé une erreur : ": "Z2M devolvió un error:",
         "Mode inclusion actif": "Incluir modo activo",
         "Mode inclusion inactif": "Modo de inclusión inactivo",
