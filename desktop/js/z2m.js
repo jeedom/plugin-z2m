@@ -198,6 +198,10 @@ tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configu
 tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
 tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
 tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label></span> ';
+// No Converter
+if (init(_cmd.type) == "info") {
+  tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="noConverter" title="{{Activer pour ne pas mettre à jour lors d\'un Refresh de l\'équipement (utile lorsqu\'il n\'existe pas de converter pour le champ)}}" />{{No Converter}} </label></span> ';
+}
 tr += '</td>';
 tr += '<td>';
 tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
