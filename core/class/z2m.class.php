@@ -62,7 +62,6 @@ class z2m extends eqLogic {
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
     } else if ($_options['sub_controller'] == 'luna') {
-      throw new Exception(__('Il n\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna', __FILE__) );
       if(file_exists('/dev/ttyLuna-Zigbee')){
           $_options['port'] = '/dev/ttyLuna-Zigbee';
       }else{
@@ -70,7 +69,8 @@ class z2m extends eqLogic {
       }
       $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
       $cmd .= 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E;';
-      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -n1 -p '.$_options['port'].' -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'].' >> ' . $log . ' 2>&1;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T >> ' . $log . ' 2>&1;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -n1 -p '.$_options['port'].' -b115200 -T -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'].' -V210 >> ' . $log . ' 2>&1;';
       $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T >> ' . $log . ' 2>&1;';
     }else{
       log::add(__CLASS__ . '_firmware', 'alert', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
@@ -554,7 +554,7 @@ class z2m extends eqLogic {
               'level' => 'info',
               'page' => 'z2m',
               'ttl' => 60000,
-              'message' => __('Péripherique en cours d\'inclusion : ', __FILE__) . $addr,
+              'message' => __("Péripherique en cours d'inclusion", __FILE__).' : ' . $addr,
             ));
           }
           break;

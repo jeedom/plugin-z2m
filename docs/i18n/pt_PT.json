@@ -2,7 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
-        "Meilleurs gestion des droits lors du lancement du demon": "",
+        "Meilleurs gestion des droits lors du lancement du demon": "Meilleurs gestion des droits lors du lancement du demon",
+        "Ajout d'un nouveau firmware (8.0.3": "Ajout d'un nouveau firmware (8.0.3",
+        "0) pour la Luna": "0) pour la Luna",
         "24\/06\/2025": "24\/06\/2025",
         "Version de zigbee2mqtt par defaut 2": "Version de zigbee2mqtt par defaut 2",
         "4 (sauf pour les luna": "4 (sauf pour les luna",
