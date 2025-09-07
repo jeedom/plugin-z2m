@@ -305,7 +305,7 @@ class z2m extends eqLogic {
     } else if (log::convertLogLevel(log::getLogLevel('z2m')) == 'info') {
       $configuration['advanced']['log_level'] = 'info';
     }
-	if(isset($configuration['device_options'] && (count($configuration['device_options']) == 0 || is_array($configuration['device_options']))){
+	if(isset($configuration['device_options']) && (count($configuration['device_options']) == 0 || is_array($configuration['device_options']))){
 		unset($configuration['device_options']);
 	}
     file_put_contents($data_path . '/configuration.yaml', yaml_emit($configuration));
