@@ -433,9 +433,6 @@ class z2m extends eqLogic {
   }
 
   public static function postConfig_wanted_z2m_version($_value = null) {
-    if(config::byKey('port', 'z2m') == '/dev/ttyLuna-Zigbee'){
-      $_value = '1.42.0';
-    }
     if($_value == null || trim($_value) == null){
       if(file_exists(__DIR__.'/../../data/wanted_z2m_version')){
         unlink(__DIR__.'/../../data/wanted_z2m_version');
