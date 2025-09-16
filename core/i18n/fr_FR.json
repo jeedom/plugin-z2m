@@ -63,7 +63,7 @@
         "Dernier firmware zigbee officiel": "Dernier firmware zigbee officiel",
         "Correction bootloader (uniquement Atlas)": "Correction bootloader (uniquement Atlas)",
         "Experimental (Pas de support\/Pas de garantie": "Experimental (Pas de support\/Pas de garantie",
-        "8.0.2.0": "8.0.2.0",
+        "8.0.3.0": "8.0.3.0",
         "Lancer la mise à jour": "Lancer la mise à jour",
         "Lancer": "Lancer",
         "Mise à jour du firmware de la clef": "Mise à jour du firmware de la clef"
@@ -292,7 +292,6 @@
     "plugins\/z2m\/core\/class\/z2m.class.php": {
         "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)": "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)",
         "Lancement de la mise à jour du firmware pour : ": "Lancement de la mise à jour du firmware pour : ",
-        "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna": "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna",
         "Pas de mise à jour possible du firmware pour : ": "Pas de mise à jour possible du firmware pour : ",
         "Fin de la mise à jour du firmware de la clef": "Fin de la mise à jour du firmware de la clef",
         "Nouvelle version de Zigbee2MQTT disponible' ": "Nouvelle version de Zigbee2MQTT disponible' ",
@@ -305,7 +304,7 @@
         "Démarrage du démon Z2M": "Démarrage du démon Z2M",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs",
         "Arrêt du démon z2m": "Arrêt du démon z2m",
-        "Péripherique en cours d\\'inclusion : ": "Péripherique en cours d\\'inclusion : ",
+        "Péripherique en cours d'inclusion": "Péripherique en cours d'inclusion",
         "Z2M à renvoyé une erreur : ": "Z2M à renvoyé une erreur : ",
         "Mode inclusion actif": "Mode inclusion actif",
         "Mode inclusion inactif": "Mode inclusion inactif",

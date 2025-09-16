@@ -63,7 +63,7 @@
         "Dernier firmware zigbee officiel": "Neueste offizielle Zigbee-Firmware",
         "Correction bootloader (uniquement Atlas)": "Bootloader-Korrektur (nur Atlas)",
         "Experimental (Pas de support\/Pas de garantie": "Experimentell (kein Support\/keine Garantie",
-        "8.0.2.0": "8.0.2.0",
+        "8.0.3.0": "8.0.3.0",
         "Lancer la mise à jour": "Starten Sie das Update",
         "Lancer": "Werfen",
         "Mise à jour du firmware de la clef": "Aktualisieren der Schlüssel-Firmware"
@@ -292,7 +292,6 @@
     "plugins\/z2m\/core\/class\/z2m.class.php": {
         "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)": "Bitte beachten Sie, dass es nicht möglich ist, diese Art von Firmware-Update auf Ihrer Box zu starten (Sie können nur ein Luna-Firmware-Update starten)",
         "Lancement de la mise à jour du firmware pour : ": "Starten des Firmware-Updates für:",
-        "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna": "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna",
         "Pas de mise à jour possible du firmware pour : ": "Kein Firmware-Update möglich für:",
         "Fin de la mise à jour du firmware de la clef": "Ende des wichtigen Firmware-Updates",
         "Nouvelle version de Zigbee2MQTT disponible' ": "Neue Version von Zigbee2MQTT verfügbar",
@@ -305,7 +304,7 @@
         "Démarrage du démon Z2M": "Starten des Z2M-Daemons",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "Der Zigbee2mqtt-Daemon konnte nicht gestartet werden, überprüfen Sie die Protokolle",
         "Arrêt du démon z2m": "Beenden des z2m-Dämons",
-        "Péripherique en cours d\\'inclusion : ": "Enthaltenes Gerät:",
+        "Péripherique en cours d'inclusion": "Péripherique en cours d'inclusion",
         "Z2M à renvoyé une erreur : ": "Z2M hat einen Fehler zurückgegeben:",
         "Mode inclusion actif": "Include-Modus aktiv",
         "Mode inclusion inactif": "Inklusionsmodus inaktiv",

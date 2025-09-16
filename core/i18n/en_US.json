@@ -63,7 +63,7 @@
         "Dernier firmware zigbee officiel": "Latest official zigbee firmware",
         "Correction bootloader (uniquement Atlas)": "Bootloader correction (Atlas only)",
         "Experimental (Pas de support\/Pas de garantie": "Experimental (No Support\/No Warranty)",
-        "8.0.2.0": "8.0.2.0",
+        "8.0.3.0": "8.0.3.0",
         "Lancer la mise à jour": "Start the update",
         "Lancer": "Throw",
         "Mise à jour du firmware de la clef": "Updating the key firmware"
@@ -292,7 +292,6 @@
     "plugins\/z2m\/core\/class\/z2m.class.php": {
         "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)": "Please note, it is not possible to launch this type of firmware update on your box (you can only launch a Luna firmware update)",
         "Lancement de la mise à jour du firmware pour : ": "Launching the firmware update for:",
-        "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna": "Il n\\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna",
         "Pas de mise à jour possible du firmware pour : ": "No firmware update possible for:",
         "Fin de la mise à jour du firmware de la clef": "End of key firmware update",
         "Nouvelle version de Zigbee2MQTT disponible' ": "New version of Zigbee2MQTT available'",
@@ -305,7 +304,7 @@
         "Démarrage du démon Z2M": "Starting the Z2M Daemon",
         "Impossible de démarrer le démon Zigbee2mqtt, consultez les logs": "Failed to start Zigbee2mqtt daemon, check logs",
         "Arrêt du démon z2m": "Stopping the z2m daemon",
-        "Péripherique en cours d\\'inclusion : ": "Device being included:",
+        "Péripherique en cours d'inclusion": "Péripherique en cours d'inclusion",
         "Z2M à renvoyé une erreur : ": "Z2M returned an error:",
         "Mode inclusion actif": "Include mode active",
         "Mode inclusion inactif": "Inclusion mode inactive",

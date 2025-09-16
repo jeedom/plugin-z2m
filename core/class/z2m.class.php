@@ -62,7 +62,6 @@ class z2m extends eqLogic {
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
     } else if ($_options['sub_controller'] == 'luna') {
-      throw new Exception(__('Il n\'est pour le moment pas possible de mettre à jour le firmware zigbee de la luna', __FILE__) );
       if(file_exists('/dev/ttyLuna-Zigbee')){
           $_options['port'] = '/dev/ttyLuna-Zigbee';
       }else{
@@ -70,7 +69,8 @@ class z2m extends eqLogic {
       }
       $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
       $cmd .= 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E;';
-      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -n1 -p '.$_options['port'].' -b115200 -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'].' >> ' . $log . ' 2>&1;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T >> ' . $log . ' 2>&1;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -n1 -p '.$_options['port'].' -b115200 -T -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'].' -V210 >> ' . $log . ' 2>&1;';
       $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T >> ' . $log . ' 2>&1;';
     }else{
       log::add(__CLASS__ . '_firmware', 'alert', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
@@ -305,6 +305,9 @@ class z2m extends eqLogic {
     } else if (log::convertLogLevel(log::getLogLevel('z2m')) == 'info') {
       $configuration['advanced']['log_level'] = 'info';
     }
+	if(isset($configuration['device_options']) && (count($configuration['device_options']) == 0 || is_array($configuration['device_options']))){
+		unset($configuration['device_options']);
+	}
     file_put_contents($data_path . '/configuration.yaml', yaml_emit($configuration));
   }
 
@@ -312,6 +315,8 @@ class z2m extends eqLogic {
     if(config::byKey('z2m::mode', 'z2m') == 'distant'){
       return;
     }
+    exec(system::getCmdSudo() . 'chown -R ' . system::get('www-uid') . ':' . system::get('www-gid') . ' ' . dirname(__FILE__) . '/../../;');
+		exec(system::getCmdSudo() . 'chmod 775 -R ' . dirname(__FILE__) . '/../../;');
     self::deamon_stop();
     self::configure_z2m_deamon();
     $data_path = dirname(__FILE__) . '/../../data';
@@ -428,9 +433,6 @@ class z2m extends eqLogic {
   }
 
   public static function postConfig_wanted_z2m_version($_value = null) {
-    if(config::byKey('port', 'z2m') == '/dev/ttyLuna-Zigbee'){
-      $_value = '1.42.0';
-    }
     if($_value == null || trim($_value) == null){
       if(file_exists(__DIR__.'/../../data/wanted_z2m_version')){
         unlink(__DIR__.'/../../data/wanted_z2m_version');
@@ -552,7 +554,7 @@ class z2m extends eqLogic {
               'level' => 'info',
               'page' => 'z2m',
               'ttl' => 60000,
-              'message' => __("Péripherique en cours d'inclusion : ", __FILE__) . $addr,
+              'message' => __("Péripherique en cours d'inclusion", __FILE__).' : ' . $addr,
             ));
           }
           break;
