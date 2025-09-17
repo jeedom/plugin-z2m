@@ -70,7 +70,7 @@ class z2m extends eqLogic {
       $cmd = 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8;';
       $cmd .= 'sudo chmod +x ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E;';
       $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T >> ' . $log . ' 2>&1;';
-      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_arm64_debian_V8 -n1 -p '.$_options['port'].' -b115200 -T -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'].' -V210 >> ' . $log . ' 2>&1;';
+      $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T -F '. __DIR__ . '/../../resources/misc/luna/' . $_options['firmware'].' -V210 >> ' . $log . ' 2>&1;';
       $cmd .= 'sudo ' . __DIR__ . '/../../resources/misc/luna/AmberGwZ3_498_EZSP0x0E -n1 -p '.$_options['port'].' -b115200 -T >> ' . $log . ' 2>&1;';
     }else{
       log::add(__CLASS__ . '_firmware', 'alert', __('Pas de mise à jour possible du firmware pour : ', __FILE__) . $_options['port']);
