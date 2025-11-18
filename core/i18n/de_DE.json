@@ -292,6 +292,7 @@
     "plugins\/z2m\/core\/class\/z2m.class.php": {
         "Attention il n'est pas possible de lancer ce type de mise à jour firmware sur votre box (vous ne pouvez lancer qu'une mise à jour firmware Luna)": "Bitte beachten Sie, dass es nicht möglich ist, diese Art von Firmware-Update auf Ihrer Box zu starten (Sie können nur ein Luna-Firmware-Update starten)",
         "Lancement de la mise à jour du firmware pour : ": "Starten des Firmware-Updates für:",
+        "Mise à jour en cours de correction.": "Mise à jour en cours de correction",
         "Pas de mise à jour possible du firmware pour : ": "Kein Firmware-Update möglich für:",
         "Fin de la mise à jour du firmware de la clef": "Ende des wichtigen Firmware-Updates",
         "Nouvelle version de Zigbee2MQTT disponible' ": "Neue Version von Zigbee2MQTT verfügbar",
