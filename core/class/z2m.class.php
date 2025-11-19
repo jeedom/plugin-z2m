@@ -62,7 +62,6 @@ class z2m extends eqLogic {
       }
       log::add(__CLASS__ . '_firmware', 'info', __('Lancement de la mise à jour du firmware pour : ', __FILE__) . $_options['port'] . ' => ' . $cmd);
     } else if ($_options['sub_controller'] == 'luna') {
-	  throw new Exception(__("Mise à jour en cours de correction.", __FILE__));
       if(file_exists('/dev/ttyLuna-Zigbee')){
           $_options['port'] = '/dev/ttyLuna-Zigbee';
       }else{
