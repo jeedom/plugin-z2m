@@ -334,6 +334,7 @@ class z2m extends eqLogic {
     $z2m_path = realpath(dirname(__FILE__) . '/../../resources/zigbee2mqtt');
     $cmd = '';
     $cmd .= 'ZIGBEE2MQTT_DATA=' . $data_path;
+	$cmd .= ' NODE_OPTIONS=--max_old_space_size=1536';
     $cmd .= ' npm start --prefix ' . $z2m_path;
     if(file_exists($data_path.'/coordinator_backup.json')){
       shell_exec(system::getCmdSudo().' rm -rf'.$data_path.'/coordinator_backup.json');
