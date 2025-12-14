@@ -1111,6 +1111,9 @@ class z2m extends eqLogic {
           if(in_array($logicalId,array('linkquality','last_seen'))){
             	continue; 
           }
+	  if ($cmd->getConfiguration('noConverter', '0') == '1') {  // no Converter
+	 	continue; 
+          }
           $datas = array($logicalId => '');
           log::add('z2m','debug','[execute] '.z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get => '.json_encode($datas));
           mqtt2::publish(z2m::getRootTopic() . '/' . z2m::convert_from_addr(explode('|', $this->getLogicalId())[0]) . '/get', json_encode($datas));
