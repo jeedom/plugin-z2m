@@ -185,17 +185,21 @@ class z2m extends eqLogic {
   }
 
   public static function deamon_info() {
-    if (config::byKey('z2m::mode', 'z2m') == 'distant') {
-      $return = array();
-      $return['log'] = __CLASS__;
-      $return['launchable'] = 'ok';
-      $return['state'] = 'ok';
-      return $return;
-    }
     $return = array();
     $return['log'] = __CLASS__;
     $return['launchable'] = 'ok';
     $return['state'] = 'nok';
+    switch (config::byKey('z2m::mode', __CLASS__)) {
+      case 'local':
+        break;
+      case 'distant':
+        $return['state'] = 'ok';
+        return $return;
+      default:
+        $return['launchable'] = 'nok';
+        $return['launchable_message'] = __("Veuillez sélectionner le mode d'installation", __FILE__);
+        return $return;
+    }
     if (self::isRunning()) {
       $return['state'] = 'ok';
     }
