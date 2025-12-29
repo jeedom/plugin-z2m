@@ -93,7 +93,7 @@ if (!isConnect()) {
           <option value="ti">ZNP/TI</option>
 	  <option value="zstack">Zstack</option>
           <option value="ezsp">EZSP (Atlas/Luna/Smart)</option>
-	  <option value="ember">Ember</option>	
+	  <option value="ember">Ember (Luna)</option>	
           <option value="deconz">Deconz/Conbee</option>
           <option value="conbee_3">Conbee 3</option>
           <option value="raspbee_2">Raspbee 2</option>
