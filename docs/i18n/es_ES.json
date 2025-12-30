@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Registro de cambios jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Si no hay información sobre la actualización, significa que se trata solo de la actualización de la documentación, la traducción o el texto",
+        "29\/12\/2025": "",
+        "Ajout de l'option NODE_OPTIONS=--max_old_space_size=1536 pour le démarrage de zigbee2mqtt": "",
+        "Amélioration du processus d'installation": "",
         "25\/11\/2025": "25\/11\/2025",
         "Amélioration de la mise a jour du firmware": "Amélioration de la mise a jour du firmware",
         "Correction d'un soucis de traduction": "Correction d'un soucis de traduction",
@@ -130,7 +133,14 @@
         " IMPORTANT]": " IMPORTANTE]",
         "[IMPORTANT]": "[IMPORTANTE]",
         "*IMPORTANT*": "*IMPORTANTE*",
-        " IMPORTANT*": " IMPORTANTE*"
+        " IMPORTANT*": " IMPORTANTE*",
+        " Typo.": " .",
+        " Typo?": " ?",
+        "Typo ": " ",
+        " Typo]": " ]",
+        "[Typo]": "[]",
+        "*Typo*": "**",
+        " Typo*": " *"
     },
     "index.md": {
         "Plugin jeezigbee": "Plugin jeezigbee",
