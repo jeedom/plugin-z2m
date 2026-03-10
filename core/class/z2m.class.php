@@ -510,7 +510,7 @@ class z2m extends eqLogic {
           continue;
         }
         foreach ($values as $logical_id => &$value) {
-          if ($value === null || $value === '') {
+          if (($value === null || $value === '') && $logical_id != 'action_code') {
             continue;
           }
           if ($logical_id == 'device') {
