@@ -576,15 +576,15 @@ class z2m extends eqLogic {
           ));*/
           break;
         case 'error':
-          log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
+          log::add('z2m', 'error', __('Z2M a renvoyé une erreur : ', __FILE__) . $_datas['logging']['message']);
           break;
       }
     }
     if (isset($_datas['response']['status']) && $_datas['response']['status'] != 'ok') {
-      log::add('z2m', 'error', __('Z2M à renvoyé une erreur : ', __FILE__) . json_encode($_datas['response']));
+      log::add('z2m', 'error', __('Z2M a renvoyé une erreur : ', __FILE__) . json_encode($_datas['response']));
     }
     if (isset($_datas['response']['permit_join'])) {
-      if ($_datas['response']['permit_join']['data']['value'] || $_datas['response']['permit_join']['status'] == 'ok') {
+      if ($_datas['response']['permit_join']['data']['time'] > 0) {
         event::add('jeedom::alert', array(
           'level' => 'success',
           'page' => 'z2m',
