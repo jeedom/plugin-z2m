@@ -184,6 +184,16 @@ class z2m extends eqLogic {
     return false;
   }
 
+  public static function additionnalDependancyCheck() {
+    $return = array();
+    if (config::byKey('z2m::mode', __CLASS__) === 'local') {
+      if (!file_exists(__DIR__ . '/../../resources/zigbee2mqtt/node_modules')) {
+        $return['state'] = 'nok';
+      }
+    }
+    return $return;
+  }
+
   public static function deamon_info() {
     $return = array();
     $return['log'] = __CLASS__;
