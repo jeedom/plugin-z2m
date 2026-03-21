@@ -2,9 +2,9 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Changelog jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Se não houver informação sobre a atualização, significa que se trata apenas da atualização da documentação, tradução ou texto",
-        "17\/03\/2026": "",
-        "Correction d'un bug sur la luna ou le plugin forcé le retour a la version 1.42": "",
-        "0 de zigbee2mqtt": "",
+        "17\/03\/2026": "17\/03\/2026",
+        "Correction d'un bug sur la luna ou le plugin forcé le retour a la version 1.42": "Correction d'un bug sur la luna ou le plugin forcé le retour a la version 1.42",
+        "0 de zigbee2mqtt": "0 de zigbee2mqtt",
         "16\/03\/2026": "16\/03\/2026",
         "Jeedom 4.5": "Jeedom 4.5",
         "3 mini": "3 mini",
