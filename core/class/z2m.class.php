@@ -178,7 +178,7 @@ class z2m extends eqLogic {
     if (config::byKey('z2m::mode', 'z2m') == 'distant') {
       return true;
     }
-    if (!empty(system::ps('zigbee2mqtt'))) {
+    if (!empty(system::ps('plugins/z2m/resources/zigbee2mqtt'))) {
       return true;
     }
     return false;
