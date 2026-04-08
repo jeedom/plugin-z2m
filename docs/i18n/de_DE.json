@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog JeeZigbee": "Änderungsprotokoll jeeZigbee",
         "S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Wenn es keine Informationen über die Aktualisierung gibt, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "09\/04\/2026": "09.04.2026",
+        "Modification de la vérification de l'état du démon pour éviter les faux positifs": "Die Überprüfung des Daemon-Status wurde modifiziert, um Fehlalarme zu vermeiden",
         "17\/03\/2026": "17\/03\/2026",
         "Correction d'un bug sur la luna ou le plugin forcé le retour a la version 1.42": "Correction d'un bug sur la luna ou le plugin forcé le retour a la version 1.42",
         "0 de zigbee2mqtt": "0 de zigbee2mqtt",
