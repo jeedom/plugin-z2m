@@ -10,6 +10,10 @@ lang: fr
 >
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+# 11/04/2026
+
+- Aucun changement sur le plugin, cette mise à jour n'est la que pour tester un nouveau systeme de traduction et de gestion de documentation
+
 # 09/04/2026
 
 - Modification de la vérification de l’état du démon pour éviter les faux positifs
