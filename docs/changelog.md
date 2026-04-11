@@ -13,6 +13,7 @@ lang: fr
 # 11/04/2026
 
 - Aucun changement sur le plugin, cette mise à jour n'est la que pour tester un nouveau systeme de traduction et de gestion de documentation
+- Correction de bugs
 
 # 09/04/2026
 
