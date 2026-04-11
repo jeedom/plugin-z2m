@@ -1,0 +1,3 @@
+remote_theme: jeedom/documentation-theme
+plugins:
+  - jekyll-remote-theme
