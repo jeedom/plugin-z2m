@@ -1,3 +1,9 @@
+---
+layout: plugin
+title: Jeezigbee
+lang: fr
+---
+
 # Plugin jeezigbee
 
 >**IMPORTANT**
