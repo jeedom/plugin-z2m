@@ -1,6 +1,7 @@
 ---
 layout: plugin
-title: Jeezigbee
+title: Documentation
+plugin: Jeezigbee
 lang: fr
 ---
 
