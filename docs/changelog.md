@@ -1,6 +1,7 @@
 ---
 layout: plugin
-title: Jeezigbee
+title: Changelog
+plugin: Jeezigbee
 lang: fr
 ---
 
