@@ -1,5 +1,4 @@
 ---
-layout: plugin
 title: Documentation
 plugin: Jeezigbee
 lang: fr
