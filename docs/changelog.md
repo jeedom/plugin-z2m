@@ -1,5 +1,4 @@
 ---
-layout: plugin
 title: Changelog
 plugin: Jeezigbee
 lang: fr
