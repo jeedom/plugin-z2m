@@ -66,7 +66,8 @@ if (!isConnect('admin')) {
         <select class="firmwareAttr form-control zigbee_firmware_sub_controller elelabs" data-l1key="firmware" style="display:none;">
           <optgroup label="{{Stable}}">
             <option value="zigbee">{{Dernier firmware zigbee officiel}}</option>
-            <option value="fix_bootloader">{{Correction bootloader (uniquement Atlas)}}</option>
+            <option value="fix_bootloader">{{[ATLAS] Correction bootloader}}</option>
+            <option value="fix_bootloader_luna">{{[LUNA] Correction bootloader}}</option>
           </optgroup>
           <optgroup label="{{Experimental (Pas de support/Pas de garantie}}">
             <option value="ncp-uart-hw-v7.4.3.0-elelabs-elx0x3-115200.gbl">Ember ncp-uart-hw-v7.4.3.0-elelabs-elx0x3-115200</option>
