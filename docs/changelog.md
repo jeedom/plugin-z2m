@@ -11,6 +11,7 @@ lang: fr
 >S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
 - Correction d'un soucis du bouton de mise à jour du firmware qui n'était pas visible en mode ember
+- Ajout d'une option pour corriger le bootloader si la mise a jour du firmware sur luna a échoué
 
 # 11/04/2026
 
