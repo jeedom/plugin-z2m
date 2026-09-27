@@ -28,7 +28,7 @@ try {
   if (init('action') == 'include') {
     $data = array(
       'value' => (init('mode') == 1),
-      'time' => 180
+      'time' => (init('mode') == 1) ? 180 : 0
     );
     if(init('id') != 'all'){
       $data['device'] = init('id');

@@ -7,7 +7,7 @@
   },
   "apt" : {
     "nodejs" : {},
-    "php-yaml" : {}
+    "php8.3-yaml" : {}
   },
   "post-install" : {
     "restart_apache" : true,
