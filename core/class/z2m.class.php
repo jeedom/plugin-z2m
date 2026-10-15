@@ -310,26 +310,14 @@ class z2m extends eqLogic {
     }
     $configuration['frontend']['auth_token'] = config::byKey('z2m_auth_token', 'z2m');
 
-    // Zigbee2MQTT 2.x ne lit plus la clé external_converters de configuration.yaml :
-    // les convertisseurs sont chargés depuis <data>/external_converters. On y recopie
-    // ceux livrés avec le plugin, en comparant les md5 pour éviter les écritures inutiles.
-    $converter_path = dirname(__FILE__) . '/../config/converters';
-    $external_path = $data_path . '/external_converters';
-    if (!is_dir($external_path)) {
-      mkdir($external_path, 0775, true);
-    }
+    $converter_path =  dirname(__FILE__) . '/../config/converters';
+    $converters = array();
     foreach (ls($converter_path, '*', false, array('folders', 'quiet')) as $folder) {
-      foreach (ls($converter_path . '/' . $folder, '*', false, array('files', 'quiet')) as $file) {
-        if (!in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), array('js', 'mjs', 'cjs'))) {
-          continue;
-        }
-        $source = $converter_path . '/' . $folder . $file;
-        $target = $external_path . '/' . $file;
-        if (!file_exists($target) || md5_file($source) != md5_file($target)) {
-          copy($source, $target);
-        }
+      foreach (ls($converter_path . '/' . $folder, '*.js', false, array('files', 'quiet')) as $file) {
+        $converters[] = $converter_path . '/' . $folder . $file;
       }
     }
+    $configuration['external_converters'] = $converters;
     $configuration['advanced']['log_level'] = 'error';
 
     if (log::convertLogLevel(log::getLogLevel('z2m')) == 'debug') {
