@@ -126,7 +126,6 @@
         "8.0.3.0": "8.0.3.0",
         "Atlas (\/dev\/ttyS2)": "Atlas (\/dev\/ttyS2)",
         "Aucun": "Keiner",
-        "Correction bootloader (uniquement Atlas)": "Bootloader-Korrektur (nur Atlas)",
         "Dernier firmware zigbee officiel": "Neueste offizielle Zigbee-Firmware",
         "Elelabs\/Popp": "Elelabs\/Popp",
         "Experimental (Pas de support\/Pas de garantie": "Experimentell (kein Support\/keine Garantie",
@@ -140,7 +139,9 @@
         "Mise à jour du firmware de la clef": "Aktualisieren der Schlüssel-Firmware",
         "Port Zigbee": "Zigbee-Port",
         "Stable": "Stabil",
-        "Type de clef": "Schlüsselart"
+        "Type de clef": "Schlüsselart",
+        "[ATLAS] Correction bootloader": "[ATLAS] Korrektur des Bootloaders",
+        "[LUNA] Correction bootloader": "[LUNA] Korrektur des Bootloaders"
     },
     "plugins\/z2m\/desktop\/modal\/group.php": {
         "Action": "Aktie",
