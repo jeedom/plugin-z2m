@@ -21,6 +21,8 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class z2m extends eqLogic {
   /*     * *************************Attributs****************************** */
 
+  private const SUNRICHER_REMOTE_MODEL = 'SR-ZG2856-Pro';
+
   private static $_cmd_converter = null;
   private static $_action_cmd = array(
     'value_off' => 'off',
@@ -524,6 +526,12 @@ class z2m extends eqLogic {
         if (isset($values['last_seen']) && $eqLogic->getConfiguration('maxLastSeen', 0) > 0 && (strtotime($values['last_seen']) + $eqLogic->getConfiguration('maxLastSeen', 0)) < strtotime('now')) {
           continue;
         }
+        $hasSunricherButtons = isset($values['action_buttons']) && is_array($values['action_buttons'])
+          && $eqLogic->getConfiguration('model') === self::SUNRICHER_REMOTE_MODEL;
+        if ($hasSunricherButtons) {
+          // Scenarios triggered by action must see the buttons from the same message.
+          $values = array('action_buttons' => $values['action_buttons']) + $values;
+        }
         foreach ($values as $logical_id => &$value) {
           if (($value === null || $value === '') && $logical_id != 'action_code') {
             continue;
@@ -532,6 +540,9 @@ class z2m extends eqLogic {
             continue;
           }
           $raw_value = $value;
+          if ($hasSunricherButtons && $logical_id === 'action_buttons') {
+            $value = implode(',', $value);
+          }
           if ($logical_id == 'last_seen') {
             $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
@@ -693,6 +704,14 @@ class z2m extends eqLogic {
             continue;
           }
           $eqLogic->createCmd($expose);
+        }
+        if ($eqLogic->getConfiguration('model') === self::SUNRICHER_REMOTE_MODEL && !is_object($eqLogic->getCmd('info', 'action_buttons'))) {
+          $eqLogic->createCmd(array(
+            'name' => 'action_buttons',
+            'property' => 'action_buttons',
+            'type' => 'text',
+            'access' => 1
+          ));
         }
         file_put_contents(__DIR__ . '/../../data/devices/' . $addr . '.json', json_encode($device));
         if ($new !== null) {
