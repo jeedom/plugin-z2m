@@ -1,0 +1,9 @@
+{
+    "SR-ZG2856-Pro": {
+        "action_buttons": {
+            "type": "list",
+            "access": 1,
+            "list_separator": ","
+        }
+    }
+}

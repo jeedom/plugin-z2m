@@ -524,6 +524,11 @@ class z2m extends eqLogic {
         if (isset($values['last_seen']) && $eqLogic->getConfiguration('maxLastSeen', 0) > 0 && (strtotime($values['last_seen']) + $eqLogic->getConfiguration('maxLastSeen', 0)) < strtotime('now')) {
           continue;
         }
+        $additionalExposes = self::getAdditionalExposes($eqLogic->getConfiguration('model'));
+        if (!empty($additionalExposes) && is_array($values)) {
+          // Apply supplemental fields before native fields that may trigger scenarios.
+          $values = array_intersect_key($values, $additionalExposes) + $values;
+        }
         foreach ($values as $logical_id => &$value) {
           if (($value === null || $value === '') && $logical_id != 'action_code') {
             continue;
@@ -532,6 +537,9 @@ class z2m extends eqLogic {
             continue;
           }
           $raw_value = $value;
+          if (is_array($value) && isset($additionalExposes[$logical_id]['list_separator'])) {
+            $value = implode($additionalExposes[$logical_id]['list_separator'], $value);
+          }
           if ($logical_id == 'last_seen') {
             $value = (is_numeric($value)) ? date('Y-m-d H:i:s', intval($value) / 1000) : date('Y-m-d H:i:s', strtotime($value));
           }
@@ -694,6 +702,11 @@ class z2m extends eqLogic {
           }
           $eqLogic->createCmd($expose);
         }
+        foreach (self::getAdditionalExposes($eqLogic->getConfiguration('model')) as $property => $expose) {
+          if (!is_object($eqLogic->getCmd('info', $property))) {
+            $eqLogic->createCmd(array('name' => $property, 'property' => $property) + $expose);
+          }
+        }
         file_put_contents(__DIR__ . '/../../data/devices/' . $addr . '.json', json_encode($device));
         if ($new !== null) {
           event::add('z2m::includeDevice', $eqLogic->getId());
@@ -839,6 +852,14 @@ class z2m extends eqLogic {
       return 'plugins/z2m/plugin_info/z2m_icon.png';
     }
     return 'plugins/z2m/data/img/' . $model . '.jpg';
+  }
+
+  private static function getAdditionalExposes($_model) {
+    static $exposesByModel = null;
+    if ($exposesByModel === null) {
+      $exposesByModel = json_decode(file_get_contents(__DIR__ . '/../config/additional-exposes.json'), true) ?? array();
+    }
+    return $exposesByModel[$_model] ?? array();
   }
 
   public static function getCmdConf($_infos, $_suffix = null, $_preffix = null, $_father_property = null) {
