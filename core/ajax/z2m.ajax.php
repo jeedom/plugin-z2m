@@ -26,11 +26,12 @@ try {
   ajax::init();
 
   if (init('action') == 'include') {
+    // Z2M 2.x ignores 'value': only 'time' counts, 0 closes the network
     $data = array(
       'value' => (init('mode') == 1),
-      'time' => 180
+      'time' => (init('mode') == 1) ? 180 : 0
     );
-    if(init('id') != 'all'){
+    if(init('mode') == 1 && init('id') != 'all'){
       $data['device'] = init('id');
     }
     mqtt2::publish(z2m::getRootTopic() . '/bridge/request/permit_join', json_encode($data));
